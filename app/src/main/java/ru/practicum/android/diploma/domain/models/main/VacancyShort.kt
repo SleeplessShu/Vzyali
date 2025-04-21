@@ -14,5 +14,5 @@ data class VacancyShort(
     val employer: String,
     val salary: Salary? = null,
     val schedule: Schedule? = null,
-    val industries: List<Industry> = emptyList()
+    val industries: List<Industry> = emptyList(),
 ) : Parcelable

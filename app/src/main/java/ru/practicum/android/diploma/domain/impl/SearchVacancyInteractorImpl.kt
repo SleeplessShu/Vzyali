@@ -11,11 +11,12 @@ import ru.practicum.android.diploma.domain.repositories.SearchVacancyRepository
 class SearchVacancyInteractorImpl(
     private val repository: SearchVacancyRepository
 ) : SearchVacancyInteractor {
-    override fun searchVacancy(vacancyName: String): Flow<Pair<List<VacancyShort>?, String?>> {
-        return repository.searchVacancy(vacancyName).map { result ->
+    override fun searchVacancy(vacancyName: String, currentPage: Int): Flow<Triple<List<VacancyShort>?, String?, Int>>
+    {
+        return repository.searchVacancy(vacancyName, currentPage).map { result ->
             when (result) {
-                is Resource.Success -> Pair(result.data, null)
-                is Resource.Error -> Pair(null, result.message)
+                is Resource.Success -> Triple(result.data, null, result.pages)
+                is Resource.Error -> Triple(null, result.message, 0)
             }
         }
     }

@@ -6,6 +6,7 @@ import kotlinx.coroutines.flow.flow
 import retrofit2.HttpException
 import ru.practicum.android.diploma.R
 import ru.practicum.android.diploma.data.dto.mapper.toDomain
+import ru.practicum.android.diploma.data.dto.response.VacancySearchResponseDto
 import ru.practicum.android.diploma.data.network.Response
 import ru.practicum.android.diploma.data.network.api.NetworkClient
 import ru.practicum.android.diploma.data.utils.StringProvider
@@ -19,9 +20,17 @@ class SearchVacancyRepoImpl(
     private val networkClient: NetworkClient,
     private val stringProvider: StringProvider
 ) : SearchVacancyRepository {
-    override fun searchVacancy(vacancyName: String): Flow<Resource<List<VacancyShort>>> =
+    override fun searchVacancy(vacancyName: String, currentPage: Int): Flow<Resource<List<VacancyShort>>> =
         handleResponse(
-            request = { networkClient.searchVacancies(mapOf("text" to vacancyName)) },
+            request = {
+                networkClient.searchVacancies(
+                    mapOf(
+                        "text" to vacancyName,
+                        "page" to currentPage.toString(),
+                        "per_page" to "20"
+                    )
+                )
+            },
             stringProvider = stringProvider,
             mapper = { dto -> dto.items.map { it.toDomain() } }
         )
@@ -40,7 +49,12 @@ class SearchVacancyRepoImpl(
     ): Flow<Resource<R>> = flow {
         try {
             when (val response = request()) {
-                is Response.Success -> emit(Resource.Success(mapper(response.data)))
+                is Response.Success -> {
+                    if (response.data is VacancySearchResponseDto) {
+                        emit(Resource.Success(mapper(response.data), response.data.pages))
+                    } else emit(Resource.Success(mapper(response.data)))
+                }
+
                 else -> emit(Resource.Error(mapError(response, stringProvider)))
             }
         } catch (e: IOException) {

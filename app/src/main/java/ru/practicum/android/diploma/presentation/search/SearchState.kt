@@ -4,5 +4,6 @@ data class SearchState<T>(
     val isLoading: Boolean = false,
     val content: T? = null,
     val error: UiError? = null,
-    val query: String = ""
+    val query: String = "",
+    val pages: Int = 0
 )

@@ -9,8 +9,8 @@ import ru.practicum.android.diploma.domain.models.main.VacancyShort
 import ru.practicum.android.diploma.util.extensions.toFormattedString
 
 class VacancyAdapter(
-    private val vacancyList: Array<VacancyShort>,
-    private val onItemClickListener: (VacancyShort) -> Unit
+    val vacancyList: MutableList<VacancyShort>,
+    private val onItemClickListener: (VacancyShort) -> Unit = {}
 ) : RecyclerView.Adapter<VacancyAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
