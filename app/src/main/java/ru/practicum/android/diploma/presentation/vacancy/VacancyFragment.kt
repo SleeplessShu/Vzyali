@@ -161,7 +161,7 @@ class VacancyFragment : Fragment() {
         views.forEach { it.visibility = if (show) View.VISIBLE else View.GONE }
     }
 
-    private fun updateIsLiked(isLiked: Boolean){
+    private fun updateIsLiked(isLiked: Boolean) {
         binding.bFavorite.setImageResource(
             if (isLiked) R.drawable.ic_favorites_on else R.drawable.ic_favorites_off
         )
