@@ -31,6 +31,22 @@ class RootActivity : AppCompatActivity() {
         val navController = navHostFragment.navController
         binding.bottomNavigationView.setupWithNavController(navController)
 
+        navController.addOnDestinationChangedListener { _, destination, _ ->
+            when (destination.id) {
+                R.id.navigation_main,
+                R.id.navigation_favorites,
+                R.id.navigation_team -> {
+                    binding.bottomNavigationView.visibility = View.VISIBLE
+                    binding.divider.visibility = View.VISIBLE
+                }
+
+                else -> {
+                    binding.bottomNavigationView.visibility = View.GONE
+                    binding.divider.visibility = View.GONE
+                }
+            }
+        }
+
         authRequest(accessToken = BuildConfig.HH_ACCESS_TOKEN)
         observeKeyboardVisibility()
     }
