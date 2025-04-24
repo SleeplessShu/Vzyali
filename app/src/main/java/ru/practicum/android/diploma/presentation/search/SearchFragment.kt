@@ -26,22 +26,24 @@ import ru.practicum.android.diploma.R
 import ru.practicum.android.diploma.databinding.FragmentSearchBinding
 import ru.practicum.android.diploma.domain.models.main.VacancyShort
 import ru.practicum.android.diploma.presentation.VacancyAdapter
+import ru.practicum.android.diploma.util.DebounceFunc
 import ru.practicum.android.diploma.util.debounce
 
 class SearchFragment : Fragment() {
     private var _binding: FragmentSearchBinding? = null
     private val binding get() = _binding ?: error("Binding is not initialized")
     private val searchViewModel by viewModel<SearchViewModel>()
-    private var debouncedSearch: ((String) -> Unit)? = null
-    private var debouncedClick: ((VacancyShort) -> Unit)? = null
+    private var debouncedSearch: DebounceFunc<String>? = null
+    private var debouncedClick: DebounceFunc<VacancyShort>? = null
     private var searchQuery: String = ""
     private var isDebounceEnabled = true
     private val adapter: VacancyAdapter = VacancyAdapter(
         onItemClickListener = { vacancy ->
             if (isDebounceEnabled) {
+                debouncedSearch?.cancel?.invoke()
                 isDebounceEnabled = false
                 navigateToVacancyScreen(vacancy)
-                debouncedClick?.let { it(vacancy) }
+                debouncedClick?.call?.invoke(vacancy)
             }
         }
     )
@@ -114,11 +116,12 @@ class SearchFragment : Fragment() {
             binding.searchImage.isVisible = searchQuery.isBlank()
 
             if (searchQuery.isBlank()) {
+                debouncedSearch?.cancel?.invoke()
                 searchViewModel.clearSearch()
                 isDebounceEnabled = false
             } else {
                 isDebounceEnabled = true
-                debouncedSearch?.invoke(searchQuery)
+                debouncedSearch?.call?.invoke(searchQuery)
             }
         }
     }
@@ -128,16 +131,14 @@ class SearchFragment : Fragment() {
             delayMillis = SEARCH_DEBOUNCE_DELAY,
             coroutineScope = viewLifecycleOwner.lifecycleScope,
             useLastParam = true
-        ) {
-            if (isDebounceEnabled) {
-                searchViewModel.searchVacancy(searchQuery)
-                toggleKeyboard(binding.searchField, false)
-            }
+        ) { query ->
+            searchViewModel.searchVacancy(searchQuery)
+            toggleKeyboard(binding.searchField, false)
         }
         debouncedClick = debounce(
             delayMillis = CLICK_DEBOUNCE_DELAY,
             coroutineScope = viewLifecycleOwner.lifecycleScope,
-            useLastParam = true,
+            useLastParam = false,
         ) {
             isDebounceEnabled = true
         }
@@ -168,7 +169,8 @@ class SearchFragment : Fragment() {
             val isActionDone = actionId == EditorInfo.IME_ACTION_DONE
             val isEnterKey = event?.keyCode == KeyEvent.KEYCODE_ENTER && event.action == KeyEvent.ACTION_DOWN
             if (isActionSearch || isActionDone || isEnterKey) {
-                isDebounceEnabled = false
+                isDebounceEnabled = true
+                debouncedSearch?.cancel?.invoke()
                 searchViewModel.searchVacancy(searchQuery)
                 toggleKeyboard(v, false)
                 true
@@ -229,7 +231,8 @@ class SearchFragment : Fragment() {
             binding.searchField.requestFocus()
             toggleKeyboard(binding.searchField, true)
         } else {
-            searchViewModel.searchVacancy(searchQuery)
+            debouncedSearch?.cancel?.invoke()
+            toggleKeyboard(binding.searchField, false)
         }
     }
 
