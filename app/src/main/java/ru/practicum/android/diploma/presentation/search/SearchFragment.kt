@@ -38,11 +38,8 @@ class SearchFragment : Fragment() {
     private var isDebounceEnabled = true
     private val adapter: VacancyAdapter = VacancyAdapter(
         onItemClickListener = { vacancy ->
-            if (isDebounceEnabled) {
-                isDebounceEnabled = false
-                navigateToVacancyScreen(vacancy)
-                debouncedClick?.let { it(vacancy) }
-            }
+            isDebounceEnabled = false
+            navigateToVacancyScreen(vacancy)
         }
     )
 
