@@ -138,7 +138,7 @@ class VacancyFragment : Fragment() {
         progressBar.visibility = View.VISIBLE
     }
 
-    private fun renderIsLiked(vacancyId: String){
+    private fun renderIsLiked(vacancyId: String) {
         lifecycleScope.launch {
             viewModel.checkInLiked(vacancyId)
         }

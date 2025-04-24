@@ -54,7 +54,7 @@ class FavoritesFragment : Fragment() {
 
     private fun openVacancy(vacancy: VacancyShort) {
         val args = Bundle().apply { putString("vacancyId", vacancy.vacancyId) }
-        findNavController().navigate(R.id.action_navigation_main_to_navigation_vacancy, args)
+        findNavController().navigate(R.id.action_navigation_favorites_to_navigation_vacancy, args)
     }
 
     override fun onDestroyView() {
