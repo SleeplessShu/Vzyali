@@ -46,10 +46,6 @@
         <EditText
             android:id="@+id/search_field"
             style="@style/text_regular_16"
-            android:focusable="true"
-            android:focusableInTouchMode="true"
-            android:cursorVisible="true"
-            android:textCursorDrawable="@drawable/cursor_edit"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_marginVertical="@dimen/margin_4"
@@ -57,21 +53,25 @@
             android:layout_marginEnd="@dimen/margin_8"
             android:layout_weight="1"
             android:background="@android:color/transparent"
+            android:cursorVisible="true"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
             android:hint="@string/hint_Enter_request"
             android:imeOptions="actionSearch"
             android:importantForAutofill="no"
             android:inputType="text"
             android:singleLine="true"
             android:textColor="@color/black"
-            android:textColorHint="?attr/colorOnSecondary" />
+            android:textColorHint="?attr/colorOnSecondary"
+            android:textCursorDrawable="@drawable/cursor_edit" />
 
         <ImageButton
             android:id="@+id/clear_field_button"
             android:layout_width="@dimen/icon_size_48"
             android:layout_height="@dimen/icon_size_48"
             android:layout_marginEnd="@dimen/margin_8"
-            android:visibility="gone"
             android:background="@android:color/transparent"
+            android:visibility="gone"
             app:srcCompat="@drawable/ic_close"
             app:tint="@color/black" />
 
@@ -87,34 +87,41 @@
 
     </LinearLayout>
 
-    <TextView
-        android:id="@+id/vacancies_found_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="@dimen/margin_4"
-        android:layout_marginBottom="@dimen/margin_8"
-        android:background="@drawable/bg_vacancies_found"
-        android:paddingHorizontal="@dimen/margin_8"
-        android:paddingVertical="@dimen/margin_4"
-        android:textColor="@color/white"
-        android:visibility="gone"
-        tools:text="Найдено 3 вакансии"
-        tools:visibility="visible" />
-
-    <ru.practicum.android.diploma.presentation.search.StateLayout
-        android:id="@+id/stateLayout"
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1">
+        android:layout_height="match_parent">
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recycler_view"
+        <ru.practicum.android.diploma.presentation.search.StateLayout
+            android:id="@+id/stateLayout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            tools:itemCount="3"
-            tools:listitem="@layout/element_vacancy_short" />
+            android:layout_weight="1">
 
-    </ru.practicum.android.diploma.presentation.search.StateLayout>
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recycler_view"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                tools:itemCount="3"
+                tools:listitem="@layout/element_vacancy_short" />
+
+        </ru.practicum.android.diploma.presentation.search.StateLayout>
+
+
+        <TextView
+            android:id="@+id/vacancies_found_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="@dimen/margin_4"
+            android:layout_marginBottom="@dimen/margin_8"
+            android:background="@drawable/bg_vacancies_found"
+            android:paddingHorizontal="@dimen/margin_8"
+            android:paddingVertical="@dimen/margin_4"
+            android:textColor="@color/white"
+            android:visibility="gone"
+            tools:text="Найдено 3 вакансии"
+            tools:visibility="visible" />
+    </FrameLayout>
+
 
 </LinearLayout>
