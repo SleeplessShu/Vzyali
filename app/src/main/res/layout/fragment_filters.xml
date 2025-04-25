@@ -11,9 +11,9 @@
 
     <ImageButton
         android:id="@+id/bToSearch"
-        android:layout_width="40dp"
-        android:layout_height="48dp"
-        android:layout_marginVertical="4dp"
+        android:layout_width="@dimen/icon_size_48"
+        android:layout_height="@dimen/icon_size_48"
+        android:layout_marginVertical="@dimen/margin_4"
         android:backgroundTint="?attr/colorPrimary"
         android:src="@drawable/btn_back"
         app:layout_constraintStart_toStartOf="parent"
@@ -29,8 +29,7 @@
         android:gravity="center"
         android:text="@string/header_Filters_setup"
         android:textColor="?attr/colorOnPrimary"
-        android:textFontWeight="500"
-        android:textSize="@dimen/text_size_22"
+        style="@style/text_medium_22"
         app:layout_constraintBottom_toTopOf="@id/header_title"
         app:layout_constraintStart_toEndOf="@id/bToSearch"
         app:layout_constraintTop_toTopOf="parent" />
@@ -202,7 +201,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/margin_24"
-        android:background="@color/transparent"
+        android:background="@android:color/transparent"
         android:stateListAnimator="@null"
         android:text="@string/buttons_Clear"
         android:textColor="@color/red"
