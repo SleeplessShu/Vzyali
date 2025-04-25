@@ -15,6 +15,7 @@ import ru.practicum.android.diploma.domain.models.additional.Employment
 import ru.practicum.android.diploma.domain.models.additional.Experience
 import ru.practicum.android.diploma.domain.models.additional.Schedule
 import ru.practicum.android.diploma.domain.models.main.Salary
+import ru.practicum.android.diploma.presentation.favorites.FavoritesFragment
 import ru.practicum.android.diploma.util.Currency
 import ru.practicum.android.diploma.util.extensions.toVacancyShort
 import java.text.DecimalFormat
@@ -26,6 +27,8 @@ class VacancyViewModel(
     private val interactorFavoriteVacancies: InteractorFavoriteVacancies,
 ) : ViewModel() {
 
+    private var navSource: String? = null
+
     private val _isLiked = MutableLiveData<Boolean>()
     val isLiked: LiveData<Boolean> get() = _isLiked
 
@@ -35,10 +38,18 @@ class VacancyViewModel(
     val vacancyState: StateFlow<VacancyState> = _vacancyState
 
     fun getLongVacancy(id: String) {
-        viewModelScope.launch(Dispatchers.IO) {
-            searchVacancyInteractor.searchVacancyDetails(id).collect { pair ->
+        if (navSource == FavoritesFragment.NAV_SOURCE) {
+            viewModelScope.launch(Dispatchers.IO) {
+                val result = interactorFavoriteVacancies.getById(id.toInt())
+                if (result.isSuccess) _vacancyState.value = VacancyState.Content(result.getOrNull()!!)
+            }
+        } else {
+            viewModelScope.launch(Dispatchers.IO) {
+                searchVacancyInteractor.searchVacancyDetails(id).collect { pair ->
 
-                _vacancyState.value = if (pair.first == null) VacancyState.Empty else VacancyState.Content(pair.first!!)
+                    _vacancyState.value =
+                        if (pair.first == null) VacancyState.Empty else VacancyState.Content(pair.first!!)
+                }
             }
         }
     }
@@ -121,10 +132,14 @@ class VacancyViewModel(
                 interactorFavoriteVacancies.deleteById(vacancy.vacancyId.toInt())
                 _isLiked.postValue(false)
             } else {
-                interactorFavoriteVacancies.insertVacancy(vacancy.toVacancyShort())
+                interactorFavoriteVacancies.insertVacancy(vacancy)
                 _isLiked.postValue(true)
             }
         }
+    }
+
+    fun setNavSource(source: String?) {
+        navSource = source
     }
 
     private fun updateUiState(isLiked: Boolean = _isLiked.value ?: false) {

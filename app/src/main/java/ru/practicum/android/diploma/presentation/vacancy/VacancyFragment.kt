@@ -6,7 +6,6 @@ import android.text.Html
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
@@ -47,6 +46,7 @@ class VacancyFragment : Fragment() {
         }
 
         if (arguments != null) {
+            viewModel.setNavSource(requireArguments().getString("navSource") ?: null)
             viewModel.getLongVacancy(requireArguments().getString("vacancyId") ?: "")
         }
 
@@ -110,7 +110,7 @@ class VacancyFragment : Fragment() {
         } else {
             headerKeySkills.visibility = View.VISIBLE
             listKeySkills.visibility = View.VISIBLE
-            listKeySkills.text = vacancy.keySkills.joinToString("\n") { "• $it" }
+            listKeySkills.text = vacancy.keySkills.joinToString("\n") { "• ${it.name}" }
         }
     }
 
