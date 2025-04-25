@@ -19,7 +19,6 @@ class VacancyAdapter(
 
     private var vacancyList: List<VacancyShort> = emptyList()
     private var showFooterItem: Boolean = false
-    private var showHeaderLoadingItem: Boolean = false
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
@@ -34,25 +33,19 @@ class VacancyAdapter(
                 LoadingViewHolder(view)
             }
 
-            VIEW_TYPE_HEADER_LOADING -> {
-                val view = layoutInflater.inflate(R.layout.placeholder_loading_bottom, parent, false)
-                HeaderLoadingViewHolder(view)
-            }
-
             else -> throw IllegalArgumentException("Unknown view type $viewType")
         }
     }
 
     override fun getItemViewType(position: Int): Int {
         return when {
-            showHeaderLoadingItem && position == 0 -> VIEW_TYPE_HEADER_LOADING
-            position >= (if (showHeaderLoadingItem) vacancyList.size + 1 else vacancyList.size) -> VIEW_TYPE_LOADING
+            position >= vacancyList.size -> VIEW_TYPE_LOADING
             else -> VIEW_TYPE_VACANCY
         }
     }
 
     override fun getItemCount(): Int {
-        val header = if (showHeaderLoadingItem) 1 else 0
+        val header = 0
         val footer = if (showFooterItem) 1 else 0
         return header + vacancyList.size + footer
     }
@@ -69,7 +62,6 @@ class VacancyAdapter(
         showHeaderLoading: Boolean = false
     ) {
         vacancyList = newVacancies
-        showHeaderLoadingItem = showHeaderLoading
         showFooterItem = showFooterLoading
         notifyDataSetChanged()
         Log.d("Adapter", "header=$showHeaderLoading, footer=$showFooterLoading, size=${newVacancies.size}")
@@ -96,11 +88,9 @@ class VacancyAdapter(
     }
 
     class LoadingViewHolder(view: View) : RecyclerView.ViewHolder(view)
-    class HeaderLoadingViewHolder(view: View) : RecyclerView.ViewHolder(view)
 
     companion object {
         private const val VIEW_TYPE_VACANCY = 0
         private const val VIEW_TYPE_LOADING = 1
-        private const val VIEW_TYPE_HEADER_LOADING = 2
     }
 }

@@ -10,7 +10,6 @@ import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
-import androidx.activity.addCallback
 import androidx.appcompat.app.AppCompatActivity.INPUT_METHOD_SERVICE
 import androidx.core.os.bundleOf
 import androidx.core.view.ViewCompat
@@ -101,9 +100,10 @@ class SearchFragment : Fragment() {
             state.content.isNullOrEmpty() -> binding.stateLayout.show(ViewState.EMPTY)
             else -> {
                 binding.stateLayout.show(ViewState.CONTENT)
-
             }
         }
+        if (state.content == null && state.error == null) showKeyboard()
+        binding.refreshLayout.isRefreshing = state.isRefreshing
         adapter.updateVacancies(
             newVacancies = state.content.orEmpty(),
             showHeaderLoading = state.isRefreshing,
@@ -137,7 +137,7 @@ class SearchFragment : Fragment() {
             delayMillis = SEARCH_DEBOUNCE_DELAY,
             coroutineScope = viewLifecycleOwner.lifecycleScope,
             useLastParam = true
-        ) { query ->
+        ) { _ ->
             searchViewModel.searchVacancy(searchQuery)
             toggleKeyboard(binding.searchField, false)
         }
@@ -159,10 +159,7 @@ class SearchFragment : Fragment() {
             setErrorView(UiError.ServerError::class.java, R.layout.placeholder_server_error_search)
         }
         binding.recyclerView.adapter = adapter
-        binding.searchField.post {
-            binding.searchField.requestFocus()
-            toggleKeyboard(binding.searchField, true)
-        }
+
         binding.clearFieldButton.setOnClickListener {
             binding.searchField.text.clear()
             binding.searchField.post {
@@ -170,20 +167,14 @@ class SearchFragment : Fragment() {
                 toggleKeyboard(binding.searchField, true)
             }
         }
-        binding.searchField.setOnEditorActionListener { v, actionId, event ->
-            val isActionSearch = actionId == EditorInfo.IME_ACTION_SEARCH
-            val isActionDone = actionId == EditorInfo.IME_ACTION_DONE
-            val isEnterKey = event?.keyCode == KeyEvent.KEYCODE_ENTER && event.action == KeyEvent.ACTION_DOWN
-            if (isActionSearch || isActionDone || isEnterKey) {
-                isDebounceEnabled = true
-                debouncedSearch?.cancel?.invoke()
-                searchViewModel.searchVacancy(searchQuery)
-                toggleKeyboard(v, false)
-                true
-            } else {
-                false
-            }
+        setEditorActionListener()
+        setOnScrollListener()
+        binding.toFiltersButton.setOnClickListener {
+            findNavController().navigate(R.id.action_navigation_main_to_navigation_filters)
         }
+    }
+
+    private fun setOnScrollListener() {
         binding.recyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
 
             override fun onScrolled(rv: RecyclerView, dx: Int, dy: Int) {
@@ -204,8 +195,29 @@ class SearchFragment : Fragment() {
                 }
             }
         })
-        binding.toFiltersButton.setOnClickListener {
-            findNavController().navigate(R.id.action_navigation_main_to_navigation_filters)
+    }
+
+    private fun setEditorActionListener() {
+        binding.searchField.setOnEditorActionListener { v, actionId, event ->
+            val isActionSearch = actionId == EditorInfo.IME_ACTION_SEARCH
+            val isActionDone = actionId == EditorInfo.IME_ACTION_DONE
+            val isEnterKey = event?.keyCode == KeyEvent.KEYCODE_ENTER && event.action == KeyEvent.ACTION_DOWN
+            if (isActionSearch || isActionDone || isEnterKey) {
+                isDebounceEnabled = true
+                debouncedSearch?.cancel?.invoke()
+                searchViewModel.searchVacancy(searchQuery)
+                toggleKeyboard(v, false)
+                true
+            } else {
+                false
+            }
+        }
+    }
+
+    private fun showKeyboard() {
+        binding.searchField.post {
+            binding.searchField.requestFocus()
+            toggleKeyboard(binding.searchField, true)
         }
     }
 
