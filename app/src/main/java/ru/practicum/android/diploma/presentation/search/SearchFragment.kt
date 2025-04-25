@@ -9,8 +9,12 @@ import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
+import androidx.activity.addCallback
 import androidx.appcompat.app.AppCompatActivity.INPUT_METHOD_SERVICE
 import androidx.core.os.bundleOf
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.isVisible
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
@@ -67,6 +71,8 @@ class SearchFragment : Fragment() {
             observeSearchState()
             observeToastFlow()
         }
+
+        setOnBackPressedListener()
     }
 
     private fun observeSearchState() {
@@ -218,6 +224,24 @@ class SearchFragment : Fragment() {
         } else {
             imm.hideSoftInputFromWindow(view.windowToken, 0)
         }
+    }
+
+    private fun setOnBackPressedListener() {
+        object: OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                if (isKeyboardOpen(requireView())) {
+                    toggleKeyboard(binding.searchField, false)
+                } else {
+                    isEnabled = false
+                    requireActivity().onBackPressedDispatcher.onBackPressed()
+                }
+            }
+        }
+    }
+
+    fun isKeyboardOpen(view: View): Boolean {
+        val insets = ViewCompat.getRootWindowInsets(view) ?: return false
+        return insets.isVisible(WindowInsetsCompat.Type.ime())
     }
 
     private fun navigateToVacancyScreen(vacancy: VacancyShort) {
