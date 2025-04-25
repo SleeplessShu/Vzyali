@@ -15,9 +15,7 @@ import ru.practicum.android.diploma.domain.models.additional.Employment
 import ru.practicum.android.diploma.domain.models.additional.Experience
 import ru.practicum.android.diploma.domain.models.additional.Schedule
 import ru.practicum.android.diploma.domain.models.main.Salary
-import ru.practicum.android.diploma.presentation.favorites.FavoritesFragment
 import ru.practicum.android.diploma.util.Currency
-import ru.practicum.android.diploma.util.extensions.toVacancyShort
 import java.text.DecimalFormat
 import java.text.NumberFormat
 import java.util.Locale
@@ -38,13 +36,13 @@ class VacancyViewModel(
     val vacancyState: StateFlow<VacancyState> = _vacancyState
 
     fun getLongVacancy(id: String) {
-        if (navSource == FavoritesFragment.NAV_SOURCE) {
-            viewModelScope.launch(Dispatchers.IO) {
-                val result = interactorFavoriteVacancies.getById(id.toInt())
-                if (result.isSuccess) _vacancyState.value = VacancyState.Content(result.getOrNull()!!)
-            }
-        } else {
-            viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch(Dispatchers.IO) {
+            if (interactorFavoriteVacancies.favouritesContains(id.toInt())) {
+                viewModelScope.launch(Dispatchers.IO) {
+                    val result = interactorFavoriteVacancies.getById(id.toInt())
+                    if (result.isSuccess) _vacancyState.value = VacancyState.Content(result.getOrNull()!!)
+                }
+            } else {
                 searchVacancyInteractor.searchVacancyDetails(id).collect { pair ->
 
                     _vacancyState.value =

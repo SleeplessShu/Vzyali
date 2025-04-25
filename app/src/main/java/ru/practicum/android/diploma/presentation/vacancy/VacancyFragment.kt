@@ -46,7 +46,6 @@ class VacancyFragment : Fragment() {
         }
 
         if (arguments != null) {
-            viewModel.setNavSource(requireArguments().getString("navSource") ?: null)
             viewModel.getLongVacancy(requireArguments().getString("vacancyId") ?: "")
         }
 

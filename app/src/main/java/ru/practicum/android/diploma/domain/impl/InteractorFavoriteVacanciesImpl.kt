@@ -9,6 +9,10 @@ import ru.practicum.android.diploma.domain.repositories.RepositoryFavoriteVacanc
 class InteractorFavoriteVacanciesImpl(
     private val repositoryVacancies: RepositoryFavoriteVacancies
 ) : InteractorFavoriteVacancies {
+    override suspend fun favouritesContains(id: Int): Boolean {
+        return repositoryVacancies.favouritesContains(id)
+    }
+
     override suspend fun insertVacancy(vacancy: VacancyLong): Result<Unit> {
         return repositoryVacancies.insertVacancy(vacancy)
     }

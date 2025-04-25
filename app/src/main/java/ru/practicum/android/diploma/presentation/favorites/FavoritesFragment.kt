@@ -53,10 +53,7 @@ class FavoritesFragment : Fragment() {
     }
 
     private fun openVacancy(vacancy: VacancyShort) {
-        val args = Bundle().apply {
-            putString("vacancyId", vacancy.vacancyId)
-            putString("navSource", NAV_SOURCE)
-        }
+        val args = Bundle().apply { putString("vacancyId", vacancy.vacancyId) }
         findNavController().navigate(R.id.action_navigation_favorites_to_navigation_vacancy, args)
     }
 
@@ -107,7 +104,5 @@ class FavoritesFragment : Fragment() {
         fun newInstance(): FavoritesFragment {
             return FavoritesFragment()
         }
-
-        const val NAV_SOURCE = "favourites"
     }
 }

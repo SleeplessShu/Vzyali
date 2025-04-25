@@ -18,6 +18,9 @@ interface VacancyDao {
     @Query("SELECT * FROM Favorite_vacancies_table")
     fun getAllFlow(): Flow<List<VacancyLongDbEntity>>
 
+    @Query("SELECT vacancy_id FROM Favorite_vacancies_table")
+    fun getVacanciesIds(): List<String>
+
     @Query("SELECT * FROM Favorite_vacancies_table")
     suspend fun getAll(): List<VacancyLongDbEntity>
 

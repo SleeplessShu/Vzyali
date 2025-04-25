@@ -5,6 +5,8 @@ import ru.practicum.android.diploma.domain.models.ResponseDb
 import ru.practicum.android.diploma.domain.models.main.VacancyLong
 
 interface InteractorFavoriteVacancies {
+    suspend fun favouritesContains(id: Int): Boolean
+
     suspend fun insertVacancy(vacancy: VacancyLong): Result<Unit>
 
     suspend fun getAllVacancies(): List<VacancyLong>?

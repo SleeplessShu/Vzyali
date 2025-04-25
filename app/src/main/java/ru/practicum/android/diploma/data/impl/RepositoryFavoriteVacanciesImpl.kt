@@ -23,6 +23,10 @@ import ru.practicum.android.diploma.domain.repositories.RepositoryFavoriteVacanc
 class RepositoryFavoriteVacanciesImpl(
     private val vacancyDao: VacancyDao,
 ) : RepositoryFavoriteVacancies {
+    override suspend fun favouritesContains(id: Int): Boolean {
+        val vacanciesIds = vacancyDao.getVacanciesIds().map { it.toInt() }
+        return vacanciesIds.contains(id)
+    }
 
     override suspend fun insertVacancy(vacancy: VacancyLong): Result<Unit> {
         return try {
