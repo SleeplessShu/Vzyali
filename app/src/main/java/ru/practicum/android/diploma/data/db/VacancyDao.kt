@@ -9,23 +9,23 @@ import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface VacancyDao {
-    @Insert(entity = VacancyShortDbEntity::class, onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertVacancy(vacancy: VacancyShortDbEntity)
+    @Insert(entity = VacancyLongDbEntity::class, onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertVacancy(vacancy: VacancyLongDbEntity)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertAll(vacancies: List<VacancyShortDbEntity>)
+    suspend fun insertAll(vacancies: List<VacancyLongDbEntity>)
 
     @Query("SELECT * FROM Favorite_vacancies_table")
-    fun getAllFlow(): Flow<List<VacancyShortDbEntity>>
+    fun getAllFlow(): Flow<List<VacancyLongDbEntity>>
 
     @Query("SELECT * FROM Favorite_vacancies_table")
-    suspend fun getAll(): List<VacancyShortDbEntity>
+    suspend fun getAll(): List<VacancyLongDbEntity>
 
     @Query("SELECT * FROM Favorite_vacancies_table WHERE vacancy_id = :id")
-    suspend fun getById(id: Int): VacancyShortDbEntity?
+    suspend fun getById(id: Int): VacancyLongDbEntity?
 
-    @Delete(entity = VacancyShortDbEntity::class)
-    suspend fun delete(vacancy: VacancyShortDbEntity)
+    @Delete(entity = VacancyLongDbEntity::class)
+    suspend fun delete(vacancy: VacancyLongDbEntity)
 
     @Query("DELETE FROM Favorite_vacancies_table")
     suspend fun clear()
