@@ -46,6 +46,7 @@ class VacancyFragment : Fragment() {
         }
 
         if (arguments != null) {
+            viewModel.setNavSource(requireArguments().getString("from_favorites") ?: "")
             viewModel.getLongVacancy(requireArguments().getString("vacancyId") ?: "")
         }
 
@@ -57,6 +58,11 @@ class VacancyFragment : Fragment() {
             viewModel.reactOnLikeButton()
         }
         viewModel.isLiked.observe(viewLifecycleOwner) { updateIsLiked(it) }
+    }
+
+    override fun onDestroy() {
+        viewModel.setNavSource(null)
+        super.onDestroy()
     }
 
     private fun render(state: VacancyState) {

@@ -15,6 +15,7 @@ import ru.practicum.android.diploma.domain.models.additional.Employment
 import ru.practicum.android.diploma.domain.models.additional.Experience
 import ru.practicum.android.diploma.domain.models.additional.Schedule
 import ru.practicum.android.diploma.domain.models.main.Salary
+import ru.practicum.android.diploma.presentation.favorites.FavoritesFragment
 import ru.practicum.android.diploma.util.Currency
 import java.text.DecimalFormat
 import java.text.NumberFormat
@@ -37,7 +38,7 @@ class VacancyViewModel(
 
     fun getLongVacancy(id: String) {
         viewModelScope.launch(Dispatchers.IO) {
-            if (interactorFavoriteVacancies.favouritesContains(id.toInt())) {
+            if (navSource == FavoritesFragment.FROM_FAVORITES) {
                 viewModelScope.launch(Dispatchers.IO) {
                     val result = interactorFavoriteVacancies.getById(id.toInt())
                     if (result.isSuccess) _vacancyState.value = VacancyState.Content(result.getOrNull()!!)
