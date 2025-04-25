@@ -102,7 +102,7 @@ class SearchFragment : Fragment() {
                 binding.stateLayout.show(ViewState.CONTENT)
             }
         }
-        if (state.content == null && state.error == null) showKeyboard()
+        if (state.content == null && state.error == null && state.isLoading == null) showKeyboard()
         binding.refreshLayout.isRefreshing = state.isRefreshing
         adapter.updateVacancies(
             newVacancies = state.content.orEmpty(),
@@ -234,7 +234,7 @@ class SearchFragment : Fragment() {
     }
 
     private fun setOnBackPressedListener() {
-        object: OnBackPressedCallback(true) {
+        object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
                 if (isKeyboardOpen(requireView())) {
                     toggleKeyboard(binding.searchField, false)
