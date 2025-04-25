@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/margin_60"
+    android:background="?attr/colorPrimary"
+    android:orientation="horizontal">
+
+    <TextView
+        android:id="@+id/item_name"
+        style="@style/ItemFilterStyle"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginStart="@dimen/margin_16"
+        android:layout_marginEnd="@dimen/margin_52"
+        android:gravity="center_vertical"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="IT" />
+
+    <com.google.android.material.radiobutton.MaterialRadioButton
+        android:id="@+id/roundBtn"
+        android:layout_width="@dimen/margin_40"
+        android:layout_height="@dimen/icon_size_48"
+        android:layout_marginTop="@dimen/margin_6"
+        android:layout_marginEnd="@dimen/margin_4"
+        android:buttonTint="@color/blue"
+        android:gravity="center"
+        android:padding="@dimen/margin_12"
+        android:theme="@style/ToolbarRipple"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+</androidx.constraintlayout.widget.ConstraintLayout>
