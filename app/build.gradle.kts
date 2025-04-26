@@ -60,6 +60,7 @@ dependencies {
     implementation(libs.ui.constraintLayout)
     implementation(libs.navigation.fragment.ktx)
     implementation(libs.navigation.ui.ktx)
+    implementation("androidx.swiperefreshlayout:swiperefreshlayout:1.2.0-alpha01")
 
     // Serialization
     implementation(libs.kotlinx.serialization.json)

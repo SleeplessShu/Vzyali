@@ -9,8 +9,11 @@ import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity.INPUT_METHOD_SERVICE
 import androidx.core.os.bundleOf
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.isVisible
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
@@ -67,6 +70,8 @@ class SearchFragment : Fragment() {
             observeSearchState()
             observeToastFlow()
         }
+
+        setOnBackPressedListener()
     }
 
     private fun observeSearchState() {
@@ -95,9 +100,10 @@ class SearchFragment : Fragment() {
             state.content.isNullOrEmpty() -> binding.stateLayout.show(ViewState.EMPTY)
             else -> {
                 binding.stateLayout.show(ViewState.CONTENT)
-
             }
         }
+        if (state.content == null && state.error == null && state.isLoading == null) showKeyboard()
+        binding.refreshLayout.isRefreshing = state.isRefreshing
         adapter.updateVacancies(
             newVacancies = state.content.orEmpty(),
             showHeaderLoading = state.isRefreshing,
@@ -131,7 +137,7 @@ class SearchFragment : Fragment() {
             delayMillis = SEARCH_DEBOUNCE_DELAY,
             coroutineScope = viewLifecycleOwner.lifecycleScope,
             useLastParam = true
-        ) { query ->
+        ) { _ ->
             searchViewModel.searchVacancy(searchQuery)
             toggleKeyboard(binding.searchField, false)
         }
@@ -153,10 +159,7 @@ class SearchFragment : Fragment() {
             setErrorView(UiError.ServerError::class.java, R.layout.placeholder_server_error_search)
         }
         binding.recyclerView.adapter = adapter
-        binding.searchField.post {
-            binding.searchField.requestFocus()
-            toggleKeyboard(binding.searchField, true)
-        }
+
         binding.clearFieldButton.setOnClickListener {
             binding.searchField.text.clear()
             binding.searchField.post {
@@ -164,6 +167,37 @@ class SearchFragment : Fragment() {
                 toggleKeyboard(binding.searchField, true)
             }
         }
+        setEditorActionListener()
+        setOnScrollListener()
+        binding.toFiltersButton.setOnClickListener {
+            findNavController().navigate(R.id.action_navigation_main_to_navigation_filters)
+        }
+    }
+
+    private fun setOnScrollListener() {
+        binding.recyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+
+            override fun onScrolled(rv: RecyclerView, dx: Int, dy: Int) {
+                super.onScrolled(rv, dx, dy)
+
+                val layoutManager = rv.layoutManager as? LinearLayoutManager ?: return
+                val lastVisible = layoutManager.findLastVisibleItemPosition()
+                val totalItems = adapter.itemCount
+
+                if (lastVisible >= totalItems - THRESHOLD) {
+                    searchViewModel.loadNextPage()
+                }
+
+                val swipeRefreshLayout = binding.refreshLayout
+                swipeRefreshLayout.setOnRefreshListener {
+                    searchViewModel.refreshSearch()
+                    swipeRefreshLayout.isRefreshing = false
+                }
+            }
+        })
+    }
+
+    private fun setEditorActionListener() {
         binding.searchField.setOnEditorActionListener { v, actionId, event ->
             val isActionSearch = actionId == EditorInfo.IME_ACTION_SEARCH
             val isActionDone = actionId == EditorInfo.IME_ACTION_DONE
@@ -178,33 +212,12 @@ class SearchFragment : Fragment() {
                 false
             }
         }
-        binding.recyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+    }
 
-            override fun onScrolled(rv: RecyclerView, dx: Int, dy: Int) {
-                super.onScrolled(rv, dx, dy)
-
-                val state = searchViewModel.searchState.value
-                val layoutManager = rv.layoutManager as? LinearLayoutManager ?: return
-                val lastVisible = layoutManager.findLastVisibleItemPosition()
-                val firstVisible = layoutManager.findFirstCompletelyVisibleItemPosition()
-                val totalItems = adapter.itemCount
-
-                if (lastVisible >= totalItems - THRESHOLD) {
-                    searchViewModel.loadNextPage()
-                }
-
-                val isPullDown = dy < 0 && firstVisible == 0
-                val isStateIdle = !state.isRefreshing
-                    && !state.isInitialLoading
-                    && !state.isLoading
-
-                if (isPullDown && isStateIdle) {
-                    searchViewModel.refreshSearch()
-                }
-            }
-        })
-        binding.toFiltersButton.setOnClickListener {
-            findNavController().navigate(R.id.action_navigation_main_to_navigation_filters)
+    private fun showKeyboard() {
+        binding.searchField.post {
+            binding.searchField.requestFocus()
+            toggleKeyboard(binding.searchField, true)
         }
     }
 
@@ -218,6 +231,24 @@ class SearchFragment : Fragment() {
         } else {
             imm.hideSoftInputFromWindow(view.windowToken, 0)
         }
+    }
+
+    private fun setOnBackPressedListener() {
+        object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                if (isKeyboardOpen(requireView())) {
+                    toggleKeyboard(binding.searchField, false)
+                } else {
+                    isEnabled = false
+                    requireActivity().onBackPressedDispatcher.onBackPressed()
+                }
+            }
+        }
+    }
+
+    fun isKeyboardOpen(view: View): Boolean {
+        val insets = ViewCompat.getRootWindowInsets(view) ?: return false
+        return insets.isVisible(WindowInsetsCompat.Type.ime())
     }
 
     private fun navigateToVacancyScreen(vacancy: VacancyShort) {
