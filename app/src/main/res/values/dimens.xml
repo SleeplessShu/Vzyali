@@ -9,7 +9,9 @@
     <dimen name="margin_156">156dp</dimen>
     <dimen name="margin_102">102dp</dimen>
     <dimen name="margin_60">60dp</dimen>
+    <dimen name="margin_52">52dp</dimen>
     <dimen name="margin_46">46dp</dimen>
+    <dimen name="margin_40">40dp</dimen>
     <dimen name="margin_32">32dp</dimen>
     <dimen name="margin_24">24dp</dimen>
     <dimen name="margin_20">20dp</dimen>

@@ -65,7 +65,6 @@
             android:id="@+id/clear_field_button"
             android:layout_width="@dimen/icon_size_48"
             android:layout_height="@dimen/icon_size_48"
-            android:layout_marginTop="@dimen/margin_4"
             android:layout_marginEnd="@dimen/margin_4"
             android:background="@android:color/transparent"
             android:visibility="invisible"
@@ -79,7 +78,6 @@
             android:id="@+id/search_image"
             android:layout_width="@dimen/icon_size_48"
             android:layout_height="@dimen/icon_size_48"
-            android:layout_marginTop="@dimen/margin_4"
             android:layout_marginEnd="@dimen/margin_4"
             android:background="@android:color/transparent"
             android:scaleType="center"
@@ -96,10 +94,24 @@
         style="@style/vacancy_recycler"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"
         app:layout_constraintTop_toBottomOf="@+id/search_view"
         tools:itemCount="10"
-        tools:listitem="@layout/item_region_depart_filter"
+        tools:listitem="@layout/filter_industry_item"
         tools:visibility="visible" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/select_btn"
+        style="@style/FilterBottomButtonsStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/margin_24"
+        android:background="@drawable/bt_round_drawable"
+        android:text="@string/buttons_Select"
+        android:textColor="@color/white"
+        android:visibility="invisible"
+        app:cornerRadius="@dimen/radius_12"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
