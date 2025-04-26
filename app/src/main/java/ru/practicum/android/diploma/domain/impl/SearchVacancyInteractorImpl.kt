@@ -3,7 +3,7 @@ package ru.practicum.android.diploma.domain.impl
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import ru.practicum.android.diploma.data.dto.mapper.VacancyPageResult
-import ru.practicum.android.diploma.domain.interactor.SearchVacancyInteractor
+import ru.practicum.android.diploma.domain.api.SearchVacancyInteractor
 import ru.practicum.android.diploma.domain.models.Resource
 import ru.practicum.android.diploma.domain.models.main.VacancyLong
 import ru.practicum.android.diploma.domain.repositories.SearchVacancyRepository
