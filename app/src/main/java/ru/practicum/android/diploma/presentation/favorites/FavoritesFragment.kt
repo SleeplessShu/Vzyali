@@ -26,7 +26,7 @@ class FavoritesFragment : Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _binding = FragmentFavoritesBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -53,7 +53,10 @@ class FavoritesFragment : Fragment() {
     }
 
     private fun openVacancy(vacancy: VacancyShort) {
-        val args = Bundle().apply { putString("vacancyId", vacancy.vacancyId) }
+        val args = Bundle().apply {
+            putString("vacancyId", vacancy.vacancyId)
+            putString("from_favorites", FROM_FAVORITES)
+        }
         findNavController().navigate(R.id.action_navigation_favorites_to_navigation_vacancy, args)
     }
 
@@ -104,5 +107,7 @@ class FavoritesFragment : Fragment() {
         fun newInstance(): FavoritesFragment {
             return FavoritesFragment()
         }
+
+        const val FROM_FAVORITES = "favorites"
     }
 }

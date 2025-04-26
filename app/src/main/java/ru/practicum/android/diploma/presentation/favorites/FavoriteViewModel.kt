@@ -7,6 +7,7 @@ import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
 import ru.practicum.android.diploma.domain.api.InteractorFavoriteVacancies
 import ru.practicum.android.diploma.domain.models.ResponseDb
+import ru.practicum.android.diploma.util.extensions.toVacancyShort
 
 class FavoriteViewModel(
     private val interactorFavoriteVacancies: InteractorFavoriteVacancies
@@ -31,7 +32,7 @@ class FavoriteViewModel(
                             if (vacancies.isEmpty()) {
                                 renderState(FavoriteVacanciesState.Empty)
                             } else {
-                                renderState(FavoriteVacanciesState.Content(vacancies))
+                                renderState(FavoriteVacanciesState.Content(vacancies.map { it.toVacancyShort() }))
                             }
                         }
                     }
