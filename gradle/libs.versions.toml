@@ -23,6 +23,8 @@ retrofit = "2.11.0"
 room = "2.6.0"
 roomCommonJvm = "2.7.0"
 
+swiperefresh = "1.2.0-alpha01"
+
 [libraries]
 
 # Detekt
@@ -44,10 +46,11 @@ retrofit-serialization = { group = "com.jakewharton.retrofit", name = "retrofit2
 okhttp = { group = "com.squareup.okhttp3", name = "okhttp", version.ref = "okhttp" }
 
 # UI layer libraries
-ui-material = "com.google.android.material:material:1.10.0"
+ui-material = "com.google.android.material:material:1.12.0"
 ui-constraintLayout = "androidx.constraintlayout:constraintlayout:2.1.4"
 navigation-fragment-ktx = { group = "androidx.navigation", name = "navigation-fragment-ktx", version.ref = "navigation" }
 navigation-ui-ktx = { group = "androidx.navigation", name = "navigation-ui-ktx", version.ref = "navigation" }
+ui-swipe-refresh = { group = "androidx.swiperefreshlayout", name = "swiperefreshlayout", version.ref = "swiperefresh"}
 
 # Glide
 glide = { module = "com.github.bumptech.glide:glide", version.ref = "glide" }

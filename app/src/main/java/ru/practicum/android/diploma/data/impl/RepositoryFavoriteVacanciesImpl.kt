@@ -2,21 +2,33 @@ package ru.practicum.android.diploma.data.impl
 
 import android.util.Log
 import androidx.sqlite.SQLiteException
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import ru.practicum.android.diploma.data.db.VacancyDao
-import ru.practicum.android.diploma.data.db.VacancyShortDbEntity
+import ru.practicum.android.diploma.data.db.VacancyLongDbEntity
 import ru.practicum.android.diploma.domain.models.ResponseDb
+import ru.practicum.android.diploma.domain.models.additional.Address
+import ru.practicum.android.diploma.domain.models.additional.Employment
+import ru.practicum.android.diploma.domain.models.additional.Experience
+import ru.practicum.android.diploma.domain.models.additional.KeySkill
+import ru.practicum.android.diploma.domain.models.additional.Schedule
+import ru.practicum.android.diploma.domain.models.main.Employer
 import ru.practicum.android.diploma.domain.models.main.LogoUrls
 import ru.practicum.android.diploma.domain.models.main.Salary
-import ru.practicum.android.diploma.domain.models.main.VacancyShort
+import ru.practicum.android.diploma.domain.models.main.VacancyLong
 import ru.practicum.android.diploma.domain.repositories.RepositoryFavoriteVacancies
 
 class RepositoryFavoriteVacanciesImpl(
     private val vacancyDao: VacancyDao,
 ) : RepositoryFavoriteVacancies {
+    override suspend fun favouritesContains(id: Int): Boolean {
+        val vacanciesIds = vacancyDao.getVacanciesIds().map { it.toInt() }
+        return vacanciesIds.contains(id)
+    }
 
-    override suspend fun insertVacancy(vacancy: VacancyShort): Result<Unit> {
+    override suspend fun insertVacancy(vacancy: VacancyLong): Result<Unit> {
         return try {
             val dataEntity = domainToData(vacancy)
             vacancyDao.insertVacancy(dataEntity)
@@ -26,13 +38,13 @@ class RepositoryFavoriteVacanciesImpl(
         }
     }
 
-    override suspend fun getAllVacancies(): List<VacancyShort> {
+    override suspend fun getAllVacancies(): List<VacancyLong> {
         val vacanciesDataList = vacancyDao.getAll()
         val vacanciesDomainList = vacanciesDataList.map { dataToDomain(it) }
         return vacanciesDomainList
     }
 
-    override suspend fun getById(vacancyId: Int): Result<VacancyShort> {
+    override suspend fun getById(vacancyId: Int): Result<VacancyLong> {
         return try {
             val vacancyData = vacancyDao.getById(vacancyId)
             if (vacancyData != null) {
@@ -54,8 +66,8 @@ class RepositoryFavoriteVacanciesImpl(
         }
     }
 
-    override fun getVacanciesFlow(): Flow<ResponseDb<List<VacancyShort>>> = flow {
-        emit(ResponseDb.Loading.cast<List<VacancyShort>>())
+    override fun getVacanciesFlow(): Flow<ResponseDb<List<VacancyLong>>> = flow {
+        emit(ResponseDb.Loading.cast<List<VacancyLong>>())
         try {
             vacancyDao.getAllFlow()
                 .collect { list ->
@@ -78,30 +90,45 @@ class RepositoryFavoriteVacanciesImpl(
         }
     }
 
-    private fun domainToData(vacancy: VacancyShort): VacancyShortDbEntity {
+    private fun domainToData(vacancy: VacancyLong): VacancyLongDbEntity {
         Log.d("logoURL", "domainToData: ${vacancy.logoUrl?.logo90}")
-        return VacancyShortDbEntity(
+        val gson = Gson()
+        return VacancyLongDbEntity(
             vacancyId = vacancy.vacancyId,
             logoUrl = vacancy.logoUrl?.logo90,
             name = vacancy.name,
-            areaName = vacancy.area,
-            employerName = vacancy.employer,
+            areaName = vacancy.areaName,
+            employer = gson.toJson(vacancy.employer),
             salary = salaryToString(vacancy.salary),
-            postedAt = vacancy.postedAt,
-            createdAt = System.currentTimeMillis()
+            postedAt = vacancy.publishedAt,
+            createdAt = System.currentTimeMillis(),
+            description = vacancy.description,
+            keySkills = gson.toJson(vacancy.keySkills),
+            experience = gson.toJson(vacancy.experience),
+            employmentForm = gson.toJson(vacancy.employmentForm),
+            schedule = gson.toJson(vacancy.schedule),
+            address = gson.toJson(vacancy.address)
         )
     }
 
-    private fun dataToDomain(vacancy: VacancyShortDbEntity): VacancyShort {
+    private fun dataToDomain(vacancy: VacancyLongDbEntity): VacancyLong {
         Log.d("logoURL", "domainToData: ${LogoUrls(logo90 = vacancy.logoUrl)}")
-        return VacancyShort(
+        val gson = Gson()
+        return VacancyLong(
             vacancyId = vacancy.vacancyId,
             logoUrl = LogoUrls(logo90 = vacancy.logoUrl),
             name = vacancy.name,
-            area = vacancy.areaName,
-            employer = vacancy.employerName,
+            areaName = vacancy.areaName,
+            employer = gson.fromJson(vacancy.employer, Employer::class.java),
             salary = stringToSalary(vacancy.salary),
-            postedAt = vacancy.postedAt,
+            publishedAt = vacancy.postedAt,
+            keySkills = gson.fromJson(vacancy.keySkills, object : TypeToken<List<KeySkill>>() {}.type),
+            createdAt = vacancy.createdAt.toString(),
+            description = vacancy.description,
+            experience = gson.fromJson(vacancy.experience, Experience::class.java),
+            employmentForm = gson.fromJson(vacancy.employmentForm, Employment::class.java),
+            schedule = gson.fromJson(vacancy.schedule, Schedule::class.java),
+            address = gson.fromJson(vacancy.address, Address::class.java)
         )
     }
 

@@ -38,5 +38,5 @@ private fun Boolean?.toGrossLabel(context: Context): String = when (this) {
 }
 
 private fun formatNumber(value: Int): String {
-    return NumberFormat.getNumberInstance(Locale.getDefault()).format(value)
+    return NumberFormat.getNumberInstance(Locale("ru", "RU")).format(value)
 }

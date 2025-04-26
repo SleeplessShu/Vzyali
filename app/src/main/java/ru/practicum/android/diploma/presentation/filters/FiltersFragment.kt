@@ -25,13 +25,13 @@ class FiltersFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         val binding = FragmentFiltersBinding.bind(view)
 
-        binding.bAccept.setOnClickListener {
-            val args = Bundle().apply { putString("filters", "some_filter_data") }
-            findNavController().navigate(R.id.action_navigation_filters_to_navigation_main, args)
-        }
-
-        binding.bCancel.setOnClickListener {
-            findNavController().navigateUp()
-        }
+//        binding.bAccept.setOnClickListener {
+//            val args = Bundle().apply { putString("filters", "some_filter_data") }
+//            findNavController().navigate(R.id.action_navigation_filters_to_navigation_main, args)
+//        }
+//
+//        binding.bCancel.setOnClickListener {
+//            findNavController().navigateUp()
+//        }
     }
 }
