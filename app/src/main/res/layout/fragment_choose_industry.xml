@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="?attr/colorPrimary"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
+    tools:context=".presentation.filters.FiltersFragment">
+
+    <ImageButton
+        android:id="@+id/bToSearch"
+        android:layout_width="@dimen/icon_size_48"
+        android:layout_height="@dimen/icon_size_48"
+        android:layout_marginVertical="@dimen/margin_4"
+        android:backgroundTint="?attr/colorPrimary"
+        android:src="@drawable/btn_back"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:tint="?attr/colorOnPrimary" />
+
+    <TextView
+        android:id="@+id/header_title"
+        style="@style/text_medium_22"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/layout_48"
+        android:layout_marginVertical="@dimen/margin_4"
+        android:fontFamily="@font/ys_display_medium"
+        android:gravity="center"
+        android:text="@string/header_Industry_selection"
+        android:textColor="?attr/colorOnPrimary"
+        app:layout_constraintBottom_toTopOf="@id/header_title"
+        app:layout_constraintStart_toEndOf="@id/bToSearch"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/search_view"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/search_field_height"
+        android:layout_marginHorizontal="@dimen/margin_16"
+        android:layout_marginVertical="@dimen/margin_8"
+        android:background="@drawable/bg_search_field"
+        app:layout_constraintTop_toBottomOf="@id/header_title">
+
+        <EditText
+            android:id="@+id/search_field"
+            style="@style/SearchInputStyle"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginVertical="@dimen/margin_4"
+            android:layout_marginStart="@dimen/margin_16"
+            android:layout_marginEnd="@dimen/margin_8"
+            android:background="@android:color/transparent"
+            android:hint="@string/hint_Enter_industry"
+            android:imeOptions="actionSearch"
+            android:importantForAutofill="no"
+            android:inputType="text"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/search_image"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageButton
+            android:id="@+id/clear_field_button"
+            android:layout_width="@dimen/icon_size_48"
+            android:layout_height="@dimen/icon_size_48"
+            android:layout_marginTop="@dimen/margin_4"
+            android:layout_marginEnd="@dimen/margin_4"
+            android:background="@android:color/transparent"
+            android:visibility="invisible"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_close"
+            app:tint="@color/black" />
+
+        <ImageView
+            android:id="@+id/search_image"
+            android:layout_width="@dimen/icon_size_48"
+            android:layout_height="@dimen/icon_size_48"
+            android:layout_marginTop="@dimen/margin_4"
+            android:layout_marginEnd="@dimen/margin_4"
+            android:background="@android:color/transparent"
+            android:scaleType="center"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_search"
+            app:tint="@color/black" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycler"
+        style="@style/vacancy_recycler"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"
+        app:layout_constraintTop_toBottomOf="@+id/search_view"
+        tools:itemCount="10"
+        tools:listitem="@layout/item_region_depart_filter"
+        tools:visibility="visible" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

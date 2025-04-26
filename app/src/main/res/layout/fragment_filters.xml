@@ -22,6 +22,7 @@
 
     <TextView
         android:id="@+id/header_title"
+        style="@style/text_medium_22"
         android:layout_width="wrap_content"
         android:layout_height="@dimen/layout_48"
         android:layout_marginVertical="@dimen/margin_4"
@@ -29,7 +30,6 @@
         android:gravity="center"
         android:text="@string/header_Filters_setup"
         android:textColor="?attr/colorOnPrimary"
-        style="@style/text_medium_22"
         app:layout_constraintBottom_toTopOf="@id/header_title"
         app:layout_constraintStart_toEndOf="@id/bToSearch"
         app:layout_constraintTop_toTopOf="parent" />
@@ -54,7 +54,7 @@
 
             <AutoCompleteTextView
                 android:id="@+id/work_place_text"
-                style="@style/SearchEditTextStyle"
+                style="@style/FilterOptionStyle"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:clickable="false"
@@ -102,7 +102,7 @@
 
             <AutoCompleteTextView
                 android:id="@+id/industry_text"
-                style="@style/SearchEditTextStyle"
+                style="@style/FilterOptionStyle"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:clickable="false"
