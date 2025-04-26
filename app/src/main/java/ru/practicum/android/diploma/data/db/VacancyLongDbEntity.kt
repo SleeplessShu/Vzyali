@@ -5,7 +5,7 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 
 @Entity(tableName = "Favorite_vacancies_table")
-data class VacancyShortDbEntity(
+data class VacancyLongDbEntity(
     @PrimaryKey
     @ColumnInfo(name = "vacancy_id")
     val vacancyId: String,
@@ -20,11 +20,32 @@ data class VacancyShortDbEntity(
     val areaName: String,
 
     @ColumnInfo(name = "company_name", defaultValue = "unknown")
-    val employerName: String,
+    val employer: String,
 
     @ColumnInfo(name = "salary", defaultValue = "Зарплата не указана")
-    val salary: String?,
+    val salary: String,
 
     @ColumnInfo(name = "postedAt", defaultValue = "unknown")
-    val postedAt: String
+    val postedAt: String,
+
+    @ColumnInfo(name = "date_of_adding")
+    val createdAt: Long,
+
+    @ColumnInfo(name = "vacancy_description")
+    val description: String,
+
+    @ColumnInfo(name = "key_skills")
+    val keySkills: String,
+
+    @ColumnInfo(name = "experience")
+    val experience: String,
+
+    @ColumnInfo(name = "employment_form")
+    val employmentForm: String,
+
+    @ColumnInfo(name = "schedule")
+    val schedule: String,
+
+    @ColumnInfo(name = "address")
+    val address: String
 )

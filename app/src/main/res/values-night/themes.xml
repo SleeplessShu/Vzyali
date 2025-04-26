@@ -1,12 +1,24 @@
-
 <resources>
-
+    <!-- Base application theme. -->
     <style name="Base.Theme.Vzyali" parent="Theme.MaterialComponents.DayNight.NoActionBar">
 
-        <item name="colorPrimary">@color/black</item> <!--background-->
+        <item name="colorPrimary">@color/black</item> <!--screen background-->
+        <item name="colorSecondary">@color/grey</item> <!--search field background-->
         <item name="colorOnPrimary">@color/white</item> <!--text-->
         <item name="colorOnSecondary">@color/white</item> <!--hint-->
+        <item name="android:statusBarColor">?attr/colorPrimary</item>
+        <item name="android:windowLightStatusBar">true</item>
 
+        <item name="blue_white">@color/white</item>
+        <item name="edittext_color">@color/white</item>
+        <item name="filter_edittext_color">@color/black</item>
+        <item name="not_show_without_salary_color">@color/white</item>
+
+    </style>
+
+    <style name="ToolbarRipple" parent="Base.Theme.Vzyali">
+        <item name="selectableItemBackground">@drawable/toolbar_ripple</item>
+        <item name="android:colorControlHighlight">?attr/blue_white</item>
     </style>
 
 </resources>
