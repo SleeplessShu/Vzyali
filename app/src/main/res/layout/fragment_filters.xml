@@ -90,7 +90,7 @@
         android:layout_marginStart="@dimen/margin_16"
         android:layout_marginEnd="@dimen/margin_4"
         android:clickable="true"
-        android:focusable="false"
+        android:focusable="true"
         app:layout_constraintTop_toBottomOf="@id/work_place_field">
 
         <com.google.android.material.textfield.TextInputLayout
