@@ -147,7 +147,9 @@ fun AreaFilterDto.toDomain(): AreaFilter =
     AreaFilter(
         areas = if (!areas.isNullOrEmpty()) {
             this.areas.map { it.toDomain() }
-        } else emptyList(),
+        } else {
+            emptyList()
+        },
         id = this.id,
         name = this.name,
         parentId = this.parentId
