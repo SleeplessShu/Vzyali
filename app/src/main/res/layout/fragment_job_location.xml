@@ -41,7 +41,7 @@
         app:layout_constraintTop_toBottomOf="@id/bBack">
 
         <TextView
-            android:id="@+id/bCountrssy"
+            android:id="@+id/tv_country_empty"
             style="@style/text_regular_16"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -107,7 +107,7 @@
         app:layout_constraintTop_toBottomOf="@id/bCountry">
 
         <ImageButton
-            android:id="@+id/bArrow"
+            android:id="@+id/bChooseRegion"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:backgroundTint="?attr/colorPrimary"
@@ -162,6 +162,30 @@
             app:layout_constraintTop_toBottomOf="@id/tvRegionWhenSelected"
             tools:text="Омск" />
     </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    <ImageButton
+        android:id="@+id/bRemoveCountry"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:backgroundTint="?attr/colorPrimary"
+        android:src="@drawable/ic_close"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="@id/bCountry"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="bCountry"
+        app:tint="?attr/colorOnPrimary" />
+
+    <ImageButton
+        android:id="@+id/bRemoveRegion"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:backgroundTint="?attr/colorPrimary"
+        android:src="@drawable/ic_close"
+        app:layout_constraintBottom_toBottomOf="@id/bRegion"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="bRegion"
+        app:tint="?attr/colorOnPrimary" />
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/bSelect"

@@ -64,6 +64,19 @@
     </fragment>
 
     <fragment
+        android:id="@+id/navigation_location"
+        android:name="ru.practicum.android.diploma.presentation.filters.location.LocationFragment"
+        android:label="@string/filter_Location"
+        tools:layout="@layout/fragment_job_location">
+        <action
+            android:id="@+id/action_LocationFragment_to_RegionFragment"
+            app:destination="@id/navigation_region" />
+        <action
+            android:id="@+id/action_LocationFragment_to_CountryFragment"
+            app:destination="@id/navigation_Country" />
+    </fragment>
+
+    <fragment
         android:id="@+id/navigation_choose_country"
         android:name="ru.practicum.android.diploma.presentation.filters.areachoice.CountryChoiceFragment"
         android:label="fragment_region_choice"
