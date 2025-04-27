@@ -9,7 +9,7 @@
         android:id="@+id/navigation_main"
         android:name="ru.practicum.android.diploma.presentation.search.SearchFragment"
         android:label="@string/navigation_Main"
-        tools:layout="@layout/fragment_search" >
+        tools:layout="@layout/fragment_search">
         <action
             android:id="@+id/action_navigation_main_to_navigation_vacancy"
             app:destination="@id/navigation_vacancy" />
@@ -22,7 +22,7 @@
         android:id="@+id/navigation_favorites"
         android:name="ru.practicum.android.diploma.presentation.favorites.FavoritesFragment"
         android:label="@string/navigation_Favorite"
-        tools:layout="@layout/fragment_favorites" >
+        tools:layout="@layout/fragment_favorites">
         <action
             android:id="@+id/action_navigation_favorites_to_navigation_vacancy"
             app:destination="@id/navigation_vacancy" />
@@ -62,5 +62,11 @@
         android:label="@string/header_Industry_selection"
         tools:layout="@layout/fragment_choose_industry" >
     </fragment>
+
+    <fragment
+        android:id="@+id/navigation_choose_country"
+        android:name="ru.practicum.android.diploma.presentation.filters.areachoice.CountryChoiceFragment"
+        android:label="fragment_region_choice"
+        tools:layout="@layout/fragment_region_choice" />
 
 </navigation>
