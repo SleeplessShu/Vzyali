@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".presentation.filters.areachoice.CountryChoiceFragment">
+
+    <ImageButton
+        android:id="@+id/bToFilters"
+        android:layout_width="@dimen/icon_size_48"
+        android:layout_height="@dimen/icon_size_48"
+        android:layout_marginVertical="@dimen/margin_4"
+        android:backgroundTint="?attr/colorPrimary"
+        android:src="@drawable/btn_back"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:tint="?attr/colorOnPrimary" />
+
+    <TextView
+        android:id="@+id/header_title"
+        style="@style/text_medium_22"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/layout_48"
+        android:layout_marginVertical="@dimen/margin_4"
+        android:gravity="center"
+        android:text="@string/header_Country_selection"
+        android:textColor="?attr/colorOnPrimary"
+        app:layout_constraintBottom_toTopOf="@id/header_title"
+        app:layout_constraintStart_toEndOf="@id/bToFilters"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_countries"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="@dimen/margin_16"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/header_title"
+        tools:listitem="@layout/area_choice_item" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

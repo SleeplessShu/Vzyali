@@ -9,7 +9,7 @@
         android:id="@+id/navigation_main"
         android:name="ru.practicum.android.diploma.presentation.search.SearchFragment"
         android:label="@string/navigation_Main"
-        tools:layout="@layout/fragment_search" >
+        tools:layout="@layout/fragment_search">
         <action
             android:id="@+id/action_navigation_main_to_navigation_vacancy"
             app:destination="@id/navigation_vacancy" />
@@ -22,7 +22,7 @@
         android:id="@+id/navigation_favorites"
         android:name="ru.practicum.android.diploma.presentation.favorites.FavoritesFragment"
         android:label="@string/navigation_Favorite"
-        tools:layout="@layout/fragment_favorites" >
+        tools:layout="@layout/fragment_favorites">
         <action
             android:id="@+id/action_navigation_favorites_to_navigation_vacancy"
             app:destination="@id/navigation_vacancy" />
@@ -38,19 +38,35 @@
         tools:layout="@layout/fragment_team" />
 
     <fragment
+        android:id="@+id/navigation_vacancy"
+        android:name="ru.practicum.android.diploma.presentation.vacancy.VacancyFragment"
+        android:label="@string/header_Vacancy"
+        tools:layout="@layout/fragment_vacancy" />
+
+    <fragment
         android:id="@+id/navigation_filters"
         android:name="ru.practicum.android.diploma.presentation.filters.FiltersFragment"
-        android:label="@string/navigation_Filters"
+        android:label="@string/header_Filters_setup"
         tools:layout="@layout/fragment_filters" >
         <action
             android:id="@+id/action_navigation_filters_to_navigation_main"
             app:destination="@id/navigation_main" />
+        <action
+            android:id="@+id/action_navigation_filters_to_navigation_choose_industry"
+            app:destination="@id/navigation_choose_industry" />
     </fragment>
 
     <fragment
-        android:id="@+id/navigation_vacancy"
-        android:name="ru.practicum.android.diploma.presentation.vacancy.VacancyFragment"
-        android:label="@string/navigation_Vacancy"
-        tools:layout="@layout/fragment_vacancy" />
+        android:id="@+id/navigation_choose_industry"
+        android:name="ru.practicum.android.diploma.presentation.filters.industry.ChooseIndustryFragment"
+        android:label="@string/header_Industry_selection"
+        tools:layout="@layout/fragment_choose_industry" >
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_choose_country"
+        android:name="ru.practicum.android.diploma.presentation.filters.areachoice.CountryChoiceFragment"
+        android:label="fragment_region_choice"
+        tools:layout="@layout/fragment_region_choice" />
 
 </navigation>

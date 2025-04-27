@@ -29,7 +29,7 @@
             android:layout_height="@dimen/icon_size_48"
             android:layout_marginEnd="@dimen/margin_8"
             android:background="?attr/colorPrimary"
-            android:contentDescription="@string/navigation_Filters"
+            android:contentDescription="@string/header_Filters_setup"
             android:src="@drawable/ic_filter_off" />
 
     </LinearLayout>
