@@ -1,4 +1,4 @@
-package ru.practicum.android.diploma.presentation.filters.regionchoice
+package ru.practicum.android.diploma.presentation.filters.areachoice
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -12,7 +12,7 @@ class RegionChoiceFragment : Fragment() {
     private var _binding: FragmentRegionChoiceBinding? = null
     private val binding get() = _binding ?: error("Binding is not initialized")
 
-    private val viewModel by viewModel<RegionChoiceViewModel>()
+    private val viewModel by viewModel<AreaChoiceViewModel>()
 
     override fun onCreateView(
         inflater: LayoutInflater,

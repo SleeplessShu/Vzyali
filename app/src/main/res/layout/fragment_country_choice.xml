@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".presentation.filters.countrychoice.CountryChoiceFragment">
+    tools:context=".presentation.filters.areachoice.CountryChoiceFragment">
 
     <ImageButton
         android:id="@+id/bToFilters"
@@ -23,7 +23,6 @@
         android:layout_width="wrap_content"
         android:layout_height="@dimen/layout_48"
         android:layout_marginVertical="@dimen/margin_4"
-        android:fontFamily="@font/ys_display_medium"
         android:gravity="center"
         android:text="@string/header_Country_selection"
         android:textColor="?attr/colorOnPrimary"
