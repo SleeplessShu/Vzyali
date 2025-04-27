@@ -10,7 +10,7 @@ import kotlinx.coroutines.launch
 import ru.practicum.android.diploma.R
 import ru.practicum.android.diploma.data.dto.mapper.VacancyPageResult
 import ru.practicum.android.diploma.data.utils.StringProvider
-import ru.practicum.android.diploma.domain.interactor.SearchVacancyInteractor
+import ru.practicum.android.diploma.domain.api.SearchVacancyInteractor
 import ru.practicum.android.diploma.domain.models.Resource
 
 class SearchViewModel(

@@ -124,8 +124,8 @@ fun EmployerDto.toDomain(): Employer = Employer(
 )
 
 fun IndustryDto.toDomain(): Industry = Industry(
-    id = this.id.orEmpty(),
-    name = this.name.orEmpty()
+    id = this.id,
+    name = this.name
 )
 
 fun LogoUrlsDto.toDomain(): LogoUrls = LogoUrls(
