@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".presentation.filters.country_choice.CountryChoiceFragment">
+
+    <ImageButton
+        android:id="@+id/bToFilters"
+        android:layout_width="@dimen/icon_size_48"
+        android:layout_height="@dimen/icon_size_48"
+        android:layout_marginVertical="@dimen/margin_4"
+        android:backgroundTint="?attr/colorPrimary"
+        android:src="@drawable/btn_back"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:tint="?attr/colorOnPrimary" />
+
+    <TextView
+        android:id="@+id/header_title"
+        style="@style/text_medium_22"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/layout_48"
+        android:layout_marginVertical="@dimen/margin_4"
+        android:fontFamily="@font/ys_display_medium"
+        android:gravity="center"
+        android:text="@string/header_Region_selection"
+        android:textColor="?attr/colorOnPrimary"
+        app:layout_constraintBottom_toTopOf="@id/header_title"
+        app:layout_constraintStart_toEndOf="@id/bToFilters"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <LinearLayout
+        android:id="@+id/search_box"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/search_field_height"
+        app:layout_constraintTop_toBottomOf="@id/header_title"
+        android:layout_marginHorizontal="@dimen/margin_16"
+        android:layout_marginVertical="@dimen/margin_8"
+        android:background="@drawable/bg_search_field"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <EditText
+            android:id="@+id/search_field"
+            style="@style/text_regular_16"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginVertical="@dimen/margin_4"
+            android:layout_marginStart="@dimen/margin_16"
+            android:layout_marginEnd="@dimen/margin_8"
+            android:layout_weight="1"
+            android:background="@android:color/transparent"
+            android:cursorVisible="true"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:hint="@string/hint_Enter_request"
+            android:imeOptions="actionSearch"
+            android:importantForAutofill="no"
+            android:inputType="text"
+            android:singleLine="true"
+            android:textColor="@color/black"
+            android:textColorHint="?attr/colorOnSecondary"
+            android:textCursorDrawable="@drawable/cursor_edit" />
+
+        <ImageButton
+            android:id="@+id/clear_field_button"
+            android:layout_width="@dimen/icon_size_48"
+            android:layout_height="@dimen/icon_size_48"
+            android:layout_marginEnd="@dimen/margin_8"
+            android:background="@android:color/transparent"
+            android:visibility="gone"
+            app:srcCompat="@drawable/ic_close"
+            app:tint="@color/black" />
+
+        <ImageView
+            android:id="@+id/search_image"
+            android:layout_width="@dimen/icon_size_48"
+            android:layout_height="@dimen/icon_size_48"
+            android:layout_marginEnd="@dimen/margin_8"
+            android:background="@android:color/transparent"
+            android:scaleType="center"
+            app:srcCompat="@drawable/ic_search"
+            app:tint="@color/black" />
+
+    </LinearLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_regions"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintTop_toBottomOf="@id/search_box"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginTop="@dimen/margin_16"
+        tools:listitem="@layout/area_choice_item"
+        />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
