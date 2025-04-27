@@ -10,6 +10,7 @@ import org.koin.dsl.bind
 import org.koin.dsl.module
 import retrofit2.Retrofit
 import ru.practicum.android.diploma.data.db.FavoriteVacanciesDatabase
+import ru.practicum.android.diploma.data.impl.AreasRepositoryImpl
 import ru.practicum.android.diploma.data.impl.IndustryRepositoryImpl
 import ru.practicum.android.diploma.data.impl.RepositoryFavoriteVacanciesImpl
 import ru.practicum.android.diploma.data.impl.SearchVacancyRepoImpl
@@ -23,6 +24,7 @@ import ru.practicum.android.diploma.data.storage.AppPrefsService
 import ru.practicum.android.diploma.data.utils.StringProvider
 import ru.practicum.android.diploma.data.utils.StringProviderImpl
 import ru.practicum.android.diploma.domain.impl.utils.NetworkCheckerImpl
+import ru.practicum.android.diploma.domain.repositories.AreasRepository
 import ru.practicum.android.diploma.domain.repositories.IndustryRepository
 import ru.practicum.android.diploma.domain.repositories.RepositoryFavoriteVacancies
 import ru.practicum.android.diploma.domain.repositories.SearchVacancyRepository
@@ -77,5 +79,9 @@ val dataModule = module {
 
     single<IndustryRepository> {
         IndustryRepositoryImpl(get(), get())
+    }
+
+    single<AreasRepository> {
+        AreasRepositoryImpl(get(), get())
     }
 }
