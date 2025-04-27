@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
+import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
@@ -35,11 +36,24 @@ class ChooseIndustryFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.recycler.adapter = adapter
-        binding.recycler.layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
+        with(binding) {
+            recycler.adapter = adapter
+            recycler.layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
 
-        binding.bToSearch.setOnClickListener {
-            findNavController().navigateUp()
+            bToSearch.setOnClickListener {
+                findNavController().navigateUp()
+            }
+
+            searchField.doOnTextChanged { text, _, _, _ ->
+                val searchQuery = text.toString()
+                clearFieldButton.isVisible = searchQuery.isNotBlank()
+                searchImage.isVisible = searchQuery.isBlank()
+                viewModel.search(searchQuery)
+            }
+
+            clearFieldButton.setOnClickListener {
+                searchField.text.clear()
+            }
         }
 
         viewLifecycleOwner.lifecycleScope.launch {
