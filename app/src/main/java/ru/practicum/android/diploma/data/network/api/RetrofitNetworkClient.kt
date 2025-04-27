@@ -2,6 +2,7 @@ package ru.practicum.android.diploma.data.network.api
 
 import android.util.Log
 import retrofit2.HttpException
+import ru.practicum.android.diploma.data.dto.main.AreaFilterDto
 import ru.practicum.android.diploma.data.dto.main.VacancyLongDto
 import ru.practicum.android.diploma.data.dto.response.GroupOfIndustriesDto
 import ru.practicum.android.diploma.data.dto.response.VacancySearchResponseDto
@@ -28,6 +29,12 @@ class RetrofitNetworkClient(
     override suspend fun getGroupsOfIndustries(): Response<List<GroupOfIndustriesDto>> {
         return safeCall {
             api.getIndustries()
+        }
+    }
+
+    override suspend fun getAreas(): Response<List<AreaFilterDto>> {
+        return safeCall {
+            api.getAreas()
         }
     }
 
