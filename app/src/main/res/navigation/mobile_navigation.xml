@@ -58,7 +58,7 @@
 
     <fragment
         android:id="@+id/navigation_choose_industry"
-        android:name="ru.practicum.android.diploma.presentation.filters.ChooseIndustryFragment"
+        android:name="ru.practicum.android.diploma.presentation.filters.industry.ChooseIndustryFragment"
         android:label="@string/header_Industry_selection"
         tools:layout="@layout/fragment_choose_industry" >
     </fragment>
