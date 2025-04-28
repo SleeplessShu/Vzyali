@@ -30,7 +30,6 @@ class FiltersFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-
         setupBindings()
         observeState()
 
@@ -42,7 +41,6 @@ class FiltersFragment : Fragment() {
 
     private fun setupBindings() {
         with(binding) {
-
             btnGroup.isVisible = !binding.industryText.text.isNullOrEmpty()
 
             bToSearch.setOnClickListener {
