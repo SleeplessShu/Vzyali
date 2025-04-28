@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -15,13 +16,14 @@ import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import ru.practicum.android.diploma.databinding.FragmentChooseIndustryBinding
 import ru.practicum.android.diploma.domain.models.main.Industry
+import ru.practicum.android.diploma.presentation.filters.FiltersViewModel
 import ru.practicum.android.diploma.presentation.search.UiError
 
 class ChooseIndustryFragment : Fragment() {
     private var _binding: FragmentChooseIndustryBinding? = null
     private val binding get() = _binding ?: error("Binding is not initialized")
-
-    private val viewModel by viewModel<ChooseIndustryViewModel>()
+    private val industryViewModel by viewModel<ChooseIndustryViewModel>()
+    private val filtersViewModel by activityViewModels<FiltersViewModel>()
     private val adapter = IndustryAdapter()
 
     override fun onCreateView(
@@ -36,28 +38,46 @@ class ChooseIndustryFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        observeState()
+
         with(binding) {
             recycler.adapter = adapter
             recycler.layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
 
+            adapter.onIndustrySelected = { industry ->
+                filtersViewModel.setIndustry(industry)
+                binding.selectBtn.isVisible = true
+            }
             bToSearch.setOnClickListener {
                 findNavController().navigateUp()
+            }
+
+            selectBtn.setOnClickListener {
+                findNavController().popBackStack()
             }
 
             searchField.doOnTextChanged { text, _, _, _ ->
                 val searchQuery = text.toString()
                 clearFieldButton.isVisible = searchQuery.isNotBlank()
                 searchImage.isVisible = searchQuery.isBlank()
-                viewModel.search(searchQuery)
+                industryViewModel.search(searchQuery)
             }
 
             clearFieldButton.setOnClickListener {
                 searchField.text.clear()
             }
         }
+    }
+
+    private fun observeState() {
+        viewLifecycleOwner.lifecycleScope.launch {
+            industryViewModel.state.collect(::render)
+        }
 
         viewLifecycleOwner.lifecycleScope.launch {
-            viewModel.state.collect(::render)
+            filtersViewModel.selectedIndustry.collect { industry ->
+                binding.selectBtn.isVisible = industry != null
+            }
         }
     }
 

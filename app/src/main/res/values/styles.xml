@@ -59,8 +59,9 @@
         <item name="android:textAlignment">viewStart</item>
         <item name="android:imeOptions">actionDone|flagNoExtractUi</item>
         <item name="android:inputType">textCapSentences</item>
-        <item name="android:maxLines">1</item>
-        <item name="android:singleLine">true</item>
+        <item name="android:maxLines">2</item>
+        <item name="android:ellipsize">end</item>
+
     </style>
 
     <style name="PlaceholderTextStyle" parent="TextAppearance.AppCompat">
