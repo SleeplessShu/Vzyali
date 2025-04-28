@@ -63,10 +63,4 @@
         tools:layout="@layout/fragment_choose_industry" >
     </fragment>
 
-    <fragment
-        android:id="@+id/navigation_choose_country"
-        android:name="ru.practicum.android.diploma.presentation.filters.areachoice.CountryChoiceFragment"
-        android:label="fragment_region_choice"
-        tools:layout="@layout/fragment_region_choice" />
-
 </navigation>

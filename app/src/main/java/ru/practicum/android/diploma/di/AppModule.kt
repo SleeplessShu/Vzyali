@@ -13,5 +13,5 @@ val appModule = module {
     viewModel { FavoriteViewModel(get()) }
     viewModel { VacancyViewModel(get(), get()) }
     viewModel { ChooseIndustryViewModel(get(), get()) }
-    viewModel { AreaChoiceViewModel(get()) }
+    viewModel { AreaChoiceViewModel(get(), get()) }
 }
