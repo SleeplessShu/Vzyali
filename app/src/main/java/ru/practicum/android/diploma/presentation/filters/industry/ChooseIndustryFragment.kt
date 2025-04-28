@@ -64,13 +64,20 @@ class ChooseIndustryFragment : Fragment() {
     private fun render(state: ChooseIndustryScreenState) {
         when (state) {
             ChooseIndustryScreenState.Loading -> renderLoading()
-            is ChooseIndustryScreenState.Content -> renderContent(state.data)
+            is ChooseIndustryScreenState.Content -> {
+                if (state.data.isNotEmpty()) {
+                    renderContent(state.data)
+                } else {
+                    renderEmpty()
+                }
+            }
             is ChooseIndustryScreenState.Error -> renderError(state.type)
         }
     }
 
     private fun renderLoading() = with(binding) {
         loadingPlaceholder.root.isVisible = true
+        emptyPlaceholder.root.isVisible = false
         noInternetPlaceholder.root.isVisible = false
         serverErrorPlaceholder.root.isVisible = false
         recycler.isVisible = false
@@ -78,14 +85,24 @@ class ChooseIndustryFragment : Fragment() {
 
     private fun renderContent(content: List<Industry>) = with(binding) {
         loadingPlaceholder.root.isVisible = false
+        emptyPlaceholder.root.isVisible = false
         noInternetPlaceholder.root.isVisible = false
         serverErrorPlaceholder.root.isVisible = false
         recycler.isVisible = true
         adapter.updateItems(content)
     }
 
+    private fun renderEmpty() = with(binding) {
+        loadingPlaceholder.root.isVisible = false
+        emptyPlaceholder.root.isVisible = true
+        noInternetPlaceholder.root.isVisible = false
+        serverErrorPlaceholder.root.isVisible = false
+        recycler.isVisible = false
+    }
+
     private fun renderError(errorType: UiError) = with(binding) {
         loadingPlaceholder.root.isVisible = false
+        emptyPlaceholder.root.isVisible = false
         noInternetPlaceholder.root.isVisible = errorType == UiError.NoConnection
         serverErrorPlaceholder.root.isVisible = errorType != UiError.NoConnection
         recycler.isVisible = false
