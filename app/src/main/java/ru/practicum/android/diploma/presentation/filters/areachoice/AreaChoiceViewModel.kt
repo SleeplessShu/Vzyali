@@ -62,7 +62,9 @@ class AreaChoiceViewModel(
                     areasResult = result.data
                     if (_countryState.value != null) {
                         getRegionsByParent(areasResult!!, _countryState.value?.id!!)
-                    } else getRegionsWithQuery()
+                    } else {
+                        getRegionsWithQuery()
+                    }
                 }
             }
         }
@@ -104,7 +106,6 @@ class AreaChoiceViewModel(
         return listOf(this) + (areas?.flatMap { it.flatten() } ?: emptyList())
     }
 
-
     fun getRegionsWithQuery(
         query: String = ""
     ) {
@@ -137,6 +138,8 @@ class AreaChoiceViewModel(
 
         result.sortBy { it.name }
 
+        areasResult = result
+
         if (result.isEmpty()) {
             _regionScreenState.value = ChooseAreaScreenState.Error(FiltersUiError.NoChildRegions)
         } else {
@@ -145,7 +148,6 @@ class AreaChoiceViewModel(
     }
 
     private fun addRegions(areas: List<AreaFilter>, result: MutableList<AreaFilter>) {
-
         for (area in areas) {
             if (area.parentId != null) result.add(area)
             if (!area.areas.isNullOrEmpty()) {
@@ -164,9 +166,9 @@ class AreaChoiceViewModel(
                     query,
                     ignoreCase = true
                 )
-            ) result.add(
-                area
-            )
+            ) {
+                result.add(area)
+            }
             if (!area.areas.isNullOrEmpty()) {
                 addRegionsWithQuery(area.areas, result, query)
             }
@@ -178,7 +180,6 @@ class AreaChoiceViewModel(
         result: MutableList<AreaFilter>,
         parentId: String
     ) {
-
         for (area in areas) {
             if (area.parentId == parentId) {
                 result.add(area)
