@@ -81,7 +81,8 @@ class RegionChoiceFragment : Fragment() {
         placeholderNoConnection.root.isVisible = errorType is FiltersUiError.NoConnection
         placeholderNoChilds.root.isVisible = errorType is FiltersUiError.NoChildRegions
         placeholderServerError.root.isVisible =
-            errorType != FiltersUiError.NoConnection && errorType != FiltersUiError.BadRequest && errorType != FiltersUiError.NoChildRegions
+            errorType != FiltersUiError.NoConnection && errorType != FiltersUiError.BadRequest &&
+                errorType != FiltersUiError.NoChildRegions
         rvRegions.isVisible = false
     }
 

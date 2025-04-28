@@ -8,7 +8,8 @@ import androidx.recyclerview.widget.RecyclerView
 import ru.practicum.android.diploma.R
 import ru.practicum.android.diploma.domain.models.AreaFilter
 
-class AreaAdapter(private val clickListener: (AreaFilter) -> Unit) : RecyclerView.Adapter<AreaAdapter.AreaViewHolder>() {
+class AreaAdapter(private val clickListener: (AreaFilter) -> Unit) :
+    RecyclerView.Adapter<AreaAdapter.AreaViewHolder>() {
 
     var areasList: List<AreaFilter>? = null
 
