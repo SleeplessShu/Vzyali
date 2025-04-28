@@ -36,6 +36,23 @@ class ChooseIndustryViewModel(
         }
     }
 
+    fun search(query: String) {
+        if (state.value is ChooseIndustryScreenState.Content) {
+            val allIndustries = (state.value as ChooseIndustryScreenState.Content).allData
+            _state.value = if (query.isBlank()) {
+                ChooseIndustryScreenState.Content(allIndustries)
+            } else {
+                ChooseIndustryScreenState.Content(
+                    allData = allIndustries,
+                    filteredData = allIndustries.filter {
+                        it.name.lowercase().contains(query.lowercase())
+                    },
+                    query = query
+                )
+            }
+        }
+    }
+
     private fun mapError(message: String): UiError {
         return when {
             message.contains(stringProvider.getString(R.string.errors_No_connection)) -> UiError.NoConnection
