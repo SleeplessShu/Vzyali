@@ -95,8 +95,6 @@ class FiltersFragment : Fragment() {
         }
     }
 
-
-
     private fun observeState() {
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
