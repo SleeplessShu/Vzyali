@@ -7,14 +7,13 @@ import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import kotlinx.coroutines.launch
-import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import org.koin.androidx.viewmodel.ext.android.activityViewModel
+import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import ru.practicum.android.diploma.R
 import ru.practicum.android.diploma.databinding.FragmentFiltersBinding
 import ru.practicum.android.diploma.presentation.filters.location.areachoice.AreaChoiceViewModel
@@ -96,6 +95,8 @@ class FiltersFragment : Fragment() {
         }
     }
 
+
+
     private fun observeState() {
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
@@ -106,7 +107,7 @@ class FiltersFragment : Fragment() {
         }
     }
 
-    private fun renderState(state: FiltersState) = with(binding) {
+    private fun renderState(state: UiFiltersState) = with(binding) {
         val locationName = buildString {
             state.location?.countryName?.takeIf { it.isNotBlank() }?.let { append(it) }
             if (!state.location?.regionName.isNullOrBlank()) {
@@ -115,8 +116,6 @@ class FiltersFragment : Fragment() {
             }
         }
 
-        industryText.setText(state.industry?.name.orEmpty())
-    private fun renderState(state: UiFiltersState) = with(binding) {
         val hasIndustry = state.industry != null
         tvIndustryHint.isVisible = !hasIndustry
         tvIndustryHintUp.isVisible = hasIndustry
@@ -136,3 +135,4 @@ class FiltersFragment : Fragment() {
         checkbox.isChecked = state.hideWithoutSalary
     }
 }
+
