@@ -5,4 +5,8 @@ data class FiltersState(
     val industryId: String? = null,
     val salary: Int? = null,
     val hideWithoutSalary: Boolean = false
-)
+) {
+    val hasAny: Boolean
+        get() = industryId != null ||
+            salary != null || hideWithoutSalary
+}

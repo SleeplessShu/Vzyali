@@ -26,6 +26,12 @@ class SearchViewModel(
     private val _toastFlow = MutableSharedFlow<String>()
     val toastFlow = _toastFlow.asSharedFlow()
 
+    init {
+        _searchState.value = _searchState.value.copy(
+            filters = filtersPrefsInteractor.getFilters()
+        )
+    }
+
     fun searchVacancy(query: String, filters: FiltersState) {
         viewModelScope.launch {
             _searchState.value = _searchState.value.copy(
@@ -162,6 +168,7 @@ class SearchViewModel(
     fun clearSearch() {
         _searchState.value = SearchState(
             content = emptyList(),
+            filters = filtersPrefsInteractor.getFilters()
         )
     }
 

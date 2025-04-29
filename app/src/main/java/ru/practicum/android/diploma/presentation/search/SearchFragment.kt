@@ -113,6 +113,8 @@ class SearchFragment : Fragment() {
             text = state.resultText
             visibility = if (state.showResultText) View.VISIBLE else View.GONE
         }
+        Log.d("FilterStatus", "filters = ${state.filters}, hasAny = ${state.filters?.hasAny}")
+        updateFiltersView(state.filters?.hasAny == true)
     }
 
     private fun editText() {
@@ -212,6 +214,12 @@ class SearchFragment : Fragment() {
                 false
             }
         }
+    }
+
+    private fun updateFiltersView(hasFilter: Boolean) {
+        binding.toFiltersButton.setImageResource(
+            if (hasFilter) R.drawable.ic_filter_on else R.drawable.ic_filter_off
+        )
     }
 
     private fun showKeyboard() {

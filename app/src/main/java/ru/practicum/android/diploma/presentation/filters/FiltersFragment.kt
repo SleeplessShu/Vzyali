@@ -47,7 +47,7 @@ class FiltersFragment : Fragment() {
 
     private fun setupBindings() {
         with(binding) {
-            btnGroup.isVisible = !binding.industryText.text.isNullOrEmpty()
+            btnGroup.isVisible = !binding.tvIndustrySelected.text.isNullOrEmpty()
 
             bToSearch.setOnClickListener {
                 findNavController().navigateUp()
@@ -93,7 +93,11 @@ class FiltersFragment : Fragment() {
     }
 
     private fun renderState(state: UiFiltersState) = with(binding) {
-        industryText.setText(state.industry?.name.orEmpty())
+        val hasIndustry = state.industry != null
+        tvIndustryHint.isVisible = !hasIndustry
+        tvIndustryHintUp.isVisible = hasIndustry
+        tvIndustrySelected.isVisible = hasIndustry
+        tvIndustrySelected.text = state.industry?.name.orEmpty()
         salaryExpectedInput.setText(state.salaryExpectations?.toString().orEmpty())
         salaryExpectedInput.setSelection(salaryExpectedInput.text?.length ?: 0)
         industryFilterOpen.isVisible = state.industry == null

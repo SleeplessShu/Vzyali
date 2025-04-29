@@ -37,9 +37,9 @@
     <style name="FilterStyle" parent="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.Dense">
         <item name="boxStrokeWidth">0dp</item>
         <item name="boxStrokeWidthFocused">0dp</item>
-        <item name="hintTextColor">?attr/colorSecondary</item>
         <item name="android:fontFamily">@font/ys_display_regular</item>
-        <item name="android:textColorHint">@color/grey</item>
+        <item name="android:textColorHint">@color/industry_hint_color</item>
+        <item name="hintTextColor">@color/industry_hint_color</item>
         <item name="android:textSize">@dimen/text_size_16</item>
         <item name="android:fontWeight">400</item>
         <item name="android:textAlignment">viewStart</item>
@@ -53,7 +53,7 @@
         <item name="android:backgroundTint">@android:color/transparent</item>
         <item name="android:fontFamily">@font/ys_display_regular</item>
         <item name="android:textColor">?attr/edittext_color</item>
-        <item name="android:textColorHint">?attr/colorSecondary</item>
+        <item name="android:textColorHint">?attr/colorOnPrimary</item>
         <item name="android:textSize">@dimen/text_size_16</item>
         <item name="android:fontWeight">400</item>
         <item name="android:textAlignment">viewStart</item>
@@ -81,7 +81,7 @@
     <style name="SalaryEditText" parent="Widget.MaterialComponents.TextInputEditText.FilledBox">
         <item name="android:backgroundTint">?attr/colorSecondary</item>
         <item name="android:fontFamily">@font/ys_display_regular</item>
-        <item name="android:textColor">?attr/filter_edittext_color</item>
+        <item name="android:textColor">?attr/salary_edittext_color</item>
         <item name="android:textSize">@dimen/text_size_16</item>
         <item name="android:textAlignment">viewStart</item>
         <item name="android:imeOptions">actionDone</item>
