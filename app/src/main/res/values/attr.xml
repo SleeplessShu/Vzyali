@@ -3,6 +3,7 @@
     <attr name="blue_white" format="reference" />
     <attr name="edittext_color" format="reference" />
     <attr name="filter_edittext_color" format="reference" />
+    <attr name="salary_edittext_color" format="reference" />
     <attr name="not_show_without_salary_color" format="reference" />
 
 </resources>

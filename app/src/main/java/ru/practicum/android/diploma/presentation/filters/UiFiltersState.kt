@@ -6,9 +6,10 @@ import ru.practicum.android.diploma.domain.models.main.Location
 data class FiltersState(
     val location: Location? = null,
     val industry: Industry? = null,
-    val salaryRange: IntRange? = null,
+    val salaryExpectations: Int? = null,
+    val hideWithoutSalary: Boolean = false,
 ) {
     val hasAny: Boolean
         get() = industry != null ||
-            salaryRange != null || location != null
+            salaryExpectations != null || hideWithoutSalary
 }

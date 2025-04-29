@@ -19,16 +19,18 @@ class SearchVacancyRepoImpl(
     private val networkClient: NetworkClient,
     private val stringProvider: StringProvider
 ) : SearchVacancyRepository {
-    override fun searchVacancy(vacancyName: String, page: Int, perPage: Int): Flow<Resource<VacancyPageResult>> =
+    override fun searchVacancy(
+        filters: Map<String, String>,
+        page: Int,
+        perPage: Int
+    ): Flow<Resource<VacancyPageResult>> =
         handleResponse(
             request = {
-                networkClient.searchVacancies(
-                    mapOf(
-                        "text" to vacancyName,
-                        "page" to page.toString(),
-                        "per_page" to perPage.toString()
-                    )
-                )
+                val fullFilters = filters.toMutableMap().apply {
+                    put("page", page.toString())
+                    put("per_page", perPage.toString())
+                }
+                networkClient.searchVacancies(fullFilters)
             },
             stringProvider = stringProvider,
             mapper = { dto ->

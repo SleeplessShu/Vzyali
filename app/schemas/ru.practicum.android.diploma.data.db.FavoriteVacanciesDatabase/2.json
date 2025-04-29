@@ -1,0 +1,118 @@
+{
+  "formatVersion": 1,
+  "database": {
+    "version": 2,
+    "identityHash": "c77fbd1bcc9fa5882232add6af77eb5f",
+    "entities": [
+      {
+        "tableName": "Favorite_vacancies_table",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`vacancy_id` TEXT NOT NULL, `company_logo` TEXT DEFAULT 'empty', `vacancy_name` TEXT NOT NULL DEFAULT 'unknown', `area_name` TEXT NOT NULL DEFAULT 'unknown', `company_name` TEXT NOT NULL DEFAULT 'unknown', `salary` TEXT NOT NULL DEFAULT 'Зарплата не указана', `postedAt` TEXT NOT NULL DEFAULT 'unknown', `date_of_adding` INTEGER NOT NULL, `vacancy_description` TEXT NOT NULL, `key_skills` TEXT NOT NULL, `experience` TEXT NOT NULL, `employment_form` TEXT NOT NULL, `schedule` TEXT NOT NULL, `address` TEXT NOT NULL, PRIMARY KEY(`vacancy_id`))",
+        "fields": [
+          {
+            "fieldPath": "vacancyId",
+            "columnName": "vacancy_id",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "logoUrl",
+            "columnName": "company_logo",
+            "affinity": "TEXT",
+            "notNull": false,
+            "defaultValue": "'empty'"
+          },
+          {
+            "fieldPath": "name",
+            "columnName": "vacancy_name",
+            "affinity": "TEXT",
+            "notNull": true,
+            "defaultValue": "'unknown'"
+          },
+          {
+            "fieldPath": "areaName",
+            "columnName": "area_name",
+            "affinity": "TEXT",
+            "notNull": true,
+            "defaultValue": "'unknown'"
+          },
+          {
+            "fieldPath": "employer",
+            "columnName": "company_name",
+            "affinity": "TEXT",
+            "notNull": true,
+            "defaultValue": "'unknown'"
+          },
+          {
+            "fieldPath": "salary",
+            "columnName": "salary",
+            "affinity": "TEXT",
+            "notNull": true,
+            "defaultValue": "'Зарплата не указана'"
+          },
+          {
+            "fieldPath": "postedAt",
+            "columnName": "postedAt",
+            "affinity": "TEXT",
+            "notNull": true,
+            "defaultValue": "'unknown'"
+          },
+          {
+            "fieldPath": "createdAt",
+            "columnName": "date_of_adding",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "description",
+            "columnName": "vacancy_description",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "keySkills",
+            "columnName": "key_skills",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "experience",
+            "columnName": "experience",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "employmentForm",
+            "columnName": "employment_form",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "schedule",
+            "columnName": "schedule",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "address",
+            "columnName": "address",
+            "affinity": "TEXT",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "vacancy_id"
+          ]
+        },
+        "indices": [],
+        "foreignKeys": []
+      }
+    ],
+    "views": [],
+    "setupQueries": [
+      "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'c77fbd1bcc9fa5882232add6af77eb5f')"
+    ]
+  }
+}
