@@ -51,6 +51,7 @@ class AreaChoiceViewModel(
 
     fun getRegionAreas() {
         viewModelScope.launch {
+            _regionScreenState.value = ChooseAreaScreenState.Loading
             when (val result = areasInteractor.getAreas()) {
                 is Resource.Empty -> Unit
                 is Resource.Error -> {

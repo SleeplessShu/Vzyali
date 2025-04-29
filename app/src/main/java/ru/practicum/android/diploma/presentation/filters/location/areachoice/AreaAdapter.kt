@@ -11,7 +11,7 @@ import ru.practicum.android.diploma.domain.models.AreaFilter
 class AreaAdapter(private val clickListener: (AreaFilter) -> Unit) :
     RecyclerView.Adapter<AreaAdapter.AreaViewHolder>() {
 
-    var areasList: List<AreaFilter>? = null
+    var areasList: List<AreaFilter> = emptyList()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AreaViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.area_choice_item, parent, false)
@@ -19,13 +19,13 @@ class AreaAdapter(private val clickListener: (AreaFilter) -> Unit) :
     }
 
     override fun getItemCount(): Int {
-        return areasList!!.size
+        return areasList.size
     }
 
     override fun onBindViewHolder(holder: AreaViewHolder, position: Int) {
-        holder.bind(areasList!![position])
+        holder.bind(areasList[position])
         holder.itemView.setOnClickListener {
-            clickListener.invoke(areasList!![position])
+            clickListener.invoke(areasList[position])
         }
     }
 

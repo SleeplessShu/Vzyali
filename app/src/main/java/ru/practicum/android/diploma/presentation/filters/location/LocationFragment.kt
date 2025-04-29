@@ -76,7 +76,7 @@ class LocationFragment : Fragment() {
         }
     }
 
-    private fun setupLifesycleScopeListeners(){
+    private fun setupLifesycleScopeListeners() {
         viewLifecycleOwner.lifecycleScope.launch {
             launch {
                 areaChoiceViewModel.countryState.collect { country ->
