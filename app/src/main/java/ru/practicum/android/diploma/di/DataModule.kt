@@ -65,7 +65,9 @@ val dataModule = module {
         val json: Json = get()
 
         Retrofit.Builder().baseUrl("https://api.hh.ru/")
-            .addConverterFactory(json.asConverterFactory("application/json".toMediaType())).build()
+            .addConverterFactory(json.asConverterFactory("application/json".toMediaType()))
+            .client(get())
+            .build()
             .create(HeadHunterApi::class.java)
     }
 
