@@ -7,16 +7,15 @@
     android:layout_marginStart="@dimen/margin_16"
     android:layout_marginEnd="@dimen/margin_4"
     android:clickable="true"
-    android:focusable="false">
+    android:focusable="true">
 
     <TextView
         android:id="@+id/country_name"
-        android:layout_height="match_parent"
-        android:layout_width="match_parent"
-        android:gravity="center_vertical"
-        tools:text="Страна или регион"
         style="@style/FilterOptionStyle"
-        />
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:gravity="center_vertical"
+        tools:text="Страна или регион" />
 
     <ImageView
         android:id="@+id/country_choice"

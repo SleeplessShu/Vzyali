@@ -6,6 +6,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import ru.practicum.android.diploma.domain.api.FiltersPrefsInteractor
 import ru.practicum.android.diploma.domain.models.main.Industry
+import ru.practicum.android.diploma.domain.models.main.Location
 
 class FiltersViewModel(private val filtersPrefsInteractor: FiltersPrefsInteractor) : ViewModel() {
     private val _selectedIndustry = MutableStateFlow<Industry?>(null)
@@ -59,5 +60,28 @@ class FiltersViewModel(private val filtersPrefsInteractor: FiltersPrefsInteracto
     fun clearAll() {
         _filterState.value = UiFiltersState()
         filtersPrefsInteractor.clearAll()
+    }
+
+    fun clearSelectedLocation() {
+        _filterState.value = _filterState.value.copy(location = null)
+    }
+
+    fun setCountry(countryId: Int, countryName: String) {
+        val location = Location(
+            countryId = countryId,
+            countryName = countryName,
+            regionId = 0,
+            regionName = ""
+        )
+        _filterState.value = _filterState.value.copy(location = location)
+    }
+
+    fun setRegion(regionId: Int, regionName: String) {
+        val currentLocation = _filterState.value.location ?: Location()
+        val updatedLocation = currentLocation.copy(
+            regionId = regionId,
+            regionName = regionName
+        )
+        _filterState.value = _filterState.value.copy(location = updatedLocation)
     }
 }

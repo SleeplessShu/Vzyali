@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".presentation.filters.areachoice.CountryChoiceFragment">
+    tools:context=".presentation.filters.location.areachoice.CountryChoiceFragment">
 
     <ImageButton
         android:id="@+id/bToFilters"
@@ -93,5 +93,50 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@id/search_box"
         tools:listitem="@layout/area_choice_item" />
+
+    <include
+        android:id="@+id/placeholder_no_connection"
+        layout="@layout/placeholder_no_internet"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/search_box" />
+
+    <include
+        android:id="@+id/placeholder_loading"
+        layout="@layout/placeholder_loading"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/search_box" />
+
+    <include
+        android:id="@+id/placeholder_server_error"
+        layout="@layout/placeholder_server_error_vacancy"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/search_box" />
+
+    <include
+        android:id="@+id/placeholder_no_results"
+        layout="@layout/placeholder_no_region"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/search_box" />
+
+    <include
+        android:id="@+id/placeholder_no_childs"
+        layout="@layout/placeholder_no_list"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/search_box" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
