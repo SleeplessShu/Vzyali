@@ -1,6 +1,5 @@
 package ru.practicum.android.diploma.presentation.filters.location.areachoice
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -11,7 +10,6 @@ import ru.practicum.android.diploma.data.utils.StringProvider
 import ru.practicum.android.diploma.domain.api.AreasInteractor
 import ru.practicum.android.diploma.domain.models.AreaFilter
 import ru.practicum.android.diploma.domain.models.Resource
-import kotlin.math.log
 
 class AreaChoiceViewModel(
     private val areasInteractor: AreasInteractor,
@@ -204,7 +202,6 @@ class AreaChoiceViewModel(
     }
 
     fun setCountry(country: AreaFilter) {
-        Log.d("DEBUG", "setCountry: ${country}")
         _countryState.value = country
         _regionState.value = null
     }
@@ -219,11 +216,6 @@ class AreaChoiceViewModel(
     }
 
     fun removeRegion() {
-        Log.d("DEBUG", "removeRegion: ")
         _regionState.value = null
-    }
-
-    fun saveFilter() {
-
     }
 }

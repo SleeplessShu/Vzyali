@@ -26,9 +26,7 @@ class LocationFragment : Fragment() {
     private val areaChoiceViewModel by sharedViewModel<AreaChoiceViewModel>()
 
     override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
         _binding = FragmentJobLocationBinding.inflate(inflater, container, false)
         return binding.root
@@ -57,7 +55,15 @@ class LocationFragment : Fragment() {
             findNavController().navigate(R.id.action_LocationFragment_to_RegionFragment)
         }
 
+        binding.bChooseRegion.setOnClickListener {
+            findNavController().navigate(R.id.action_LocationFragment_to_RegionFragment)
+        }
+
         binding.bCountry.setOnClickListener {
+            findNavController().navigate(R.id.action_LocationFragment_to_CountryFragment)
+        }
+
+        binding.bChooseCountry.setOnClickListener {
             findNavController().navigate(R.id.action_LocationFragment_to_CountryFragment)
         }
 
@@ -70,7 +76,6 @@ class LocationFragment : Fragment() {
         }
 
         binding.bSelect.setOnClickListener {
-            areaChoiceViewModel.saveFilter()
             findNavController().navigateUp()
         }
 
@@ -80,21 +85,24 @@ class LocationFragment : Fragment() {
     }
 
     private fun renderCountry(state: AreaFilter?) {
-        when (state) {
-            null -> renderEmpty()
-            else -> {
-                renderContent(state.name ?: "", "")
-            }
+        if (state == null) {
+            renderEmpty()
+        } else {
+            val countryId = state.id?.toIntOrNull() ?: -1
+            filtersViewModel.setCountry(countryId, state.name.orEmpty())
+            renderContent(state.name.orEmpty(), "")
         }
     }
 
     private fun renderRegion(state: AreaFilter?) {
-        val countryName = areaChoiceViewModel.countryState.value?.name.orEmpty()
-
         if (state == null) {
             renderEmptyRegion()
         } else {
-            renderContent(countryName, state?.name.orEmpty())
+            val regionId = state.id?.toIntOrNull() ?: -1
+            filtersViewModel.setRegion(regionId, state.name.orEmpty())
+
+            val countryName = filtersViewModel.filterState.value.location?.countryName.orEmpty()
+            renderContent(countryName, state.name.orEmpty())
         }
     }
 

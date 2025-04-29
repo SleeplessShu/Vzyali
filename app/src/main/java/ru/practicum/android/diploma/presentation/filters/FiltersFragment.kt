@@ -21,9 +21,7 @@ class FiltersFragment : Fragment() {
     private val filtersViewModel by activityViewModels<FiltersViewModel>()
 
     override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
         _binding = FragmentFiltersBinding.inflate(inflater, container, false)
         return binding.root
@@ -59,6 +57,11 @@ class FiltersFragment : Fragment() {
                 filtersViewModel.clearSelectedIndustry()
                 binding.industryFilterOpen.isVisible = true
             }
+
+            clearWorkPlaceFilter.setOnClickListener {
+                filtersViewModel.clearSelectedLocation()
+                binding.workPlaceFilterOpen.isVisible = true
+            }
         }
     }
 
@@ -73,9 +76,22 @@ class FiltersFragment : Fragment() {
     }
 
     private fun renderState(state: FiltersState) = with(binding) {
+        val locationName = buildString {
+            state.location?.countryName?.takeIf { it.isNotBlank() }?.let { append(it) }
+            if (!state.location?.regionName.isNullOrBlank()) {
+                if (isNotEmpty()) append(", ")
+                append(state.location?.regionName)
+            }
+        }
+
         industryText.setText(state.industry?.name.orEmpty())
         industryFilterOpen.isVisible = state.industry == null
         clearIndustryFilter.isVisible = state.industry != null
+
+        workPlaceText.setText(locationName)
+        workPlaceFilterOpen.isVisible = state.location == null
+        clearWorkPlaceFilter.isVisible = state.location != null
+
         btnGroup.isVisible == state.hasAny
     }
 }
