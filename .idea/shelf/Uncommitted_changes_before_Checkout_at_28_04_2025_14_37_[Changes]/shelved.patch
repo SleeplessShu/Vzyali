@@ -1,0 +1,28 @@
+Index: app/src/main/res/values/dimens.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<resources>\r\n    <dimen name=\"text_size_32\">32sp</dimen>\r\n    <dimen name=\"text_size_22\">22sp</dimen>\r\n    <dimen name=\"text_size_16\">16sp</dimen>\r\n    <dimen name=\"text_size_12\">12sp</dimen>\r\n\r\n    <!--MARGIN-->\r\n    <dimen name=\"margin_156\">156dp</dimen>\r\n    <dimen name=\"margin_102\">102dp</dimen>\r\n    <dimen name=\"margin_64\">60dp</dimen>\r\n    <dimen name=\"margin_60\">60dp</dimen>\r\n    <dimen name=\"margin_52\">52dp</dimen>\r\n    <dimen name=\"margin_46\">46dp</dimen>\r\n    <dimen name=\"margin_40\">40dp</dimen>\r\n    <dimen name=\"margin_32\">32dp</dimen>\r\n    <dimen name=\"margin_24\">24dp</dimen>\r\n    <dimen name=\"margin_20\">20dp</dimen>\r\n    <dimen name=\"margin_16\">16dp</dimen>\r\n    <dimen name=\"margin_14\">12dp</dimen>\r\n    <dimen name=\"margin_12\">12dp</dimen>\r\n    <dimen name=\"margin_8\">8dp</dimen>\r\n    <dimen name=\"margin_6\">6dp</dimen>\r\n    <dimen name=\"margin_4\">4dp</dimen>\r\n    <dimen name=\"margin_2\">2dp</dimen>\r\n\r\n    <!--UNIQUE-->\r\n    <dimen name=\"loader\">36dp</dimen>\r\n    <dimen name=\"icon_size_48\">48dp</dimen>\r\n    <dimen name=\"search_field_height\">56dp</dimen>\r\n    <dimen name=\"top_bar_height\">64dp</dimen>\r\n    <dimen name=\"radius_12\">12dp</dimen>\r\n\r\n    <!--LAYOUT SIZES-->\r\n    <dimen name=\"layout_48\">48dp</dimen>\r\n\r\n</resources>\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/res/values/dimens.xml b/app/src/main/res/values/dimens.xml
+--- a/app/src/main/res/values/dimens.xml	(revision 5c2431bb115eedad729ac7bbdabb4f5a9b6141eb)
++++ b/app/src/main/res/values/dimens.xml	(date 1745839509258)
+@@ -8,7 +8,7 @@
+     <!--MARGIN-->
+     <dimen name="margin_156">156dp</dimen>
+     <dimen name="margin_102">102dp</dimen>
+-    <dimen name="margin_64">60dp</dimen>
++    <dimen name="margin_64">64dp</dimen>
+     <dimen name="margin_60">60dp</dimen>
+     <dimen name="margin_52">52dp</dimen>
+     <dimen name="margin_46">46dp</dimen>
+@@ -17,7 +17,7 @@
+     <dimen name="margin_24">24dp</dimen>
+     <dimen name="margin_20">20dp</dimen>
+     <dimen name="margin_16">16dp</dimen>
+-    <dimen name="margin_14">12dp</dimen>
++    <dimen name="margin_14">14dp</dimen>
+     <dimen name="margin_12">12dp</dimen>
+     <dimen name="margin_8">8dp</dimen>
+     <dimen name="margin_6">6dp</dimen>

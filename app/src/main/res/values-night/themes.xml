@@ -12,6 +12,7 @@
         <item name="blue_white">@color/white</item>
         <item name="edittext_color">@color/white</item>
         <item name="filter_edittext_color">@color/black</item>
+        <item name="salary_edittext_color">@color/white</item>
         <item name="not_show_without_salary_color">@color/white</item>
 
     </style>

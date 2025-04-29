@@ -1,5 +1,6 @@
 package ru.practicum.android.diploma.presentation.search
 
+import ru.practicum.android.diploma.domain.models.FiltersState
 import ru.practicum.android.diploma.domain.models.main.VacancyShort
 
 data class SearchState(
@@ -7,6 +8,7 @@ data class SearchState(
     val content: List<VacancyShort>? = null,
     val error: UiError? = null,
     val query: String = "",
+    val filters: FiltersState? = null,
     val showResultText: Boolean = false,
     val resultText: String = "",
     val currentPage: Int = 0,

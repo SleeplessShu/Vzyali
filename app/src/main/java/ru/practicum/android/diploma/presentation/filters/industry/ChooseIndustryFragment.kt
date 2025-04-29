@@ -1,18 +1,19 @@
 package ru.practicum.android.diploma.presentation.filters.industry
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.coroutines.launch
+import org.koin.androidx.viewmodel.ext.android.activityViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import ru.practicum.android.diploma.databinding.FragmentChooseIndustryBinding
 import ru.practicum.android.diploma.domain.models.main.Industry
@@ -23,7 +24,7 @@ class ChooseIndustryFragment : Fragment() {
     private var _binding: FragmentChooseIndustryBinding? = null
     private val binding get() = _binding ?: error("Binding is not initialized")
     private val industryViewModel by viewModel<ChooseIndustryViewModel>()
-    private val filtersViewModel by activityViewModels<FiltersViewModel>()
+    private val filtersViewModel by activityViewModel<FiltersViewModel>()
     private val adapter = IndustryAdapter()
 
     override fun onCreateView(
@@ -45,14 +46,15 @@ class ChooseIndustryFragment : Fragment() {
             recycler.layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
 
             adapter.onIndustrySelected = { industry ->
+                Log.d("Industry-chosen", "id=${industry.id}, name=${industry.name}")
                 filtersViewModel.setIndustry(industry)
-                binding.selectBtn.isVisible = true
+                binding.applyBtn.isVisible = true
             }
             bToSearch.setOnClickListener {
                 findNavController().navigateUp()
             }
 
-            selectBtn.setOnClickListener {
+            applyBtn.setOnClickListener {
                 findNavController().popBackStack()
             }
 
@@ -76,7 +78,7 @@ class ChooseIndustryFragment : Fragment() {
 
         viewLifecycleOwner.lifecycleScope.launch {
             filtersViewModel.selectedIndustry.collect { industry ->
-                binding.selectBtn.isVisible = industry != null
+                binding.applyBtn.isVisible = industry != null
             }
         }
     }
@@ -91,6 +93,7 @@ class ChooseIndustryFragment : Fragment() {
                     renderEmpty()
                 }
             }
+
             is ChooseIndustryScreenState.Error -> renderError(state.type)
         }
     }

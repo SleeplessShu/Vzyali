@@ -90,27 +90,52 @@
         android:layout_height="@dimen/margin_60"
         android:layout_marginStart="@dimen/margin_16"
         android:layout_marginEnd="@dimen/margin_4"
-        android:clickable="true"
+        android:clickable="false"
         android:focusable="false"
         app:layout_constraintTop_toBottomOf="@id/work_place_field">
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/industry_input_layout"
-            style="@style/FilterStyle"
+        <TextView
+            android:id="@+id/tv_industry_hint"
+            style="@style/text_regular_16"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:hint="@string/filter_Industry">
+            android:gravity="start"
+            android:paddingVertical="@dimen/margin_20"
+            android:text="@string/filter_Industry"
+            android:visibility="visible"
+            android:textColor="@color/grey"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-            <AutoCompleteTextView
-                android:id="@+id/industry_text"
-                style="@style/FilterOptionStyle"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:paddingTop="@dimen/margin_20"
-                android:clickable="false"
-                android:focusable="false"
-                android:inputType="none" />
-        </com.google.android.material.textfield.TextInputLayout>
+        <TextView
+            android:id="@+id/tv_industry_hint_up"
+            style="@style/text_regular_12"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="start"
+            android:layout_marginTop="@dimen/margin_8"
+            android:text="@string/filter_Industry"
+            android:textColor="?attr/colorOnPrimary"
+            android:visibility="gone"
+            app:layout_constraintBottom_toTopOf="@id/tv_industry_selected"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_industry_selected"
+            style="@style/text_regular_16"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="start"
+            android:layout_marginTop="@dimen/margin_24"
+            android:text="@string/filter_Industry"
+            android:textColor="?attr/colorOnPrimary"
+            android:visibility="visible"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_industry_hint_up" />
 
         <ImageView
             android:id="@+id/industry_filter_open"
@@ -182,7 +207,7 @@
         app:layout_constraintTop_toTopOf="@id/hide_without_salary" />
 
     <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/select_btn"
+        android:id="@+id/apply_btn"
         style="@style/FilterBottomButtonsStyle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -216,5 +241,5 @@
         android:id="@+id/btn_group"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:constraint_referenced_ids="select_btn,cancel_btn" />
+        app:constraint_referenced_ids="apply_btn,cancel_btn" />
 </androidx.constraintlayout.widget.ConstraintLayout>

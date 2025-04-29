@@ -5,20 +5,22 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
+import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import kotlinx.coroutines.launch
+import org.koin.androidx.viewmodel.ext.android.activityViewModel
 import ru.practicum.android.diploma.R
 import ru.practicum.android.diploma.databinding.FragmentFiltersBinding
 
 class FiltersFragment : Fragment() {
     private var _binding: FragmentFiltersBinding? = null
     private val binding get() = _binding ?: error("Binding is not initialized")
-    private val filtersViewModel by activityViewModels<FiltersViewModel>()
+    private val filtersViewModel by activityViewModel<FiltersViewModel>()
+    private var salaryInput: Int? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -32,16 +34,20 @@ class FiltersFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         setupBindings()
         observeState()
+        editSalary()
 
-//        binding.bAccept.setOnClickListener {
-//            val args = Bundle().apply { putString("filters", "some_filter_data") }
-//            findNavController().navigate(R.id.action_navigation_filters_to_navigation_main, args)
-//        }
+    }
+
+    private fun editSalary() {
+        binding.salaryExpectedInput.doOnTextChanged { s, _, _, _ ->
+            salaryInput = s?.toString()?.toIntOrNull()
+            salaryInput?.let { filtersViewModel.setSalary(it) }
+        }
     }
 
     private fun setupBindings() {
         with(binding) {
-            btnGroup.isVisible = !binding.industryText.text.isNullOrEmpty()
+            btnGroup.isVisible = !binding.tvIndustrySelected.text.isNullOrEmpty()
 
             bToSearch.setOnClickListener {
                 findNavController().navigateUp()
@@ -54,6 +60,24 @@ class FiltersFragment : Fragment() {
             clearIndustryFilter.setOnClickListener {
                 filtersViewModel.clearSelectedIndustry()
                 binding.industryFilterOpen.isVisible = true
+            }
+
+            salaryExpectedLayout.setEndIconOnClickListener {
+                binding.salaryExpectedInput.text?.clear()
+                filtersViewModel.clearSalary()
+            }
+
+            checkbox.setOnCheckedChangeListener { _, isChecked ->
+                filtersViewModel.setHideWithoutSalary(isChecked)
+            }
+
+            applyBtn.setOnClickListener {
+                filtersViewModel.saveAll()
+                findNavController().popBackStack()
+            }
+
+            cancelBtn.setOnClickListener {
+                filtersViewModel.clearAll()
             }
         }
     }
@@ -68,10 +92,17 @@ class FiltersFragment : Fragment() {
         }
     }
 
-    private fun renderState(state: FiltersState) = with(binding) {
-        industryText.setText(state.industry?.name.orEmpty())
+    private fun renderState(state: UiFiltersState) = with(binding) {
+        val hasIndustry = state.industry != null
+        tvIndustryHint.isVisible = !hasIndustry
+        tvIndustryHintUp.isVisible = hasIndustry
+        tvIndustrySelected.isVisible = hasIndustry
+        tvIndustrySelected.text = state.industry?.name.orEmpty()
+        salaryExpectedInput.setText(state.salaryExpectations?.toString().orEmpty())
+        salaryExpectedInput.setSelection(salaryExpectedInput.text?.length ?: 0)
         industryFilterOpen.isVisible = state.industry == null
         clearIndustryFilter.isVisible = state.industry != null
-        btnGroup.isVisible == state.hasAny
+        btnGroup.isVisible = state.hasAny
+        checkbox.isChecked = state.hideWithoutSalary
     }
 }

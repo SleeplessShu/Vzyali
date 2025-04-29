@@ -6,6 +6,6 @@ import ru.practicum.android.diploma.domain.models.Resource
 import ru.practicum.android.diploma.domain.models.main.VacancyLong
 
 interface SearchVacancyInteractor {
-    fun searchVacancy(vacancyName: String, page: Int, perPage: Int): Flow<Resource<VacancyPageResult>>
+    fun searchVacancy(filters: Map<String, String>, page: Int, perPage: Int): Flow<Resource<VacancyPageResult>>
     fun searchVacancyDetails(vacancyId: String): Flow<Pair<VacancyLong?, String?>>
 }
