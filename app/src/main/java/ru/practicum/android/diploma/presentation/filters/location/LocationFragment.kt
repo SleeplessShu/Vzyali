@@ -39,18 +39,7 @@ class LocationFragment : Fragment() {
     }
 
     private fun setupObservers() {
-        viewLifecycleOwner.lifecycleScope.launch {
-            launch {
-                areaChoiceViewModel.countryState.collect { country ->
-                    renderState(country, areaChoiceViewModel.regionState.value)
-                }
-            }
-            launch {
-                areaChoiceViewModel.regionState.collect { region ->
-                    renderState(areaChoiceViewModel.countryState.value, region)
-                }
-            }
-        }
+        setupLifesycleScopeListeners()
 
         binding.bRegion.setOnClickListener {
             findNavController().navigate(R.id.action_LocationFragment_to_RegionFragment)
@@ -77,7 +66,6 @@ class LocationFragment : Fragment() {
         }
 
         binding.bSelect.setOnClickListener {
-
             findNavController().navigateUp()
         }
 
@@ -85,6 +73,21 @@ class LocationFragment : Fragment() {
             findNavController().navigateUp()
             areaChoiceViewModel.removeCountry()
             filtersViewModel.clearSelectedLocation()
+        }
+    }
+
+    private fun setupLifesycleScopeListeners(){
+        viewLifecycleOwner.lifecycleScope.launch {
+            launch {
+                areaChoiceViewModel.countryState.collect { country ->
+                    renderState(country, areaChoiceViewModel.regionState.value)
+                }
+            }
+            launch {
+                areaChoiceViewModel.regionState.collect { region ->
+                    renderState(areaChoiceViewModel.countryState.value, region)
+                }
+            }
         }
     }
 
