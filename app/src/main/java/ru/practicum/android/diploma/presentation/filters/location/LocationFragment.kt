@@ -156,8 +156,4 @@ class LocationFragment : Fragment() {
             tvRegionWhenSelected.isVisible = visibility
         }
     }
-
-    override fun onResume() {
-        super.onResume()
-    }
 }
