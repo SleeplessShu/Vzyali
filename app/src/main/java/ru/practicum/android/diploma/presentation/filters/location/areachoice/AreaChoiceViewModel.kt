@@ -86,7 +86,28 @@ class AreaChoiceViewModel(
                 result.add(area)
             }
         }
+        sortCountriesResult(result)
+
         return result
+    }
+
+    private fun sortCountriesResult(areas: MutableList<AreaFilter>) {
+        val iterator = areas.iterator()
+        var others: AreaFilter? = null
+
+        while (iterator.hasNext()) {
+            val area = iterator.next()
+            if (area.name == "Другие регионы") {
+                others = area
+                iterator.remove()
+            }
+        }
+
+        if (others == null) {
+            return
+        } else {
+            areas.add(others)
+        }
     }
 
     private fun setParentCountry(childElement: AreaFilter) {
