@@ -6,7 +6,9 @@ import ru.practicum.android.diploma.domain.models.main.Industry
 fun FiltersState.toUiState(): UiFiltersState {
     val industry = if (!industryId.isNullOrBlank() && !industryName.isNullOrBlank()) {
         Industry(id = industryId, name = industryName)
-    } else null
+    } else {
+        null
+    }
 
     return UiFiltersState(
         industry = industry,

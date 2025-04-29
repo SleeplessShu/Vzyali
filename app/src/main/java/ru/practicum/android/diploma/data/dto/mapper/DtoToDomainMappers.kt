@@ -130,7 +130,7 @@ fun IndustryDto.toDomain(): Industry = Industry(
     name = this.name
 )
 
-//fun IndustryDto.toDomainGroup(groupId: String): Industry =
+// fun IndustryDto.toDomainGroup(groupId: String): Industry =
 //    Industry(
 //        id   = groupId,
 //        name = this.name
