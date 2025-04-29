@@ -1,7 +1,6 @@
 package ru.practicum.android.diploma.presentation.filters.location
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -26,7 +25,9 @@ class LocationFragment : Fragment() {
     private val areaChoiceViewModel by sharedViewModel<AreaChoiceViewModel>()
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
     ): View {
         _binding = FragmentJobLocationBinding.inflate(inflater, container, false)
         return binding.root
@@ -40,7 +41,6 @@ class LocationFragment : Fragment() {
     private fun setupObservers() {
         viewLifecycleOwner.lifecycleScope.launch {
             areaChoiceViewModel.countryState.collect { state ->
-                Log.d("DEBUG", "setupObservers: ${state}")
                 renderCountry(state)
             }
         }
