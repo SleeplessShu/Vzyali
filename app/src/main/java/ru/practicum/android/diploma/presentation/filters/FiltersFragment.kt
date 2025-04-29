@@ -1,8 +1,6 @@
 package ru.practicum.android.diploma.presentation.filters
 
 import android.os.Bundle
-import android.text.Editable
-import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -42,9 +40,9 @@ class FiltersFragment : Fragment() {
 
     private fun editSalary() {
         binding.salaryExpectedInput.doOnTextChanged { s, _, _, _ ->
-                salaryInput = s?.toString()?.toIntOrNull()
-                salaryInput?.let { filtersViewModel.setSalary(it) }
-            }
+            salaryInput = s?.toString()?.toIntOrNull()
+            salaryInput?.let { filtersViewModel.setSalary(it) }
+        }
     }
 
     private fun setupBindings() {
