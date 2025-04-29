@@ -48,7 +48,7 @@ class ChooseIndustryFragment : Fragment() {
                 filtersViewModel.setIndustry(industry)
                 binding.selectBtn.isVisible = true
             }
-            bToSearch.setOnClickListener {
+            bBack.setOnClickListener {
                 findNavController().navigateUp()
             }
 

@@ -43,8 +43,12 @@ class FiltersFragment : Fragment() {
         with(binding) {
             btnGroup.isVisible = !binding.industryText.text.isNullOrEmpty()
 
-            bToSearch.setOnClickListener {
+            bBack.setOnClickListener {
                 findNavController().navigateUp()
+            }
+
+            workPlaceFilterOpen.setOnClickListener {
+                findNavController().navigate(R.id.action_navigation_filters_to_navigation_choose_location)
             }
 
             industryFilterOpen.setOnClickListener {

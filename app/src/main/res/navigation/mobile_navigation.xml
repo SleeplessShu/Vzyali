@@ -54,6 +54,9 @@
         <action
             android:id="@+id/action_navigation_filters_to_navigation_choose_industry"
             app:destination="@id/navigation_choose_industry" />
+        <action
+            android:id="@+id/action_navigation_filters_to_navigation_choose_location"
+            app:destination="@id/navigation_choose_location" />
     </fragment>
 
     <fragment
@@ -64,22 +67,28 @@
     </fragment>
 
     <fragment
-        android:id="@+id/navigation_location"
+        android:id="@+id/navigation_choose_location"
         android:name="ru.practicum.android.diploma.presentation.filters.location.LocationFragment"
         android:label="@string/filter_Location"
         tools:layout="@layout/fragment_job_location">
         <action
             android:id="@+id/action_LocationFragment_to_RegionFragment"
-            app:destination="@id/navigation_region" />
+            app:destination="@id/navigation_choose_region" />
         <action
             android:id="@+id/action_LocationFragment_to_CountryFragment"
-            app:destination="@id/navigation_Country" />
+            app:destination="@id/navigation_choose_country" />
     </fragment>
 
     <fragment
         android:id="@+id/navigation_choose_country"
         android:name="ru.practicum.android.diploma.presentation.filters.areachoice.CountryChoiceFragment"
-        android:label="fragment_region_choice"
+        android:label="@string/filter_Country"
+        tools:layout="@layout/fragment_country_choice" />
+
+    <fragment
+        android:id="@+id/navigation_choose_region"
+        android:name="ru.practicum.android.diploma.presentation.filters.areachoice.RegionChoiceFragment"
+        android:label="@string/filter_Region"
         tools:layout="@layout/fragment_region_choice" />
 
 </navigation>

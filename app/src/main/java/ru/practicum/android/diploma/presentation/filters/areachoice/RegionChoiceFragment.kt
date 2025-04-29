@@ -65,6 +65,10 @@ class RegionChoiceFragment : Fragment() {
         binding.clearFieldButton.setOnClickListener {
             binding.searchField.text.clear()
         }
+
+        binding.bToFilters.setOnClickListener {
+            findNavController().navigateUp()
+        }
     }
 
     private fun render(state: ChooseAreaScreenState) {

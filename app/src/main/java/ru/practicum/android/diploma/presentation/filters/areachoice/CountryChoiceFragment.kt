@@ -49,6 +49,10 @@ class CountryChoiceFragment : Fragment() {
             }
         }
 
+        binding.bToFilters.setOnClickListener {
+            findNavController().navigateUp()
+        }
+
         viewModel.getCountryAreas()
     }
 

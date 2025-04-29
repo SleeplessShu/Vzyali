@@ -8,14 +8,17 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
+import org.koin.androidx.viewmodel.ext.android.viewModel
 import ru.practicum.android.diploma.R
 import ru.practicum.android.diploma.databinding.FragmentJobLocationBinding
+import ru.practicum.android.diploma.presentation.filters.FiltersViewModel
 
 class LocationFragment : Fragment() {
     private var _binding: FragmentJobLocationBinding? = null
     private val binding get() = _binding ?: error("Binding is not initialized")
 
-    private val viewModel: LocationViewModel by activityViewModels()
+    private val locationViewModel by viewModel<LocationViewModel>()
+    private val filtersViewModel by activityViewModels<FiltersViewModel>()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -32,7 +35,7 @@ class LocationFragment : Fragment() {
     }
 
     private fun setupObservers() {
-        viewModel.locationLiveData.observe(viewLifecycleOwner) { state ->
+        locationViewModel.locationLiveData.observe(viewLifecycleOwner) { state ->
             render(state)
         }
 
@@ -45,15 +48,15 @@ class LocationFragment : Fragment() {
         }
 
         binding.bRemoveCountry.setOnClickListener {
-            viewModel.removeCountry()
+            locationViewModel.removeCountry()
         }
 
         binding.bRemoveRegion.setOnClickListener {
-            viewModel.removeRegion()
+            locationViewModel.removeRegion()
         }
 
         binding.bSelect.setOnClickListener {
-            viewModel.saveFilter()
+            locationViewModel.saveFilter()
             findNavController().navigateUp()
         }
 

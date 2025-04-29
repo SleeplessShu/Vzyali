@@ -36,7 +36,6 @@
         android:layout_height="wrap_content"
         android:layout_marginVertical="@dimen/margin_16"
         app:layout_constraintEnd_toEndOf="parent"
-
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/bBack">
 
@@ -173,7 +172,7 @@
         android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="@id/bCountry"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="bCountry"
+        app:layout_constraintTop_toTopOf="@id/bCountry"
         app:tint="?attr/colorOnPrimary" />
 
     <ImageButton
@@ -182,9 +181,10 @@
         android:layout_height="wrap_content"
         android:backgroundTint="?attr/colorPrimary"
         android:src="@drawable/ic_close"
+        android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="@id/bRegion"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="bRegion"
+        app:layout_constraintTop_toTopOf="@id/bRegion"
         app:tint="?attr/colorOnPrimary" />
 
     <androidx.appcompat.widget.AppCompatButton
