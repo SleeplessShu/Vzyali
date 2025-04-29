@@ -9,9 +9,9 @@ import ru.practicum.android.diploma.domain.models.main.Industry
 
 class IndustryAdapter : RecyclerView.Adapter<IndustryAdapter.IndustryViewHolder>() {
     private var industries: List<Industry> = emptyList()
-
-    // позиция выбранного элемента
-    var checkedPosition = -1
+    var onIndustrySelected: ((Industry) -> Unit)? = null
+    // выбранный элемент
+    var checkedIndustry: Industry? = null
         private set
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): IndustryViewHolder {
@@ -27,6 +27,16 @@ class IndustryAdapter : RecyclerView.Adapter<IndustryAdapter.IndustryViewHolder>
         holder.bind(industry, position)
     }
 
+    fun onItemClick(industry: Industry, position: Int) {
+        if (industry != checkedIndustry) {
+            val checkedPosition = industries.indexOf(checkedIndustry)
+            notifyItemChanged(checkedPosition) // снимаем выделение у предыдущего выбранного элемента
+            checkedIndustry = industry // запоминаем новый выбранный элемент
+        }
+        notifyItemChanged(position) // отмечаем текущий выбранный элемент
+        onIndustrySelected?.invoke(industry)
+    }
+
     @SuppressLint("NotifyDataSetChanged")
     fun updateItems(industries: List<Industry>) {
         this.industries = industries
@@ -37,19 +47,13 @@ class IndustryAdapter : RecyclerView.Adapter<IndustryAdapter.IndustryViewHolder>
         private val binding: FilterIndustryItemBinding
     ) : RecyclerView.ViewHolder(binding.root) {
 
-        init {
-            binding.roundBtn.setOnClickListener {
-                if (adapterPosition != checkedPosition) {
-                    notifyItemChanged(checkedPosition) // снимаем выделение у предыдущего выбранного элемента
-                    checkedPosition = adapterPosition // запоминаем новую позицию выбранного элемента
-                }
-                notifyItemChanged(checkedPosition) // отмечаем текущий выбранный элемент
-            }
-        }
-
         fun bind(industry: Industry, position: Int) {
             binding.itemName.text = industry.name
-            binding.roundBtn.isChecked = position == checkedPosition
+            binding.roundBtn.isChecked = industry == checkedIndustry
+
+            binding.roundBtn.setOnClickListener {
+                onItemClick(industry, position)
+            }
         }
     }
 }
