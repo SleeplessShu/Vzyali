@@ -182,7 +182,7 @@
         app:layout_constraintTop_toTopOf="@id/hide_without_salary" />
 
     <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/select_btn"
+        android:id="@+id/apply_btn"
         style="@style/FilterBottomButtonsStyle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -216,5 +216,5 @@
         android:id="@+id/btn_group"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:constraint_referenced_ids="select_btn,cancel_btn" />
+        app:constraint_referenced_ids="apply_btn,cancel_btn" />
 </androidx.constraintlayout.widget.ConstraintLayout>

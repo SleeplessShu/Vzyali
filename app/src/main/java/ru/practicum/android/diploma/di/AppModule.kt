@@ -10,10 +10,10 @@ import ru.practicum.android.diploma.presentation.search.SearchViewModel
 import ru.practicum.android.diploma.presentation.vacancy.VacancyViewModel
 
 val appModule = module {
-    viewModel { SearchViewModel(get(), get()) }
+    viewModel { SearchViewModel(get(), get(), get()) }
     viewModel { FavoriteViewModel(get()) }
     viewModel { VacancyViewModel(get(), get()) }
     viewModel { ChooseIndustryViewModel(get(), get()) }
     viewModel { AreaChoiceViewModel(get()) }
-    viewModel { FiltersViewModel() }
+    viewModel { FiltersViewModel(get()) }
 }
