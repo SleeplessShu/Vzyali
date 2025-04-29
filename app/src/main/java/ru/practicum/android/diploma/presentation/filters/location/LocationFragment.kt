@@ -40,14 +40,15 @@ class LocationFragment : Fragment() {
 
     private fun setupObservers() {
         viewLifecycleOwner.lifecycleScope.launch {
-            areaChoiceViewModel.countryState.collect { state ->
-                renderCountry(state)
+            launch {
+                areaChoiceViewModel.countryState.collect { country ->
+                    renderState(country, areaChoiceViewModel.regionState.value)
+                }
             }
-        }
-
-        viewLifecycleOwner.lifecycleScope.launch {
-            areaChoiceViewModel.regionState.collect { state ->
-                renderRegion(state)
+            launch {
+                areaChoiceViewModel.regionState.collect { region ->
+                    renderState(areaChoiceViewModel.countryState.value, region)
+                }
             }
         }
 
@@ -76,34 +77,29 @@ class LocationFragment : Fragment() {
         }
 
         binding.bSelect.setOnClickListener {
+
             findNavController().navigateUp()
         }
 
         binding.bBack.setOnClickListener {
             findNavController().navigateUp()
+            areaChoiceViewModel.removeCountry()
+            filtersViewModel.clearSelectedLocation()
         }
     }
 
-    private fun renderCountry(state: AreaFilter?) {
-        if (state == null) {
+    private fun renderState(country: AreaFilter?, region: AreaFilter?) {
+        val countryName = country?.name.orEmpty()
+        val regionName = region?.name.orEmpty()
+
+        if (country == null && region == null) {
             renderEmpty()
         } else {
-            val countryId = state.id?.toIntOrNull() ?: -1
-            filtersViewModel.setCountry(countryId, state.name.orEmpty())
-            renderContent(state.name.orEmpty(), "")
+            renderContent(countryName, regionName)
         }
-    }
 
-    private fun renderRegion(state: AreaFilter?) {
-        if (state == null) {
-            renderEmptyRegion()
-        } else {
-            val regionId = state.id?.toIntOrNull() ?: -1
-            filtersViewModel.setRegion(regionId, state.name.orEmpty())
-
-            val countryName = filtersViewModel.filterState.value.location?.countryName.orEmpty()
-            renderContent(countryName, state.name.orEmpty())
-        }
+        filtersViewModel.setCountry(country?.id?.toIntOrNull() ?: -1, countryName)
+        filtersViewModel.setRegion(region?.id?.toIntOrNull() ?: -1, regionName)
     }
 
     private fun renderEmpty() = with(binding) {
@@ -112,12 +108,6 @@ class LocationFragment : Fragment() {
         showRegion(false)
         showCountry(false)
         bSelect.isVisible = false
-    }
-
-    private fun renderEmptyRegion() {
-        showDefaultRegion(true)
-        showRegion(false)
-        binding.bSelect.isVisible = false
     }
 
     private fun renderContent(country: String, region: String) {
@@ -131,7 +121,7 @@ class LocationFragment : Fragment() {
             showDefaultRegion(false)
             showRegion(true)
         }
-        binding.bSelect.isVisible = true
+        binding.bSelect.isVisible = country.isNotEmpty()
     }
 
     private fun showDefaultCountry(visibility: Boolean) {
@@ -162,5 +152,9 @@ class LocationFragment : Fragment() {
             tvRegionNameSelected.isVisible = visibility
             tvRegionWhenSelected.isVisible = visibility
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
     }
 }

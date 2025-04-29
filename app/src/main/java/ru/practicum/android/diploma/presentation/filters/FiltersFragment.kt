@@ -12,13 +12,16 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import kotlinx.coroutines.launch
+import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import ru.practicum.android.diploma.R
 import ru.practicum.android.diploma.databinding.FragmentFiltersBinding
+import ru.practicum.android.diploma.presentation.filters.location.areachoice.AreaChoiceViewModel
 
 class FiltersFragment : Fragment() {
     private var _binding: FragmentFiltersBinding? = null
     private val binding get() = _binding ?: error("Binding is not initialized")
     private val filtersViewModel by activityViewModels<FiltersViewModel>()
+    private val areaChoiceViewModel by sharedViewModel<AreaChoiceViewModel>()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -61,6 +64,7 @@ class FiltersFragment : Fragment() {
             }
 
             clearWorkPlaceFilter.setOnClickListener {
+                areaChoiceViewModel.removeCountry()
                 filtersViewModel.clearSelectedLocation()
                 binding.workPlaceFilterOpen.isVisible = true
             }
