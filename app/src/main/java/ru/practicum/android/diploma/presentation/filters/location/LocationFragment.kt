@@ -1,24 +1,29 @@
 package ru.practicum.android.diploma.presentation.filters.location
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
-import org.koin.androidx.viewmodel.ext.android.viewModel
+import kotlinx.coroutines.launch
+import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import ru.practicum.android.diploma.R
 import ru.practicum.android.diploma.databinding.FragmentJobLocationBinding
+import ru.practicum.android.diploma.domain.models.AreaFilter
 import ru.practicum.android.diploma.presentation.filters.FiltersViewModel
+import ru.practicum.android.diploma.presentation.filters.location.areachoice.AreaChoiceViewModel
 
 class LocationFragment : Fragment() {
     private var _binding: FragmentJobLocationBinding? = null
     private val binding get() = _binding ?: error("Binding is not initialized")
 
-    private val locationViewModel by viewModel<LocationViewModel>()
     private val filtersViewModel by activityViewModels<FiltersViewModel>()
+    private val areaChoiceViewModel by sharedViewModel<AreaChoiceViewModel>()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -35,8 +40,17 @@ class LocationFragment : Fragment() {
     }
 
     private fun setupObservers() {
-        locationViewModel.locationLiveData.observe(viewLifecycleOwner) { state ->
-            render(state)
+        viewLifecycleOwner.lifecycleScope.launch {
+            areaChoiceViewModel.countryState.collect { state ->
+                Log.d("DEBUG", "setupObservers: ${state}")
+                renderCountry(state)
+            }
+        }
+
+        viewLifecycleOwner.lifecycleScope.launch {
+            areaChoiceViewModel.regionState.collect { state ->
+                renderRegion(state)
+            }
         }
 
         binding.bRegion.setOnClickListener {
@@ -48,15 +62,15 @@ class LocationFragment : Fragment() {
         }
 
         binding.bRemoveCountry.setOnClickListener {
-            locationViewModel.removeCountry()
+            areaChoiceViewModel.removeCountry()
         }
 
         binding.bRemoveRegion.setOnClickListener {
-            locationViewModel.removeRegion()
+            areaChoiceViewModel.removeRegion()
         }
 
         binding.bSelect.setOnClickListener {
-            locationViewModel.saveFilter()
+            areaChoiceViewModel.saveFilter()
             findNavController().navigateUp()
         }
 
@@ -65,10 +79,22 @@ class LocationFragment : Fragment() {
         }
     }
 
-    private fun render(state: LocationState) {
+    private fun renderCountry(state: AreaFilter?) {
         when (state) {
-            is LocationState.Empty -> renderEmpty()
-            is LocationState.Content -> renderContent(state.country, state.region)
+            null -> renderEmpty()
+            else -> {
+                renderContent(state.name ?: "", "")
+            }
+        }
+    }
+
+    private fun renderRegion(state: AreaFilter?) {
+        val countryName = areaChoiceViewModel.countryState.value?.name.orEmpty()
+
+        if (state == null) {
+            renderEmptyRegion()
+        } else {
+            renderContent(countryName, state?.name.orEmpty())
         }
     }
 
@@ -80,16 +106,24 @@ class LocationFragment : Fragment() {
         bSelect.isVisible = false
     }
 
-    private fun renderContent(country: String, region: String) = with(binding) {
+    private fun renderEmptyRegion() {
+        showDefaultRegion(true)
+        showRegion(false)
+        binding.bSelect.isVisible = false
+    }
+
+    private fun renderContent(country: String, region: String) {
         if (country.isNotEmpty()) {
-            showCountry(true)
+            binding.tvCountryNameSelected.text = country
             showDefaultCountry(false)
+            showCountry(true)
         }
         if (region.isNotEmpty()) {
-            showRegion(true)
+            binding.tvRegionNameSelected.text = region
             showDefaultRegion(false)
+            showRegion(true)
         }
-        bSelect.isVisible = true
+        binding.bSelect.isVisible = true
     }
 
     private fun showDefaultCountry(visibility: Boolean) {
@@ -116,9 +150,9 @@ class LocationFragment : Fragment() {
 
     private fun showRegion(visibility: Boolean) {
         with(binding) {
-            bRemoveCountry.isVisible = visibility
-            tvCountryNameSelected.isVisible = visibility
-            tvCountryWhenSelected.isVisible = visibility
+            bRemoveRegion.isVisible = visibility
+            tvRegionNameSelected.isVisible = visibility
+            tvRegionWhenSelected.isVisible = visibility
         }
     }
 }

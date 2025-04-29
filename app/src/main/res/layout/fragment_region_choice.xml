@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".presentation.filters.areachoice.CountryChoiceFragment">
+    tools:context=".presentation.filters.location.areachoice.CountryChoiceFragment">
 
     <ImageButton
         android:id="@+id/bToFilters"

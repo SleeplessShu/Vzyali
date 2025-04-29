@@ -48,6 +48,7 @@
             android:paddingHorizontal="@dimen/margin_16"
             android:paddingVertical="@dimen/margin_20"
             android:text="@string/filter_Country"
+            android:visibility="visible"
             android:textColor="@color/grey"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -59,6 +60,7 @@
             android:layout_height="wrap_content"
             android:backgroundTint="?attr/colorPrimary"
             android:src="@drawable/ic_arrow_forward"
+            android:visibility="visible"
             app:layout_constraintBottom_toBottomOf="@id/bCountry"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@id/bCountry"
@@ -88,12 +90,14 @@
             android:gravity="start"
             android:paddingHorizontal="@dimen/margin_16"
             android:paddingBottom="@dimen/margin_12"
+            android:text="@string/filter_Country"
             android:textColor="?attr/colorOnPrimary"
-            android:visibility="invisible"
+            android:visibility="visible"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tvCountryWhenSelected"
-            tools:text="Россия" />
+            tools:text="Россия"
+            tools:visibility="visible" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

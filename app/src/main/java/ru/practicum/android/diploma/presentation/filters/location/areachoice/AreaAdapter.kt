@@ -1,4 +1,4 @@
-package ru.practicum.android.diploma.presentation.filters.areachoice
+package ru.practicum.android.diploma.presentation.filters.location.areachoice
 
 import android.view.LayoutInflater
 import android.view.View

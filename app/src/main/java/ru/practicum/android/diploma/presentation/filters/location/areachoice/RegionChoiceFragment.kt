@@ -1,6 +1,7 @@
-package ru.practicum.android.diploma.presentation.filters.areachoice
+package ru.practicum.android.diploma.presentation.filters.location.areachoice
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,7 +13,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.coroutines.launch
-import org.koin.androidx.viewmodel.ext.android.viewModel
+import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import ru.practicum.android.diploma.databinding.FragmentRegionChoiceBinding
 import ru.practicum.android.diploma.domain.models.AreaFilter
 
@@ -20,11 +21,12 @@ class RegionChoiceFragment : Fragment() {
     private var _binding: FragmentRegionChoiceBinding? = null
     private val binding get() = _binding ?: error("Binding is not initialized")
 
-    private val viewModel by viewModel<AreaChoiceViewModel>()
+    private val viewModel by sharedViewModel<AreaChoiceViewModel>()
     private var rvRegions: RecyclerView? = null
     private val adapter = AreaAdapter { area ->
         viewModel.setRegion(area)
         viewModel.setCountryIfNull(area)
+        Log.d("DEBUG", "adapter: ${area}")
         findNavController().popBackStack()
     }
 
@@ -86,7 +88,7 @@ class RegionChoiceFragment : Fragment() {
         placeholderNoChilds.root.isVisible = errorType is FiltersUiError.NoChildRegions
         placeholderServerError.root.isVisible =
             errorType != FiltersUiError.NoConnection && errorType != FiltersUiError.BadRequest &&
-            errorType != FiltersUiError.NoChildRegions
+                errorType != FiltersUiError.NoChildRegions
         rvRegions.isVisible = false
     }
 

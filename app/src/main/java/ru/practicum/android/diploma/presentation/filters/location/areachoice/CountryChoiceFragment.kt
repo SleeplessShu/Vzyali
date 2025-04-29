@@ -1,4 +1,4 @@
-package ru.practicum.android.diploma.presentation.filters.areachoice
+package ru.practicum.android.diploma.presentation.filters.location.areachoice
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -11,7 +11,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.coroutines.launch
-import org.koin.androidx.viewmodel.ext.android.viewModel
+import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import ru.practicum.android.diploma.databinding.FragmentCountryChoiceBinding
 import ru.practicum.android.diploma.domain.models.AreaFilter
 
@@ -19,7 +19,7 @@ class CountryChoiceFragment : Fragment() {
     private var _binding: FragmentCountryChoiceBinding? = null
     private val binding get() = _binding ?: error("Binding is not initialized")
 
-    private val viewModel by viewModel<AreaChoiceViewModel>()
+    private val viewModel by sharedViewModel<AreaChoiceViewModel>()
     private var rvCountries: RecyclerView? = null
 
     private val adapter = AreaAdapter { area ->

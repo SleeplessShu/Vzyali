@@ -1,4 +1,4 @@
-package ru.practicum.android.diploma.presentation.filters.areachoice
+package ru.practicum.android.diploma.presentation.filters.location.areachoice
 
 sealed class FiltersUiError {
     object NoConnection : FiltersUiError()

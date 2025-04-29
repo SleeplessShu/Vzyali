@@ -81,13 +81,13 @@
 
     <fragment
         android:id="@+id/navigation_choose_country"
-        android:name="ru.practicum.android.diploma.presentation.filters.areachoice.CountryChoiceFragment"
+        android:name="ru.practicum.android.diploma.presentation.filters.location.areachoice.CountryChoiceFragment"
         android:label="@string/filter_Country"
         tools:layout="@layout/fragment_country_choice" />
 
     <fragment
         android:id="@+id/navigation_choose_region"
-        android:name="ru.practicum.android.diploma.presentation.filters.areachoice.RegionChoiceFragment"
+        android:name="ru.practicum.android.diploma.presentation.filters.location.areachoice.RegionChoiceFragment"
         android:label="@string/filter_Region"
         tools:layout="@layout/fragment_region_choice" />
 
