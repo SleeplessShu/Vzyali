@@ -10,7 +10,7 @@
     tools:context=".presentation.filters.FiltersFragment">
 
     <ImageButton
-        android:id="@+id/bToSearch"
+        android:id="@+id/bBack"
         android:layout_width="@dimen/icon_size_48"
         android:layout_height="@dimen/icon_size_48"
         android:layout_marginVertical="@dimen/margin_4"
@@ -31,7 +31,7 @@
         android:text="@string/header_Industry_selection"
         android:textColor="?attr/colorOnPrimary"
         app:layout_constraintBottom_toTopOf="@id/header_title"
-        app:layout_constraintStart_toEndOf="@id/bToSearch"
+        app:layout_constraintStart_toEndOf="@id/bBack"
         app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -100,7 +100,7 @@
         tools:visibility="visible" />
 
     <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/select_btn"
+        android:id="@+id/apply_btn"
         style="@style/FilterBottomButtonsStyle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -113,5 +113,41 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
+
+    <include
+        android:id="@+id/loading_placeholder"
+        layout="@layout/placeholder_loading"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/search_view" />
+
+    <include
+        android:id="@+id/no_internet_placeholder"
+        layout="@layout/placeholder_no_internet"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/search_view" />
+
+    <include
+        android:id="@+id/empty_placeholder"
+        layout="@layout/placeholder_empty_list"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/search_view" />
+
+    <include
+        android:id="@+id/server_error_placeholder"
+        layout="@layout/placeholder_server_error_search"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/search_view" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

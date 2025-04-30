@@ -38,6 +38,7 @@
     <string name="filter_Salary">Ожидаемая зарплата</string>
     <string name="filter_Country">Страна</string>
     <string name="filter_Region">Регион</string>
+    <string name="filter_Location">Location</string>
 
     <!--КНОПКИ-->
     <string name="buttons_Select">Выбрать</string>
@@ -45,11 +46,10 @@
     <string name="buttons_Clear">Сбросить</string>
 
     <!--РЕЗУЛЬТАТ ПОИСКА-->
+    <string name="results_not_found">Таких вакансий нет</string>
     <!--val vacanciesCountText = resources.getQuantityString(
    R.plurals.vacancies_count, vacanciesCount, vacanciesCount
    )-->
-
-    <string name="results_not_found">Таких вакансий нет</string>
     <string name="results_Find">Найдено </string>
     <plurals name="vacancies_count">
         <item quantity="one">%d вакансия</item>       <!-- 1 вакансия -->
@@ -57,6 +57,7 @@
         <item quantity="many">%d вакансий</item>    <!-- 5, 6, 7... вакансий -->
         <item quantity="other">%d вакансий</item>   <!-- 0, 11-19, 20+ вакансий -->
     </plurals>
+
     <!--Зарплата -->
     <string name="salary_from_to">От %1$s до %2$s %3$s</string>
     <string name="salary_from">От %1$s %2$s</string>
@@ -68,6 +69,7 @@
     <!--Опыт -->
     <string name="expirienseFrom">от</string>
     <string name="expirienseTo">до</string>
+
     <!--График -->
     <string name="fullDay">Полный день</string>
     <string name="shift">Сменный график</string>
@@ -91,13 +93,6 @@
     <string name="team_Tatyana">Татьяна Швецова</string>
     <string name="team_Dimitrii">Дмитрий Бурмистров</string>
     <string name="team_Emil">Эмиль Алмаметов</string>
-
-    <!--ЗАГЛУШКИ-->
-    <string name="navigation_Filters">Фильтры</string>
-    <string name="navigation_Vacancy">Вакансия</string>
-    <string name="navigation_Share">Поделиться</string>
-    <string name="navigation_Back">Вернуться назад</string>
-    <string name="navigation_AddToFavorite">Добавить в избранное</string>
 
     <!--INTENTS-->
     <string name="intent_sharing_type">text/plain</string>

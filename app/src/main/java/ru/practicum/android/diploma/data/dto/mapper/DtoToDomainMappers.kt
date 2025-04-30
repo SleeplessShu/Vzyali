@@ -10,12 +10,14 @@ import ru.practicum.android.diploma.data.dto.additional.PhoneDto
 import ru.practicum.android.diploma.data.dto.additional.ProfessionalRoleDto
 import ru.practicum.android.diploma.data.dto.additional.ScheduleDto
 import ru.practicum.android.diploma.data.dto.main.AreaDto
+import ru.practicum.android.diploma.data.dto.main.AreaFilterDto
 import ru.practicum.android.diploma.data.dto.main.EmployerDto
 import ru.practicum.android.diploma.data.dto.main.IndustryDto
 import ru.practicum.android.diploma.data.dto.main.LogoUrlsDto
 import ru.practicum.android.diploma.data.dto.main.SalaryDto
 import ru.practicum.android.diploma.data.dto.main.VacancyLongDto
 import ru.practicum.android.diploma.data.dto.main.VacancyShortDto
+import ru.practicum.android.diploma.domain.models.AreaFilter
 import ru.practicum.android.diploma.domain.models.additional.Address
 import ru.practicum.android.diploma.domain.models.additional.Contacts
 import ru.practicum.android.diploma.domain.models.additional.Employment
@@ -124,9 +126,15 @@ fun EmployerDto.toDomain(): Employer = Employer(
 )
 
 fun IndustryDto.toDomain(): Industry = Industry(
-    id = this.id.orEmpty(),
-    name = this.name.orEmpty()
+    id = this.id,
+    name = this.name
 )
+
+// fun IndustryDto.toDomainGroup(groupId: String): Industry =
+//    Industry(
+//        id   = groupId,
+//        name = this.name
+//    )
 
 fun LogoUrlsDto.toDomain(): LogoUrls = LogoUrls(
     logo90 = this.logo90.orEmpty(),
@@ -140,3 +148,15 @@ fun SalaryDto.toDomain(): Salary = Salary(
     currency = this.currency,
     gross = this.gross ?: true
 )
+
+fun AreaFilterDto.toDomain(): AreaFilter =
+    AreaFilter(
+        areas = if (!areas.isNullOrEmpty()) {
+            this.areas.map { it.toDomain() }
+        } else {
+            emptyList()
+        },
+        id = this.id,
+        name = this.name,
+        parentId = this.parentId
+    )

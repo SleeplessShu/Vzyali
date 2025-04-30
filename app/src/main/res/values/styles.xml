@@ -37,9 +37,9 @@
     <style name="FilterStyle" parent="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.Dense">
         <item name="boxStrokeWidth">0dp</item>
         <item name="boxStrokeWidthFocused">0dp</item>
-        <item name="hintTextColor">?attr/colorSecondary</item>
         <item name="android:fontFamily">@font/ys_display_regular</item>
-        <item name="android:textColorHint">@color/grey</item>
+        <item name="android:textColorHint">@color/industry_hint_color</item>
+        <item name="hintTextColor">@color/industry_hint_color</item>
         <item name="android:textSize">@dimen/text_size_16</item>
         <item name="android:fontWeight">400</item>
         <item name="android:textAlignment">viewStart</item>
@@ -53,14 +53,15 @@
         <item name="android:backgroundTint">@android:color/transparent</item>
         <item name="android:fontFamily">@font/ys_display_regular</item>
         <item name="android:textColor">?attr/edittext_color</item>
-        <item name="android:textColorHint">?attr/colorSecondary</item>
+        <item name="android:textColorHint">?attr/colorOnPrimary</item>
         <item name="android:textSize">@dimen/text_size_16</item>
         <item name="android:fontWeight">400</item>
         <item name="android:textAlignment">viewStart</item>
         <item name="android:imeOptions">actionDone|flagNoExtractUi</item>
         <item name="android:inputType">textCapSentences</item>
-        <item name="android:maxLines">1</item>
-        <item name="android:singleLine">true</item>
+        <item name="android:maxLines">2</item>
+        <item name="android:ellipsize">end</item>
+
     </style>
 
     <style name="PlaceholderTextStyle" parent="TextAppearance.AppCompat">
@@ -80,12 +81,13 @@
     <style name="SalaryEditText" parent="Widget.MaterialComponents.TextInputEditText.FilledBox">
         <item name="android:backgroundTint">?attr/colorSecondary</item>
         <item name="android:fontFamily">@font/ys_display_regular</item>
-        <item name="android:textColor">?attr/filter_edittext_color</item>
+        <item name="android:textColor">?attr/salary_edittext_color</item>
         <item name="android:textSize">@dimen/text_size_16</item>
         <item name="android:textAlignment">viewStart</item>
         <item name="android:imeOptions">actionDone</item>
         <item name="android:inputType">number</item>
         <item name="android:maxLines">1</item>
+        <item name="android:textDirection">ltr</item>
         <item name="android:textCursorDrawable">@drawable/cursor_blue</item>
         <item name="colorControlActivated">@color/blue</item>
 
@@ -133,12 +135,12 @@
         <item name="android:focusable">true</item>
         <item name="android:focusableInTouchMode">true</item>
         <item name="android:cursorVisible">true</item>
-        <item name="android:textCursorDrawable">"@drawable/cursor_edit"</item>
+        <item name="android:textCursorDrawable">@drawable/cursor_edit</item>
         <item name="android:maxLines">1</item>
         <item name="android:scrollHorizontally">true</item>
         <item name="android:ellipsize">none</item>
-        <item name="android:textColor">"@color/black"</item>
-        <item name="android:textColorHint">"?attr/colorOnSecondary"</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="android:textColorHint">?attr/colorOnSecondary</item>
     </style>
 
     <style name="vacancy_recycler">

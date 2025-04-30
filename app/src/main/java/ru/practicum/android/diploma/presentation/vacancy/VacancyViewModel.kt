@@ -10,7 +10,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import ru.practicum.android.diploma.domain.api.InteractorFavoriteVacancies
-import ru.practicum.android.diploma.domain.interactor.SearchVacancyInteractor
+import ru.practicum.android.diploma.domain.api.SearchVacancyInteractor
 import ru.practicum.android.diploma.domain.models.additional.Employment
 import ru.practicum.android.diploma.domain.models.additional.Experience
 import ru.practicum.android.diploma.domain.models.additional.Schedule
