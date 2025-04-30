@@ -10,6 +10,7 @@ import ru.practicum.android.diploma.domain.models.main.Industry
 class IndustryAdapter : RecyclerView.Adapter<IndustryAdapter.IndustryViewHolder>() {
     private var industries: List<Industry> = emptyList()
     var onIndustrySelected: ((Industry) -> Unit)? = null
+
     // выбранный элемент
     var checkedIndustry: Industry? = null
         private set
