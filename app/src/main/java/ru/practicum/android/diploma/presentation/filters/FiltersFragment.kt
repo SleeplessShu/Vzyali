@@ -55,7 +55,7 @@ class FiltersFragment : Fragment() {
                 findNavController().navigateUp()
             }
 
-            workPlaceText.setOnClickListener {
+            workPlaceField.setOnClickListener {
                 findNavController().navigate(R.id.action_navigation_filters_to_navigation_choose_location)
             }
 
