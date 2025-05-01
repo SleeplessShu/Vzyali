@@ -45,24 +45,48 @@
         android:focusable="false"
         app:layout_constraintTop_toBottomOf="@id/header_title">
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/workPlace"
-            style="@style/FilterStyle"
+        <TextView
+            android:id="@+id/tv_work_place_hint"
+            style="@style/text_regular_16"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:hint="@string/filter_Job">
+            android:gravity="start"
+            android:paddingVertical="@dimen/margin_20"
+            android:text="@string/filter_Job"
+            android:visibility="visible"
+            android:textColor="@color/grey"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-            <AutoCompleteTextView
-                android:id="@+id/work_place_text"
-                style="@style/FilterOptionStyle"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:paddingTop="@dimen/margin_20"
-                android:clickable="false"
-                android:focusable="false"
-                android:inputType="none" />
+        <TextView
+            android:id="@+id/tv_work_place_hint_up"
+            style="@style/text_regular_12"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="start"
+            android:layout_marginTop="@dimen/margin_8"
+            android:text="@string/filter_Job"
+            android:textColor="?attr/colorOnPrimary"
+            android:visibility="gone"
+            app:layout_constraintBottom_toTopOf="@id/tv_industry_selected"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-        </com.google.android.material.textfield.TextInputLayout>
+        <TextView
+            android:id="@+id/tv_work_place_selected"
+            style="@style/text_regular_16"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="start"
+            android:layout_marginTop="@dimen/margin_24"
+            android:text="@string/filter_Job"
+            android:textColor="?attr/colorOnPrimary"
+            android:visibility="visible"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_industry_hint_up" />
 
         <ImageView
             android:id="@+id/work_place_filter_open"

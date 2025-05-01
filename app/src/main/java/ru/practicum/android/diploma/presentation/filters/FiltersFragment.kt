@@ -118,14 +118,19 @@ class FiltersFragment : Fragment() {
         tvIndustryHintUp.isVisible = hasIndustry
         tvIndustrySelected.isVisible = hasIndustry
         tvIndustrySelected.text = state.industry?.name.orEmpty()
+        industryFilterOpen.isVisible = !hasIndustry
+        clearIndustryFilter.isVisible = hasIndustry
+
+        val hasLocation = state.location != null
+        tvWorkPlaceHint.isVisible = !hasLocation
+        tvWorkPlaceHintUp.isVisible = hasLocation
+        tvWorkPlaceSelected.isVisible = hasLocation
+        tvWorkPlaceSelected.text = locationName
+        workPlaceFilterOpen.isVisible = state.location == null
+        clearWorkPlaceFilter.isVisible = hasLocation
+
         salaryExpectedInput.setText(state.salaryExpectations?.toString().orEmpty())
         salaryExpectedInput.setSelection(salaryExpectedInput.text?.length ?: 0)
-        industryFilterOpen.isVisible = state.industry == null
-        clearIndustryFilter.isVisible = state.industry != null
-
-        workPlaceText.setText(locationName)
-        workPlaceFilterOpen.isVisible = state.location == null
-        clearWorkPlaceFilter.isVisible = state.location != null
 
         btnGroup.isVisible = state.hasAny
         checkbox.isChecked = state.hideWithoutSalary
