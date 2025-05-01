@@ -271,6 +271,7 @@ class SearchFragment : Fragment() {
             toggleKeyboard(binding.searchField, true)
         } else {
             debouncedSearch?.cancel?.invoke()
+            searchViewModel.searchVacancy(searchQuery)
             toggleKeyboard(binding.searchField, false)
         }
     }
