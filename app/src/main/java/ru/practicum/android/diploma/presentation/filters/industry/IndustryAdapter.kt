@@ -51,8 +51,7 @@ class IndustryAdapter : RecyclerView.Adapter<IndustryAdapter.IndustryViewHolder>
         fun bind(industry: Industry, position: Int) {
             binding.itemName.text = industry.name
             binding.roundBtn.isChecked = industry == checkedIndustry
-
-            binding.roundBtn.setOnClickListener {
+            itemView.setOnClickListener {
                 onItemClick(industry, position)
             }
         }
