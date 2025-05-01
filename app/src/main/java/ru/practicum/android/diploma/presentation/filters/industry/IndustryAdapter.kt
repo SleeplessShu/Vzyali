@@ -13,7 +13,6 @@ class IndustryAdapter : RecyclerView.Adapter<IndustryAdapter.IndustryViewHolder>
 
     // выбранный элемент
     var checkedIndustry: Industry? = null
-        private set
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): IndustryViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
