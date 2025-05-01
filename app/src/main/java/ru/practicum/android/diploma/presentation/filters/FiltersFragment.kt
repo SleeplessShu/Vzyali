@@ -38,7 +38,6 @@ class FiltersFragment : Fragment() {
         setupBindings()
         observeState()
         editSalary()
-
     }
 
     private fun editSalary() {
@@ -56,11 +55,11 @@ class FiltersFragment : Fragment() {
                 findNavController().navigateUp()
             }
 
-            workPlaceFilterOpen.setOnClickListener {
+            workPlaceText.setOnClickListener {
                 findNavController().navigate(R.id.action_navigation_filters_to_navigation_choose_location)
             }
 
-            industryFilterOpen.setOnClickListener {
+            industryField.setOnClickListener {
                 findNavController().navigate(R.id.action_navigation_filters_to_navigation_choose_industry)
             }
 
@@ -128,7 +127,6 @@ class FiltersFragment : Fragment() {
         workPlaceFilterOpen.isVisible = state.location == null
         clearWorkPlaceFilter.isVisible = state.location != null
 
-        btnGroup.isVisible == state.hasAny
         btnGroup.isVisible = state.hasAny
         checkbox.isChecked = state.hideWithoutSalary
     }
