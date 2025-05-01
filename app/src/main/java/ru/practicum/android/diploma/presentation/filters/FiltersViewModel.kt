@@ -1,6 +1,5 @@
 package ru.practicum.android.diploma.presentation.filters
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -27,7 +26,6 @@ class FiltersViewModel(private val filtersPrefsInteractor: FiltersPrefsInteracto
     fun setIndustry(newIndustry: Industry) {
         _selectedIndustry.value = newIndustry
         _filterState.value = _filterState.value.copy(industry = newIndustry)
-        Log.d("ChosenIndustry", "${newIndustry.id} - ${newIndustry.name}")
     }
 
     fun setSalary(newSalary: Int) {
@@ -44,7 +42,8 @@ class FiltersViewModel(private val filtersPrefsInteractor: FiltersPrefsInteracto
             industryId = state.industry?.id,
             industryName = state.industry?.name,
             salary = state.salaryExpectations,
-            hide = state.hideWithoutSalary
+            hide = state.hideWithoutSalary,
+            location = state.location
         )
     }
 

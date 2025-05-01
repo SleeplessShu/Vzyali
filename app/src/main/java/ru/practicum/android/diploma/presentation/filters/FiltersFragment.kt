@@ -131,4 +131,3 @@ class FiltersFragment : Fragment() {
         checkbox.isChecked = state.hideWithoutSalary
     }
 }
-
