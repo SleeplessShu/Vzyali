@@ -50,6 +50,9 @@ class ChooseIndustryFragment : Fragment() {
                 filtersViewModel.setIndustry(industry)
                 binding.applyBtn.isVisible = true
             }
+
+            adapter.checkedIndustry = filtersViewModel.selectedIndustry.value
+
             bBack.setOnClickListener {
                 findNavController().navigateUp()
             }
