@@ -25,9 +25,9 @@
         android:layout_marginTop="@dimen/margin_6"
         android:layout_marginEnd="@dimen/margin_4"
         android:buttonTint="@color/blue"
+        android:clickable="false"
         android:gravity="center"
         android:padding="@dimen/margin_12"
-        android:theme="@style/ToolbarRipple"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>
