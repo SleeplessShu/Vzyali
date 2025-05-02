@@ -110,7 +110,7 @@
         <item name="boxCornerRadiusTopEnd">@dimen/radius_12</item>
         <item name="boxCornerRadiusTopStart">@dimen/radius_12</item>
 
-        <item name="hintTextColor">@color/hint_selector</item>
+
         <item name="android:textColorHint">@color/hint_selector</item>
         <item name="hintTextAppearance">@style/HintTextStyle</item>
 

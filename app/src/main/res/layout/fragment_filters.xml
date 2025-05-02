@@ -181,29 +181,69 @@
             app:tint="?attr/colorOnPrimary" />
     </FrameLayout>
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/salary_expected_layout"
-        style="@style/FilterFrameLayoutSettings"
+    <FrameLayout
+        android:id="@+id/salary_field"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/margin_24"
-        android:focusableInTouchMode="true"
-        android:hint="@string/filter_Salary"
-        app:endIconDrawable="@drawable/ic_close"
-        app:endIconMode="clear_text"
-        app:endIconTint="?attr/colorOnPrimary"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginHorizontal="@dimen/margin_16"
         app:layout_constraintTop_toBottomOf="@id/industry_field"
-        app:placeholderText="@string/hint_Enter_amount">
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
 
-        <com.google.android.material.textfield.TextInputEditText
+        <EditText
             android:id="@+id/salary_expected_input"
             style="@style/SalaryEditText"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:hint="@string/hint_Enter_amount"
+            android:inputType="number"
+            android:background="@drawable/bt_round_drawable" />
 
-    </com.google.android.material.textfield.TextInputLayout>
+        <TextView
+            android:id="@+id/tvSalaryHintUpEmpty"
+            style="@style/text_regular_12"
+            android:layout_marginTop="@dimen/margin_8"
+            android:layout_marginStart="@dimen/margin_16"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/filter_Salary"
+            android:textColor="@color/grey"
+            android:visibility="visible"/>
+
+        <TextView
+            android:id="@+id/tvSalaryHintUpActivated"
+            style="@style/text_regular_12"
+            android:layout_marginTop="@dimen/margin_8"
+            android:layout_marginStart="@dimen/margin_16"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/filter_Salary"
+            android:textColor="?attr/colorOnPrimary"
+            android:visibility="visible"/>
+
+        <TextView
+            android:id="@+id/tvSalaryHintUpFocused"
+            style="@style/text_regular_12"
+            android:layout_marginTop="@dimen/margin_8"
+            android:layout_marginStart="@dimen/margin_16"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/filter_Salary"
+            android:textColor="@color/blue"
+            android:visibility="visible"/>
+
+        <ImageButton
+            android:id="@+id/clear_salary_filter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/margin_14"
+            android:layout_gravity="end|center_vertical"
+            android:src="@drawable/ic_close"
+            android:background="@android:color/transparent"
+            android:visibility="visible"
+            app:tint="?attr/colorOnPrimary" />
+        </FrameLayout>
 
     <TextView
         android:id="@+id/hide_without_salary"
@@ -216,7 +256,7 @@
         android:text="@string/filter_Hide_without_salary"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/salary_expected_layout" />
+        app:layout_constraintTop_toBottomOf="@id/salary_field" />
 
     <CheckBox
         android:id="@+id/checkbox"

@@ -17,6 +17,7 @@ import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import ru.practicum.android.diploma.R
 import ru.practicum.android.diploma.databinding.FragmentFiltersBinding
 import ru.practicum.android.diploma.presentation.filters.location.areachoice.AreaChoiceViewModel
+import ru.practicum.android.diploma.util.extensions.setupThousandSeparatorFormatter
 
 class FiltersFragment : Fragment() {
     private var _binding: FragmentFiltersBinding? = null
@@ -37,13 +38,37 @@ class FiltersFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         setupBindings()
         observeState()
-        editSalary()
+        setupSalaryFormatter()
+        setupSalaryHintLogic()
+
     }
 
-    private fun editSalary() {
-        binding.salaryExpectedInput.doOnTextChanged { s, _, _, _ ->
-            salaryInput = s?.toString()?.toIntOrNull()
-            salaryInput?.let { filtersViewModel.setSalary(it) }
+    private fun setupSalaryHintLogic() = with(binding) {
+        fun updateSalaryHints() {
+            val hasText = salaryExpectedInput.text?.isNotBlank() == true
+            val hasFocus = salaryExpectedInput.isFocused
+
+            clearSalaryFilter.isVisible = hasText
+
+            tvSalaryHintUpEmpty.isVisible = !hasText && !hasFocus
+            tvSalaryHintUpFocused.isVisible = hasFocus
+            tvSalaryHintUpActivated.isVisible = hasText && !hasFocus
+        }
+
+        salaryExpectedInput.doOnTextChanged { _, _, _, _ ->
+            updateSalaryHints()
+        }
+        salaryExpectedInput.setOnFocusChangeListener { _, _ ->
+            updateSalaryHints()
+        }
+        updateSalaryHints()
+    }
+
+
+    private fun setupSalaryFormatter() = with(binding) {
+        salaryExpectedInput.setupThousandSeparatorFormatter { value ->
+            salaryInput = value
+            value?.let { filtersViewModel.setSalary(it) }
         }
     }
 
@@ -74,8 +99,8 @@ class FiltersFragment : Fragment() {
                 binding.workPlaceFilterOpen.isVisible = true
             }
 
-            salaryExpectedLayout.setEndIconOnClickListener {
-                binding.salaryExpectedInput.text?.clear()
+            clearSalaryFilter.setOnClickListener {
+                salaryExpectedInput.text?.clear()
                 filtersViewModel.clearSalary()
             }
 
