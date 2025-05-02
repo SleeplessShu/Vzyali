@@ -77,7 +77,6 @@ class FiltersFragment : Fragment() {
         updateSalaryHints()
     }
 
-
     private fun setupSalaryFormatter() = with(binding) {
         salaryExpectedInput.setupThousandSeparatorFormatter { value ->
             salaryInput = value
