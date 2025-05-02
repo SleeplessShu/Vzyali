@@ -8,20 +8,12 @@ import ru.practicum.android.diploma.domain.models.main.Industry
 import ru.practicum.android.diploma.domain.models.main.Location
 
 class FiltersViewModel(private val filtersPrefsInteractor: FiltersPrefsInteractor) : ViewModel() {
-    private val _selectedIndustry = MutableStateFlow<Industry?>(null)
-    val selectedIndustry: StateFlow<Industry?> = _selectedIndustry
 
-    private val _filterState = MutableStateFlow(UiFiltersState())
+    private val _filterState = MutableStateFlow(filtersPrefsInteractor.getFilters().toUiState())
     val filterState: StateFlow<UiFiltersState> = _filterState
 
-    init {
-        _filterState.value = getFilters()
-        _selectedIndustry.value = _filterState.value.industry
-    }
-
-    private fun getFilters(): UiFiltersState {
-        return filtersPrefsInteractor.getFilters().toUiState()
-    }
+    private val _selectedIndustry = MutableStateFlow(_filterState.value.industry)
+    val selectedIndustry: StateFlow<Industry?> = _selectedIndustry
 
     fun setIndustry(newIndustry: Industry) {
         _selectedIndustry.value = newIndustry
@@ -34,6 +26,11 @@ class FiltersViewModel(private val filtersPrefsInteractor: FiltersPrefsInteracto
 
     fun setHideWithoutSalary(hide: Boolean) {
         _filterState.value = _filterState.value.copy(hideWithoutSalary = hide)
+    }
+
+    fun hasChanges(): Boolean {
+        val currentFilters = filtersPrefsInteractor.getFilters().toUiState()
+        return _filterState.value != currentFilters
     }
 
     fun saveAll() {
@@ -63,6 +60,12 @@ class FiltersViewModel(private val filtersPrefsInteractor: FiltersPrefsInteracto
 
     fun clearSelectedLocation() {
         _filterState.value = _filterState.value.copy(location = null)
+    }
+
+    fun discardChanges() {
+        val saved = filtersPrefsInteractor.getFilters().toUiState()
+        _filterState.value = saved
+        _selectedIndustry.value = saved.industry
     }
 
     fun setCountry(countryId: Int, countryName: String) {

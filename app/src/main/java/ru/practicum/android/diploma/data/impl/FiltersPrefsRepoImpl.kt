@@ -21,14 +21,26 @@ class FiltersPrefsRepoImpl(private val appPrefsService: AppPrefsService) : Filte
         location: Location?
     ) {
         if (location != null) {
-            val dtoJson = location.toDto().let(json::encodeToString)
+            val dtoJson = json.encodeToString(location.toDto())
             appPrefsService.putString(KEY_LOCATION, dtoJson)
         } else {
             appPrefsService.remove(KEY_LOCATION)
         }
-        appPrefsService.putString(KEY_INDUSTRY_ID, industryId.orEmpty())
-        appPrefsService.putString(KEY_INDUSTRY_NAME, industryName.orEmpty())
-        appPrefsService.putString(KEY_SALARY, salary?.toString() ?: "")
+        if (!industryId.isNullOrBlank()) {
+            appPrefsService.putString(KEY_INDUSTRY_ID, industryId)
+        } else {
+            appPrefsService.remove(KEY_INDUSTRY_ID)
+        }
+        if (!industryName.isNullOrBlank()) {
+            appPrefsService.putString(KEY_INDUSTRY_NAME, industryName)
+        } else {
+            appPrefsService.remove(KEY_INDUSTRY_NAME)
+        }
+        if (salary != null) {
+            appPrefsService.putString(KEY_SALARY, salary.toString())
+        } else {
+            appPrefsService.remove(KEY_SALARY)
+        }
         appPrefsService.putString(KEY_HIDE_WITHOUT_SALARY, hide.toString())
     }
 

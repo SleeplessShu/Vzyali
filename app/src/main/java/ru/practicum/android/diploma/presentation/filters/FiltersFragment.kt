@@ -1,9 +1,13 @@
 package ru.practicum.android.diploma.presentation.filters
 
+import android.app.AlertDialog
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.OnBackPressedCallback
+import androidx.core.content.ContextCompat
+import androidx.core.content.res.ResourcesCompat
 import androidx.core.view.isVisible
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
@@ -11,6 +15,7 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.activityViewModel
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
@@ -41,6 +46,14 @@ class FiltersFragment : Fragment() {
         setupSalaryFormatter()
         setupSalaryHintLogic()
 
+        requireActivity().onBackPressedDispatcher.addCallback(
+            viewLifecycleOwner,
+            object : OnBackPressedCallback(true) {
+                override fun handleOnBackPressed() {
+                    confirmExit()
+                }
+            }
+        )
     }
 
     private fun setupSalaryHintLogic() = with(binding) {
@@ -77,7 +90,7 @@ class FiltersFragment : Fragment() {
             btnGroup.isVisible = !binding.tvIndustrySelected.text.isNullOrEmpty()
 
             bBack.setOnClickListener {
-                findNavController().navigateUp()
+                confirmExit()
             }
 
             workPlaceField.setOnClickListener {
@@ -114,7 +127,10 @@ class FiltersFragment : Fragment() {
             }
 
             cancelBtn.setOnClickListener {
-                filtersViewModel.clearAll()
+                filtersViewModel.clearSalary()
+                filtersViewModel.clearSelectedIndustry()
+                filtersViewModel.clearSelectedLocation()
+                filtersViewModel.setHideWithoutSalary(false)
             }
         }
     }
@@ -127,6 +143,40 @@ class FiltersFragment : Fragment() {
                 }
             }
         }
+    }
+
+    private fun confirmExit() {
+        if (!filtersViewModel.hasChanges()) {
+            findNavController().navigateUp()
+            return
+        }
+
+        val dialog = MaterialAlertDialogBuilder(requireContext(), R.style.MyAlertDialogTheme)
+            .setTitle(R.string.saveConfirmTitle)
+            .setPositiveButton(R.string.saveChanges) { _, _ ->
+                filtersViewModel.saveAll()
+                findNavController().navigateUp()
+            }
+            .setNegativeButton(R.string.discardChanges) { _, _ ->
+                filtersViewModel.discardChanges()
+                findNavController().navigateUp()
+            }
+            .setNeutralButton(R.string.cancel) { dialog, _ ->
+                dialog.dismiss()
+            }
+            .show()
+
+        val positiveBtn = dialog.getButton(AlertDialog.BUTTON_POSITIVE)
+        positiveBtn.setTextColor(ContextCompat.getColor(requireContext(), R.color.blue))
+        positiveBtn.typeface = ResourcesCompat.getFont(requireContext(), R.font.ys_display_medium)
+
+        val negativeBtn = dialog.getButton(AlertDialog.BUTTON_NEGATIVE)
+        negativeBtn.setTextColor(ContextCompat.getColor(requireContext(), R.color.blue))
+        negativeBtn.typeface = ResourcesCompat.getFont(requireContext(), R.font.ys_display_medium)
+
+        val neutralBtn = dialog.getButton(AlertDialog.BUTTON_NEUTRAL)
+        neutralBtn.setTextColor(ContextCompat.getColor(requireContext(), R.color.blue))
+        neutralBtn.typeface = ResourcesCompat.getFont(requireContext(), R.font.ys_display_medium)
     }
 
     private fun renderState(state: UiFiltersState) = with(binding) {
@@ -159,5 +209,10 @@ class FiltersFragment : Fragment() {
 
         btnGroup.isVisible = state.hasAny
         checkbox.isChecked = state.hideWithoutSalary
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }

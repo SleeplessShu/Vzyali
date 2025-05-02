@@ -197,6 +197,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/hint_Enter_amount"
+            android:textColorHint="?attr/colorOnSecondary"
             android:inputType="number"
             android:background="@drawable/bt_round_drawable" />
 
@@ -208,7 +209,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/filter_Salary"
-            android:textColor="@color/grey"
+            android:textColor="?attr/colorOnSecondary"
             android:visibility="visible"/>
 
         <TextView
@@ -219,7 +220,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/filter_Salary"
-            android:textColor="?attr/colorOnPrimary"
+            android:textColor="@color/black"
             android:visibility="visible"/>
 
         <TextView
@@ -242,7 +243,7 @@
             android:src="@drawable/ic_close"
             android:background="@android:color/transparent"
             android:visibility="visible"
-            app:tint="?attr/colorOnPrimary" />
+            app:tint="@color/black" />
         </FrameLayout>
 
     <TextView
