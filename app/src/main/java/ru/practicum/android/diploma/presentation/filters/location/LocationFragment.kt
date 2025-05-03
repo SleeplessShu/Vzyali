@@ -45,15 +45,7 @@ class LocationFragment : Fragment() {
             findNavController().navigate(R.id.action_LocationFragment_to_RegionFragment)
         }
 
-        binding.bChooseRegion.setOnClickListener {
-            findNavController().navigate(R.id.action_LocationFragment_to_RegionFragment)
-        }
-
         binding.bCountry.setOnClickListener {
-            findNavController().navigate(R.id.action_LocationFragment_to_CountryFragment)
-        }
-
-        binding.bChooseCountry.setOnClickListener {
             findNavController().navigate(R.id.action_LocationFragment_to_CountryFragment)
         }
 
