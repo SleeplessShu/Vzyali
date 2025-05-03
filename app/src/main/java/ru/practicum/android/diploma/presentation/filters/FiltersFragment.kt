@@ -1,9 +1,18 @@
 package ru.practicum.android.diploma.presentation.filters
 
+import android.content.Context
+import android.graphics.Rect
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.InputMethodManager
+import android.widget.EditText
+import androidx.activity.OnBackPressedCallback
+import androidx.appcompat.app.AppCompatActivity.INPUT_METHOD_SERVICE
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.isVisible
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
@@ -11,6 +20,7 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
+import com.google.android.material.textfield.TextInputEditText
 import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.activityViewModel
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
@@ -38,6 +48,7 @@ class FiltersFragment : Fragment() {
         setupBindings()
         observeState()
         editSalary()
+        setOnBackPressedListener()
     }
 
     private fun editSalary() {
@@ -91,6 +102,36 @@ class FiltersFragment : Fragment() {
             cancelBtn.setOnClickListener {
                 filtersViewModel.clearAll()
             }
+        }
+    }
+
+    private fun setOnBackPressedListener() {
+        object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                if (isKeyboardOpen(requireView())) {
+                    toggleKeyboard(binding.root, false)
+                } else {
+                    isEnabled = false
+                    requireActivity().onBackPressedDispatcher.onBackPressed()
+                }
+            }
+        }
+    }
+
+    fun isKeyboardOpen(view: View): Boolean {
+        val insets = ViewCompat.getRootWindowInsets(view) ?: return false
+        return insets.isVisible(WindowInsetsCompat.Type.ime())
+    }
+
+    private fun toggleKeyboard(view: View, show: Boolean) {
+        val imm = requireActivity().getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
+        if (show) {
+            view.post {
+                imm.showSoftInput(view, InputMethodManager.SHOW_IMPLICIT)
+            }
+
+        } else {
+            imm.hideSoftInputFromWindow(view.windowToken, 0)
         }
     }
 

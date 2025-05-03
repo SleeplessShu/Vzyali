@@ -57,7 +57,6 @@ class RootActivity : AppCompatActivity() {
             view.getGlobalVisibleRect(outRect)
             if (!outRect.contains(ev.rawX.toInt(), ev.rawY.toInt())) {
                 view.clearFocus()
-                hideKeyboard(view)
             }
         }
         return super.dispatchTouchEvent(ev)
@@ -79,11 +78,6 @@ class RootActivity : AppCompatActivity() {
                 .setDuration(ANIM_DURATION)
                 .start()
         }
-    }
-
-    private fun hideKeyboard(view: View) {
-        val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-        imm.hideSoftInputFromWindow(view.windowToken, 0)
     }
 
     private fun authRequest(accessToken: String) {
