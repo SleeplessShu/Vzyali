@@ -57,21 +57,20 @@ class ChooseIndustryFragment : Fragment() {
             }
 
             applyBtn.setOnClickListener {
-                if (draftIndustry != null) {
-                    filtersViewModel.setIndustry(draftIndustry!!)
-                    findNavController().popBackStack()
+                draftIndustry?.let { selected ->
+                    filtersViewModel.setIndustry(selected)
                 }
+                findNavController().popBackStack()
+            }
+            searchField.doOnTextChanged { text, _, _, _ ->
+                val searchQuery = text.toString()
+                clearFieldButton.isVisible = searchQuery.isNotBlank()
+                searchImage.isVisible = searchQuery.isBlank()
+                industryViewModel.search(searchQuery)
+            }
 
-                searchField.doOnTextChanged { text, _, _, _ ->
-                    val searchQuery = text.toString()
-                    clearFieldButton.isVisible = searchQuery.isNotBlank()
-                    searchImage.isVisible = searchQuery.isBlank()
-                    industryViewModel.search(searchQuery)
-                }
-
-                clearFieldButton.setOnClickListener {
-                    searchField.text.clear()
-                }
+            clearFieldButton.setOnClickListener {
+                searchField.text.clear()
             }
         }
     }

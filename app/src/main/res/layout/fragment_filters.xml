@@ -276,14 +276,13 @@
         style="@style/FilterBottomButtonsStyle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/margin_8"
+        android:layout_marginBottom="@dimen/margin_90"
         android:background="@drawable/bt_round_drawable"
         android:text="@string/buttons_Apply"
         android:textColor="@color/white"
         android:visibility="invisible"
         app:cornerRadius="@dimen/radius_12"
-        app:layout_constraintBottom_toTopOf="@id/cancel_btn"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         tools:visibility="visible" />
 

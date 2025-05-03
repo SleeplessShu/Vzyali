@@ -86,7 +86,13 @@ class FiltersFragment : Fragment() {
 
     private fun setupBindings() {
         with(binding) {
+            val savedValue = filtersViewModel.filterState.value.hideWithoutSalary
             btnGroup.isVisible = !binding.tvIndustrySelected.text.isNullOrEmpty()
+
+            checkbox.apply {
+                isChecked = savedValue
+                jumpDrawablesToCurrentState()
+            }
 
             bBack.setOnClickListener {
                 confirmExit()
@@ -179,6 +185,7 @@ class FiltersFragment : Fragment() {
     }
 
     private fun renderState(state: UiFiltersState) = with(binding) {
+        val hasUnsaved = filtersViewModel.hasChanges()
         val locationName = buildString {
             state.location?.countryName?.takeIf { it.isNotBlank() }?.let { append(it) }
             if (!state.location?.regionName.isNullOrBlank()) {
@@ -206,7 +213,8 @@ class FiltersFragment : Fragment() {
         salaryExpectedInput.setText(state.salaryExpectations?.toString().orEmpty())
         salaryExpectedInput.setSelection(salaryExpectedInput.text?.length ?: 0)
 
-        btnGroup.isVisible = state.hasAny
+        applyBtn.isVisible = hasUnsaved
+        cancelBtn.isVisible = state.hasAny
         checkbox.isChecked = state.hideWithoutSalary
     }
 
