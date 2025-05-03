@@ -30,7 +30,6 @@ class ChooseIndustryViewModel(
                     _state.value = ChooseIndustryScreenState.Error(mapError(result.message))
                 }
 
-                // С сервера вернется либо непустой список, либо ошибка
                 is Resource.Empty -> Unit
             }
         }

@@ -11,7 +11,6 @@ class IndustryAdapter : RecyclerView.Adapter<IndustryAdapter.IndustryViewHolder>
     private var industries: List<Industry> = emptyList()
     var onIndustrySelected: ((Industry) -> Unit)? = null
 
-    // выбранный элемент
     var checkedIndustry: Industry? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): IndustryViewHolder {
@@ -30,10 +29,10 @@ class IndustryAdapter : RecyclerView.Adapter<IndustryAdapter.IndustryViewHolder>
     fun onItemClick(industry: Industry, position: Int) {
         if (industry != checkedIndustry) {
             val checkedPosition = industries.indexOf(checkedIndustry)
-            notifyItemChanged(checkedPosition) // снимаем выделение у предыдущего выбранного элемента
-            checkedIndustry = industry // запоминаем новый выбранный элемент
+            notifyItemChanged(checkedPosition)
+            checkedIndustry = industry
         }
-        notifyItemChanged(position) // отмечаем текущий выбранный элемент
+        notifyItemChanged(position)
         onIndustrySelected?.invoke(industry)
     }
 

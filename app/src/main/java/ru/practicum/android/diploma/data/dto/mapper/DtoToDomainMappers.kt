@@ -130,12 +130,6 @@ fun IndustryDto.toDomain(): Industry = Industry(
     name = this.name
 )
 
-// fun IndustryDto.toDomainGroup(groupId: String): Industry =
-//    Industry(
-//        id   = groupId,
-//        name = this.name
-//    )
-
 fun LogoUrlsDto.toDomain(): LogoUrls = LogoUrls(
     logo90 = this.logo90.orEmpty(),
     logo240 = this.logo240.orEmpty(),
