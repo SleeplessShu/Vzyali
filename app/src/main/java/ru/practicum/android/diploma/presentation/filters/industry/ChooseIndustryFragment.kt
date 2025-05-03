@@ -1,7 +1,6 @@
 package ru.practicum.android.diploma.presentation.filters.industry
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -26,6 +25,7 @@ class ChooseIndustryFragment : Fragment() {
     private val industryViewModel by viewModel<ChooseIndustryViewModel>()
     private val filtersViewModel by activityViewModel<FiltersViewModel>()
     private val adapter = IndustryAdapter()
+    private var draftIndustry: Industry? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -46,8 +46,7 @@ class ChooseIndustryFragment : Fragment() {
             recycler.layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
 
             adapter.onIndustrySelected = { industry ->
-                Log.d("Industry-chosen", "id=${industry.id}, name=${industry.name}")
-                filtersViewModel.setIndustry(industry)
+                draftIndustry = industry
                 binding.applyBtn.isVisible = true
             }
 
@@ -58,9 +57,11 @@ class ChooseIndustryFragment : Fragment() {
             }
 
             applyBtn.setOnClickListener {
+                draftIndustry?.let { selected ->
+                    filtersViewModel.setIndustry(selected)
+                }
                 findNavController().popBackStack()
             }
-
             searchField.doOnTextChanged { text, _, _, _ ->
                 val searchQuery = text.toString()
                 clearFieldButton.isVisible = searchQuery.isNotBlank()
@@ -116,6 +117,8 @@ class ChooseIndustryFragment : Fragment() {
         serverErrorPlaceholder.root.isVisible = false
         recycler.isVisible = true
         adapter.updateItems(content)
+        adapter.checkedIndustry = filtersViewModel.selectedIndustry.value
+        adapter.notifyDataSetChanged()
     }
 
     private fun renderEmpty() = with(binding) {
