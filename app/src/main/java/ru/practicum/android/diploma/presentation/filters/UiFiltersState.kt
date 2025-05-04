@@ -11,5 +11,5 @@ data class UiFiltersState(
 ) {
     val hasAny: Boolean
         get() = industry != null ||
-            salaryExpectations != null || hideWithoutSalary
+            salaryExpectations != null || hideWithoutSalary || location != null
 }

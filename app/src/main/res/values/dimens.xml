@@ -8,6 +8,7 @@
     <!--MARGIN-->
     <dimen name="margin_156">156dp</dimen>
     <dimen name="margin_102">102dp</dimen>
+    <dimen name="margin_90">90dp</dimen>
     <dimen name="margin_64">64dp</dimen>
     <dimen name="margin_60">60dp</dimen>
     <dimen name="margin_52">52dp</dimen>

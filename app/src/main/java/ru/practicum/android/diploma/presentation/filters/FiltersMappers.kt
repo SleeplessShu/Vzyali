@@ -11,6 +11,7 @@ fun FiltersState.toUiState(): UiFiltersState {
     }
 
     return UiFiltersState(
+        location = location,
         industry = industry,
         salaryExpectations = salary,
         hideWithoutSalary = hideWithoutSalary
@@ -22,6 +23,7 @@ fun UiFiltersState.toDomainState(): FiltersState {
         industryId = industry?.id,
         industryName = industry?.name,
         salary = salaryExpectations,
-        hideWithoutSalary = hideWithoutSalary
+        hideWithoutSalary = hideWithoutSalary,
+        location = location
     )
 }
