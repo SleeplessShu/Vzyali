@@ -118,7 +118,15 @@ class SearchViewModel(
         filters.industryId?.takeIf { it.isNotBlank() }?.let { map["industry"] = it }
         filters.salary?.let { map["salary"] = it.toString() }
         if (filters.hideWithoutSalary) map["only_with_salary"] = "true"
-
+        filters.location?.let {
+            if (it.countryId > 0) {
+                map["area"] = if (it.regionId > 0) {
+                    it.regionId.toString()
+                } else {
+                    it.countryId.toString()
+                }
+            }
+        }
         Log.d("Search-params", map.toString())
         return map
     }
