@@ -243,7 +243,6 @@ class AreaChoiceViewModel(
     }
 
     fun removeRegion() {
-        Log.d("DEBUG", "removeRegion: ")
         _regionState.value = null
     }
 }
