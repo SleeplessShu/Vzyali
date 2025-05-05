@@ -64,8 +64,8 @@ class LocationFragment : Fragment() {
 
         binding.bBack.setOnClickListener {
             findNavController().navigateUp()
-            areaChoiceViewModel.removeCountry()
-            filtersViewModel.clearSelectedLocation()
+            val currentState = filtersViewModel.filterState.value
+            areaChoiceViewModel.onBackPressed(currentState)
         }
     }
 
