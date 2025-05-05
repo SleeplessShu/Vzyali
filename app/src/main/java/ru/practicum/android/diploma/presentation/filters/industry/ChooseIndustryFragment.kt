@@ -1,10 +1,14 @@
 package ru.practicum.android.diploma.presentation.filters.industry
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.InputMethodManager
+import androidx.activity.OnBackPressedCallback
+import androidx.appcompat.app.AppCompatActivity.INPUT_METHOD_SERVICE
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.isVisible
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
@@ -26,6 +30,7 @@ class ChooseIndustryFragment : Fragment() {
     private val industryViewModel by viewModel<ChooseIndustryViewModel>()
     private val filtersViewModel by activityViewModel<FiltersViewModel>()
     private val adapter = IndustryAdapter()
+    private var draftIndustry: Industry? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -46,8 +51,7 @@ class ChooseIndustryFragment : Fragment() {
             recycler.layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
 
             adapter.onIndustrySelected = { industry ->
-                Log.d("Industry-chosen", "id=${industry.id}, name=${industry.name}")
-                filtersViewModel.setIndustry(industry)
+                draftIndustry = industry
                 binding.applyBtn.isVisible = true
             }
 
@@ -58,9 +62,11 @@ class ChooseIndustryFragment : Fragment() {
             }
 
             applyBtn.setOnClickListener {
+                draftIndustry?.let { selected ->
+                    filtersViewModel.setIndustry(selected)
+                }
                 findNavController().popBackStack()
             }
-
             searchField.doOnTextChanged { text, _, _, _ ->
                 val searchQuery = text.toString()
                 clearFieldButton.isVisible = searchQuery.isNotBlank()
@@ -71,6 +77,38 @@ class ChooseIndustryFragment : Fragment() {
             clearFieldButton.setOnClickListener {
                 searchField.text.clear()
             }
+        }
+
+        setOnBackPressedListener()
+    }
+
+    private fun setOnBackPressedListener() {
+        object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                if (isKeyboardOpen(requireView())) {
+                    toggleKeyboard(binding.root, false)
+                } else {
+                    isEnabled = false
+                    requireActivity().onBackPressedDispatcher.onBackPressed()
+                }
+            }
+        }
+    }
+
+    fun isKeyboardOpen(view: View): Boolean {
+        val insets = ViewCompat.getRootWindowInsets(view) ?: return false
+        return insets.isVisible(WindowInsetsCompat.Type.ime())
+    }
+
+    private fun toggleKeyboard(view: View, show: Boolean) {
+        val imm = requireActivity().getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
+        if (show) {
+            view.post {
+                imm.showSoftInput(view, InputMethodManager.SHOW_IMPLICIT)
+            }
+
+        } else {
+            imm.hideSoftInputFromWindow(view.windowToken, 0)
         }
     }
 
@@ -116,6 +154,8 @@ class ChooseIndustryFragment : Fragment() {
         serverErrorPlaceholder.root.isVisible = false
         recycler.isVisible = true
         adapter.updateItems(content)
+        adapter.checkedIndustry = filtersViewModel.selectedIndustry.value
+        adapter.notifyDataSetChanged()
     }
 
     private fun renderEmpty() = with(binding) {

@@ -5,6 +5,7 @@ import ru.practicum.android.diploma.data.dto.additional.ContactsDto
 import ru.practicum.android.diploma.data.dto.additional.EmploymentDto
 import ru.practicum.android.diploma.data.dto.additional.ExperienceDto
 import ru.practicum.android.diploma.data.dto.additional.KeySkillDto
+import ru.practicum.android.diploma.data.dto.additional.LocationDto
 import ru.practicum.android.diploma.data.dto.additional.MetroStationDto
 import ru.practicum.android.diploma.data.dto.additional.PhoneDto
 import ru.practicum.android.diploma.data.dto.additional.ProfessionalRoleDto
@@ -30,6 +31,7 @@ import ru.practicum.android.diploma.domain.models.additional.Schedule
 import ru.practicum.android.diploma.domain.models.main.Area
 import ru.practicum.android.diploma.domain.models.main.Employer
 import ru.practicum.android.diploma.domain.models.main.Industry
+import ru.practicum.android.diploma.domain.models.main.Location
 import ru.practicum.android.diploma.domain.models.main.LogoUrls
 import ru.practicum.android.diploma.domain.models.main.Salary
 import ru.practicum.android.diploma.domain.models.main.VacancyLong
@@ -160,3 +162,10 @@ fun AreaFilterDto.toDomain(): AreaFilter =
         name = this.name,
         parentId = this.parentId
     )
+
+fun LocationDto.toDomain(): Location = Location(
+    countryId = this.countryId,
+    countryName = this.countryName,
+    regionId = this.regionId,
+    regionName = this.regionName
+)

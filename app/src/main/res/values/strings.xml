@@ -16,6 +16,13 @@
     <string name="hint_Enter_region">Введите регион</string>
     <string name="hint_Enter_industry">Введите отрасль</string>
 
+    <!--ПОДСКАЗКИ-->
+    <string name="saveConfirmTitle">Вы хотите сохранить изменения?</string>
+    <string name="saveChanges">Да</string>
+    <string name="discardChanges">Нет</string>
+    <string name="cancel">Отмена</string>
+
+
     <!--BOTTOM NAVIGATION-->
     <string name="navigation_Main">Главная</string>
     <string name="navigation_Favorite">Избранное</string>

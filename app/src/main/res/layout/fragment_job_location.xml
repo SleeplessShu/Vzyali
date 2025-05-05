@@ -33,7 +33,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/bCountry"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="@dimen/margin_60"
         android:layout_marginVertical="@dimen/margin_16"
         android:clickable="true"
         android:focusable="true"
@@ -63,11 +63,12 @@
             android:backgroundTint="?attr/colorPrimary"
             android:clickable="false"
             android:focusable="false"
+            android:paddingVertical="@dimen/margin_12"
             android:src="@drawable/ic_arrow_forward"
             android:visibility="visible"
-            app:layout_constraintBottom_toBottomOf="@id/bCountry"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@id/bCountry"
+            app:layout_constraintTop_toTopOf="parent"
             app:tint="?attr/colorOnPrimary" />
 
         <TextView
@@ -108,9 +109,9 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/bRegion"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
         android:clickable="true"
         android:focusable="true"
+        android:layout_height="@dimen/margin_60"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/bCountry">
@@ -122,7 +123,9 @@
             android:backgroundTint="?attr/colorPrimary"
             android:clickable="false"
             android:focusable="false"
+            android:paddingVertical="@dimen/margin_12"
             android:src="@drawable/ic_arrow_forward"
+            android:visibility="visible"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"

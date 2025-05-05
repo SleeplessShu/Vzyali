@@ -1,6 +1,7 @@
 package ru.practicum.android.diploma.presentation.filters.location
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -86,7 +87,7 @@ class LocationFragment : Fragment() {
     private fun renderState(country: AreaFilter?, region: AreaFilter?) {
         val countryName = country?.name.orEmpty()
         val regionName = region?.name.orEmpty()
-
+        Log.d("DEBUG", "renderState: $region")
         if (country == null && region == null) {
             renderEmpty()
         } else {
@@ -98,43 +99,23 @@ class LocationFragment : Fragment() {
     }
 
     private fun renderEmpty() = with(binding) {
-        showDefaultCountry(true)
-        showDefaultRegion(true)
-        showRegion(false)
         showCountry(false)
+        showRegion(false)
         bSelect.isVisible = false
     }
 
     private fun renderContent(country: String, region: String) {
-        if (country.isNotEmpty()) {
-            binding.tvCountryNameSelected.text = country
-            showDefaultCountry(false)
-            showCountry(true)
-        }
-        if (region.isNotEmpty()) {
-            binding.tvRegionNameSelected.text = region
-            showDefaultRegion(false)
-            showRegion(true)
-        }
+        binding.tvCountryNameSelected.text = country
+        showCountry(country.isNotEmpty())
+        binding.tvRegionNameSelected.text = region
+        showRegion(region.isNotEmpty())
         binding.bSelect.isVisible = country.isNotEmpty()
-    }
-
-    private fun showDefaultCountry(visibility: Boolean) {
-        with(binding) {
-            tvCountryEmpty.isVisible = visibility
-            bChooseCountry.isVisible = visibility
-        }
-    }
-
-    private fun showDefaultRegion(visibility: Boolean) {
-        with(binding) {
-            tvRegionEmpty.isVisible = visibility
-            bChooseRegion.isVisible = visibility
-        }
     }
 
     private fun showCountry(visibility: Boolean) {
         with(binding) {
+            tvCountryEmpty.isVisible = !visibility
+            bChooseCountry.isVisible = !visibility
             bRemoveCountry.isVisible = visibility
             tvCountryNameSelected.isVisible = visibility
             tvCountryWhenSelected.isVisible = visibility
@@ -143,6 +124,8 @@ class LocationFragment : Fragment() {
 
     private fun showRegion(visibility: Boolean) {
         with(binding) {
+            tvRegionEmpty.isVisible = !visibility
+            bChooseRegion.isVisible = !visibility
             bRemoveRegion.isVisible = visibility
             tvRegionNameSelected.isVisible = visibility
             tvRegionWhenSelected.isVisible = visibility
