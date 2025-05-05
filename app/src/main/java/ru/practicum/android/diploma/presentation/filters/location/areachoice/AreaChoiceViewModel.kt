@@ -9,10 +9,14 @@ import kotlinx.coroutines.launch
 import ru.practicum.android.diploma.R
 import ru.practicum.android.diploma.data.utils.StringProvider
 import ru.practicum.android.diploma.domain.api.AreasInteractor
+import ru.practicum.android.diploma.domain.api.FiltersPrefsInteractor
 import ru.practicum.android.diploma.domain.models.AreaFilter
 import ru.practicum.android.diploma.domain.models.Resource
+import ru.practicum.android.diploma.presentation.filters.toCountryLocation
+import ru.practicum.android.diploma.presentation.filters.toRegionLocation
 
 class AreaChoiceViewModel(
+    private val filtersPrefsInteractor: FiltersPrefsInteractor,
     private val areasInteractor: AreasInteractor,
     private val stringProvider: StringProvider
 ) : ViewModel() {
@@ -27,10 +31,10 @@ class AreaChoiceViewModel(
         MutableStateFlow<ChooseAreaScreenState>(ChooseAreaScreenState.Loading)
     val regionScreenState: StateFlow<ChooseAreaScreenState> = _regionScreenState
 
-    private val _countryState = MutableStateFlow<AreaFilter?>(null)
+    private val _countryState = MutableStateFlow<AreaFilter?>(filtersPrefsInteractor.getFilters().toCountryLocation())
     val countryState: StateFlow<AreaFilter?> = _countryState
 
-    private val _regionState = MutableStateFlow<AreaFilter?>(null)
+    private val _regionState = MutableStateFlow<AreaFilter?>(filtersPrefsInteractor.getFilters().toRegionLocation())
     val regionState: StateFlow<AreaFilter?> = _regionState
 
     fun getCountryAreas() {
