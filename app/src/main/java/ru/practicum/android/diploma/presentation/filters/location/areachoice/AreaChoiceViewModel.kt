@@ -1,5 +1,6 @@
 package ru.practicum.android.diploma.presentation.filters.location.areachoice
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -238,6 +239,7 @@ class AreaChoiceViewModel(
     }
 
     fun removeRegion() {
+        Log.d("DEBUG", "removeRegion: ")
         _regionState.value = null
     }
 }
