@@ -45,8 +45,8 @@ class SearchViewModel(
             searchVacancyInteractor.searchVacancy(map, page = 0, perPage = PER_PAGE).collect { resource ->
                 _searchState.value = when (resource) {
                     is Resource.Success -> buildSuccessState(resource.data, query, filters)
-                    is Resource.Empty -> buildEmptyState(query)
-                    is Resource.Error -> buildErrorState(resource.message, query)
+                    is Resource.Empty -> buildEmptyState(query, filters)
+                    is Resource.Error -> buildErrorState(resource.message, query, filters)
                 }
             }
         }
@@ -105,8 +105,8 @@ class SearchViewModel(
             searchVacancyInteractor.searchVacancy(map, page = 0, perPage = PER_PAGE).collect { resource ->
                 _searchState.value = when (resource) {
                     is Resource.Success -> buildSuccessState(resource.data, query, filters).copy(isRefreshing = false)
-                    is Resource.Empty -> buildEmptyState(query).copy(isRefreshing = false)
-                    is Resource.Error -> buildErrorState(resource.message, query).copy(isRefreshing = false)
+                    is Resource.Empty -> buildEmptyState(query, filters).copy(isRefreshing = false)
+                    is Resource.Error -> buildErrorState(resource.message, query, filters).copy(isRefreshing = false)
                 }
             }
         }
@@ -152,24 +152,30 @@ class SearchViewModel(
         )
     }
 
-    private fun buildEmptyState(query: String): SearchState {
+    private fun buildEmptyState(
+        query: String,
+        filters: FiltersState
+    ): SearchState {
         return SearchState(
             isLoading = false,
             error = UiError.BadRequest,
             resultText = stringProvider.getString(R.string.results_not_found),
             showResultText = true,
-            query = query
+            query = query,
+            filters = filters
         )
     }
 
     private fun buildErrorState(
         message: String,
-        query: String
+        query: String,
+        filters: FiltersState
     ): SearchState {
         return SearchState(
             isLoading = false,
             error = mapError(message),
-            query = query
+            query = query,
+            filters = filters
         )
     }
 
