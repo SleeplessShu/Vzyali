@@ -33,11 +33,12 @@ fun EditText.setupThousandSeparatorFormatter(
                 if (digits != lastDigits) {
                     lastDigits = digits
 
-                    val formatted = if (digits.isNotEmpty())
+                    val formatted = if (digits.isNotEmpty()) {
                         NumberFormat.getNumberInstance(Locale("ru"))
                             .format(digits.toLong())
-                    else
+                    } else {
                         ""
+                    }
 
                     selfChange = true
                     setText(formatted)
