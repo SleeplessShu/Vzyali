@@ -1,5 +1,6 @@
 package ru.practicum.android.diploma.presentation.filters
 
+import ru.practicum.android.diploma.domain.models.AreaFilter
 import ru.practicum.android.diploma.domain.models.FiltersState
 import ru.practicum.android.diploma.domain.models.main.Industry
 
@@ -25,5 +26,23 @@ fun UiFiltersState.toDomainState(): FiltersState {
         salary = salaryExpectations,
         hideWithoutSalary = hideWithoutSalary,
         location = location
+    )
+}
+
+fun FiltersState.toCountryLocation(): AreaFilter {
+    return AreaFilter(
+        areas = null,
+        id = location?.countryId.toString(),
+        name = location?.countryName,
+        parentId = null
+    )
+}
+
+fun FiltersState.toRegionLocation(): AreaFilter {
+    return AreaFilter(
+        areas = null,
+        id = location?.regionId.toString(),
+        name = location?.regionName,
+        parentId = null
     )
 }

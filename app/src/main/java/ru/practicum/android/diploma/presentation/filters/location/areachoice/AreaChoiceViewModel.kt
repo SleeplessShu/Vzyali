@@ -1,6 +1,5 @@
 package ru.practicum.android.diploma.presentation.filters.location.areachoice
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -9,10 +8,16 @@ import kotlinx.coroutines.launch
 import ru.practicum.android.diploma.R
 import ru.practicum.android.diploma.data.utils.StringProvider
 import ru.practicum.android.diploma.domain.api.AreasInteractor
+import ru.practicum.android.diploma.domain.api.FiltersPrefsInteractor
 import ru.practicum.android.diploma.domain.models.AreaFilter
 import ru.practicum.android.diploma.domain.models.Resource
+import ru.practicum.android.diploma.presentation.filters.UiFiltersState
+import ru.practicum.android.diploma.presentation.filters.toCountryLocation
+import ru.practicum.android.diploma.presentation.filters.toRegionLocation
+import ru.practicum.android.diploma.presentation.filters.toUiState
 
 class AreaChoiceViewModel(
+    private val filtersPrefsInteractor: FiltersPrefsInteractor,
     private val areasInteractor: AreasInteractor,
     private val stringProvider: StringProvider
 ) : ViewModel() {
@@ -27,10 +32,10 @@ class AreaChoiceViewModel(
         MutableStateFlow<ChooseAreaScreenState>(ChooseAreaScreenState.Loading)
     val regionScreenState: StateFlow<ChooseAreaScreenState> = _regionScreenState
 
-    private val _countryState = MutableStateFlow<AreaFilter?>(null)
+    private val _countryState = MutableStateFlow<AreaFilter?>(filtersPrefsInteractor.getFilters().toCountryLocation())
     val countryState: StateFlow<AreaFilter?> = _countryState
 
-    private val _regionState = MutableStateFlow<AreaFilter?>(null)
+    private val _regionState = MutableStateFlow<AreaFilter?>(filtersPrefsInteractor.getFilters().toRegionLocation())
     val regionState: StateFlow<AreaFilter?> = _regionState
 
     fun getCountryAreas() {
@@ -239,7 +244,33 @@ class AreaChoiceViewModel(
     }
 
     fun removeRegion() {
-        Log.d("DEBUG", "removeRegion: ")
         _regionState.value = null
+    }
+
+    fun onBackPressed(currentState: UiFiltersState? = null) {
+        val state = currentState ?: filtersPrefsInteractor.getFilters().toUiState()
+
+        val savedCountryName = state.location?.countryName
+        val savedCountryId = state.location?.countryId?.toString()
+
+        val savedRegionName = state.location?.regionName
+        val savedRegionId = state.location?.regionId?.toString()
+
+        val currentCountry = _countryState.value
+        val currentRegion = _regionState.value
+
+        if (currentCountry?.name != savedCountryName || currentCountry?.id != savedCountryId) {
+            _countryState.value = currentCountry?.copy(
+                name = savedCountryName,
+                id = savedCountryId
+            )
+        }
+
+        if (currentRegion?.name != savedRegionName || currentRegion?.id != savedRegionId) {
+            _regionState.value = currentRegion?.copy(
+                name = savedRegionName,
+                id = savedRegionId
+            )
+        }
     }
 }

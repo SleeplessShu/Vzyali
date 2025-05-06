@@ -64,8 +64,8 @@ class LocationFragment : Fragment() {
 
         binding.bBack.setOnClickListener {
             findNavController().navigateUp()
-            areaChoiceViewModel.removeCountry()
-            filtersViewModel.clearSelectedLocation()
+            val currentState = filtersViewModel.filterState.value
+            areaChoiceViewModel.onBackPressed(currentState)
         }
     }
 
@@ -87,7 +87,6 @@ class LocationFragment : Fragment() {
     private fun renderState(country: AreaFilter?, region: AreaFilter?) {
         val countryName = country?.name.orEmpty()
         val regionName = region?.name.orEmpty()
-        Log.d("DEBUG", "renderState: $region")
         if (country == null && region == null) {
             renderEmpty()
         } else {
