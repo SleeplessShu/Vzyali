@@ -1,9 +1,11 @@
 package ru.practicum.android.diploma.presentation.search
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.util.Log
 import android.view.KeyEvent
 import android.view.LayoutInflater
+import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
@@ -157,7 +159,24 @@ class SearchFragment : Fragment() {
         }
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     private fun setupBindings() {
+        binding.searchField.apply {
+            isFocusable = false
+            isFocusableInTouchMode = false
+            isCursorVisible = false
+
+            setOnTouchListener { v, event ->
+                if (event.action == MotionEvent.ACTION_UP) {
+                    isFocusableInTouchMode = true
+                    isCursorVisible = true
+                    requestFocus()
+                    toggleKeyboard(this, true)
+                }
+                false
+            }
+        }
+
         binding.stateLayout.apply {
             setLoadingView(R.layout.placeholder_loading)
             setEmptyView(R.layout.placeholder_search_new)
@@ -170,6 +189,8 @@ class SearchFragment : Fragment() {
         binding.clearFieldButton.setOnClickListener {
             binding.searchField.text.clear()
             binding.searchField.post {
+                binding.searchField.isFocusableInTouchMode = true
+                binding.searchField.isCursorVisible = true
                 binding.searchField.requestFocus()
                 toggleKeyboard(binding.searchField, true)
             }
