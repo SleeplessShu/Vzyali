@@ -59,13 +59,13 @@ class LocationFragment : Fragment() {
         }
 
         binding.bSelect.setOnClickListener {
+            val selectedLocation = areaChoiceViewModel.getLocation()
+            filtersViewModel.setLocation(selectedLocation)
             findNavController().navigateUp()
         }
 
         binding.bBack.setOnClickListener {
             findNavController().navigateUp()
-            val currentState = filtersViewModel.filterState.value
-            areaChoiceViewModel.onBackPressed(currentState)
         }
     }
 
@@ -92,9 +92,6 @@ class LocationFragment : Fragment() {
         } else {
             renderContent(countryName, regionName)
         }
-
-        filtersViewModel.setCountry(country?.id?.toIntOrNull() ?: -1, countryName)
-        filtersViewModel.setRegion(region?.id?.toIntOrNull() ?: -1, regionName)
     }
 
     private fun renderEmpty() = with(binding) {
@@ -129,5 +126,23 @@ class LocationFragment : Fragment() {
             tvRegionNameSelected.isVisible = visibility
             tvRegionWhenSelected.isVisible = visibility
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+
+        val fromSelection = findNavController()
+            .currentBackStackEntry
+            ?.savedStateHandle
+            ?.get<Boolean>("from_selection") ?: false
+
+        if (!fromSelection) {
+            areaChoiceViewModel.initLocationFromFiltersState(filtersViewModel.filterState.value)
+        }
+
+        findNavController()
+            .currentBackStackEntry
+            ?.savedStateHandle
+            ?.remove<Boolean>("from_selection")
     }
 }

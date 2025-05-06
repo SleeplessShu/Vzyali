@@ -63,22 +63,7 @@ class FiltersViewModel(private val filtersPrefsInteractor: FiltersPrefsInteracto
         _selectedIndustry.value = saved.industry
     }
 
-    fun setCountry(countryId: Int, countryName: String) {
-        val location = Location(
-            countryId = countryId,
-            countryName = countryName,
-            regionId = 0,
-            regionName = ""
-        )
+    fun setLocation(location: Location) {
         _filterState.value = _filterState.value.copy(location = location)
-    }
-
-    fun setRegion(regionId: Int, regionName: String) {
-        val currentLocation = _filterState.value.location ?: Location()
-        val updatedLocation = currentLocation.copy(
-            regionId = regionId,
-            regionName = regionName
-        )
-        _filterState.value = _filterState.value.copy(location = updatedLocation)
     }
 }
