@@ -24,6 +24,9 @@ class CountryChoiceFragment : Fragment() {
 
     private val adapter = AreaAdapter { area ->
         viewModel.setCountry(area)
+        findNavController().previousBackStackEntry
+            ?.savedStateHandle
+            ?.set("from_selection", true)
         findNavController().popBackStack()
     }
 

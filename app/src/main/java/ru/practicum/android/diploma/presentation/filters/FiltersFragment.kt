@@ -236,12 +236,12 @@ class FiltersFragment : Fragment() {
         industryFilterOpen.isVisible = !hasIndustry
         clearIndustryFilter.isVisible = hasIndustry
 
-        val hasLocation = state.location != null
+        val hasLocation = locationName.isNotEmpty()
         tvWorkPlaceHint.isVisible = !hasLocation
         tvWorkPlaceHintUp.isVisible = hasLocation
         tvWorkPlaceSelected.isVisible = hasLocation
         tvWorkPlaceSelected.text = locationName
-        workPlaceFilterOpen.isVisible = state.location == null
+        workPlaceFilterOpen.isVisible = !hasLocation
         clearWorkPlaceFilter.isVisible = hasLocation
 
         val currentDigits = salaryExpectedInput.text

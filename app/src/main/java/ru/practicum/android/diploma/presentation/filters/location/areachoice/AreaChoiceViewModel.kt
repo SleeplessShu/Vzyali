@@ -11,10 +11,10 @@ import ru.practicum.android.diploma.domain.api.AreasInteractor
 import ru.practicum.android.diploma.domain.api.FiltersPrefsInteractor
 import ru.practicum.android.diploma.domain.models.AreaFilter
 import ru.practicum.android.diploma.domain.models.Resource
+import ru.practicum.android.diploma.domain.models.main.Location
 import ru.practicum.android.diploma.presentation.filters.UiFiltersState
 import ru.practicum.android.diploma.presentation.filters.toCountryLocation
 import ru.practicum.android.diploma.presentation.filters.toRegionLocation
-import ru.practicum.android.diploma.presentation.filters.toUiState
 
 class AreaChoiceViewModel(
     private val filtersPrefsInteractor: FiltersPrefsInteractor,
@@ -94,7 +94,6 @@ class AreaChoiceViewModel(
             }
         }
         sortCountriesResult(result)
-
         return result
     }
 
@@ -229,6 +228,15 @@ class AreaChoiceViewModel(
         }
     }
 
+    fun getLocation(): Location {
+        return Location(
+            countryId = _countryState.value?.id?.toIntOrNull() ?: -1,
+            countryName = _countryState.value?.name.orEmpty(),
+            regionId = _regionState.value?.id?.toIntOrNull() ?: -1,
+            regionName = _regionState.value?.name.orEmpty()
+        )
+    }
+
     fun setCountry(country: AreaFilter) {
         _countryState.value = country
         _regionState.value = null
@@ -247,30 +255,30 @@ class AreaChoiceViewModel(
         _regionState.value = null
     }
 
-    fun onBackPressed(currentState: UiFiltersState? = null) {
-        val state = currentState ?: filtersPrefsInteractor.getFilters().toUiState()
-
-        val savedCountryName = state.location?.countryName
-        val savedCountryId = state.location?.countryId?.toString()
-
-        val savedRegionName = state.location?.regionName
-        val savedRegionId = state.location?.regionId?.toString()
-
-        val currentCountry = _countryState.value
-        val currentRegion = _regionState.value
-
-        if (currentCountry?.name != savedCountryName || currentCountry?.id != savedCountryId) {
-            _countryState.value = currentCountry?.copy(
-                name = savedCountryName,
-                id = savedCountryId
-            )
+    fun initLocationFromFiltersState(state: UiFiltersState) {
+        val country = state.location?.let {
+            if (!it.countryName.isNullOrBlank()) {
+                AreaFilter(
+                    id = it.countryId.toString(),
+                    name = it.countryName,
+                    parentId = null,
+                    areas = null
+                )
+            } else null
         }
 
-        if (currentRegion?.name != savedRegionName || currentRegion?.id != savedRegionId) {
-            _regionState.value = currentRegion?.copy(
-                name = savedRegionName,
-                id = savedRegionId
-            )
+        val region = state.location?.let {
+            if (!it.regionName.isNullOrBlank()) {
+                AreaFilter(
+                    id = it.regionId.toString(),
+                    name = it.regionName,
+                    parentId = it.countryId.toString(), // если надо связать
+                    areas = null
+                )
+            } else null
         }
+
+        _countryState.value = country
+        _regionState.value = region
     }
 }
