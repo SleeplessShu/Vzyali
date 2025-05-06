@@ -63,6 +63,11 @@ class SearchFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         with(binding) {
             recyclerView.layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
+            recyclerView.addItemDecoration(
+                TopPaddingItemDecoration(
+                    requireContext().resources.getDimensionPixelSize(R.dimen.margin_38)
+                )
+            )
 
             debounceFunc()
             editText()
