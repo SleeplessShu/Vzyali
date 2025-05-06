@@ -64,14 +64,6 @@ class FiltersPrefsRepoImpl(private val appPrefsService: AppPrefsService) : Filte
         )
     }
 
-    override fun clearAll() {
-        appPrefsService.remove(KEY_SALARY)
-        appPrefsService.remove(KEY_INDUSTRY_NAME)
-        appPrefsService.remove(KEY_INDUSTRY_ID)
-        appPrefsService.remove(KEY_HIDE_WITHOUT_SALARY)
-        appPrefsService.remove(KEY_LOCATION)
-    }
-
     companion object {
         private const val KEY_INDUSTRY_ID = "industry_id"
         private const val KEY_INDUSTRY_NAME = "industry_name"

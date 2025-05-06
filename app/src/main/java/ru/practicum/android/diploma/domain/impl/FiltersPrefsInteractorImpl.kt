@@ -21,8 +21,4 @@ class FiltersPrefsInteractorImpl(
     override fun getFilters(): FiltersState {
         return filtersPrefsRepository.getFilters()
     }
-
-    override fun clearAll() {
-        filtersPrefsRepository.clearAll()
-    }
 }

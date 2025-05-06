@@ -8,10 +8,10 @@ import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity.INPUT_METHOD_SERVICE
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.isVisible
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
@@ -33,7 +33,6 @@ class FiltersFragment : Fragment() {
     private val binding get() = _binding ?: error("Binding is not initialized")
     private val filtersViewModel by activityViewModel<FiltersViewModel>()
     private val areaChoiceViewModel by sharedViewModel<AreaChoiceViewModel>()
-    private var salaryInput: Int? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -86,8 +85,7 @@ class FiltersFragment : Fragment() {
 
     private fun setupSalaryFormatter() = with(binding) {
         salaryExpectedInput.setupThousandSeparatorFormatter { value ->
-            salaryInput = value
-            value?.let { filtersViewModel.setSalary(it) }
+            filtersViewModel.setSalary(value)
         }
     }
 
@@ -126,7 +124,6 @@ class FiltersFragment : Fragment() {
 
             clearSalaryFilter.setOnClickListener {
                 salaryExpectedInput.text?.clear()
-                filtersViewModel.clearSalary()
             }
 
             checkbox.setOnCheckedChangeListener { _, isChecked ->
@@ -247,8 +244,18 @@ class FiltersFragment : Fragment() {
         workPlaceFilterOpen.isVisible = state.location == null
         clearWorkPlaceFilter.isVisible = hasLocation
 
-        salaryExpectedInput.setText(state.salaryExpectations?.toString().orEmpty())
-        salaryExpectedInput.setSelection(salaryExpectedInput.text?.length ?: 0)
+        val currentDigits = salaryExpectedInput.text
+            ?.replace("""\D""".toRegex(), "")
+            .orEmpty()
+
+        val expectedDigits = state.salaryExpectations
+            ?.toString()
+            .orEmpty()
+
+        if (currentDigits != expectedDigits) {
+            salaryExpectedInput.setText(expectedDigits)
+            salaryExpectedInput.setSelection(salaryExpectedInput.text?.length ?: 0)
+        }
 
         applyBtn.isVisible = hasUnsaved
         cancelBtn.isVisible = state.hasAny
