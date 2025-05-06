@@ -13,5 +13,4 @@ interface FiltersPrefsRepository {
     )
 
     fun getFilters(): FiltersState
-    fun clearAll()
 }

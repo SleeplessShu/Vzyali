@@ -12,30 +12,39 @@ fun EditText.setupThousandSeparatorFormatter(
     inputType = InputType.TYPE_CLASS_NUMBER
 
     var lastDigits = ""
+    var selfChange = false
 
     addTextChangedListener(
         onTextChanged = { text, _, _, _ ->
-            val clean = text
-                ?.toString()
-                ?.replace("""\D""".toRegex(), "")
-                ?.toIntOrNull()
-            onValueChange(clean)
+            if (!selfChange) {
+                val clean = text
+                    ?.toString()
+                    ?.replace("""\D""".toRegex(), "")
+                    ?.toIntOrNull()
+                onValueChange(clean)
+            }
         },
         afterTextChanged = { editable ->
-            val raw = editable?.toString().orEmpty()
-            val digits = raw.replace("""\D""".toRegex(), "")
+            if (!selfChange) {
+                val digits = editable
+                    ?.toString()
+                    ?.replace("""\D""".toRegex(), "")
+                    .orEmpty()
+                if (digits != lastDigits) {
+                    lastDigits = digits
 
-            if (digits != lastDigits) {
-                lastDigits = digits
-                val formatted = if (digits.isNotEmpty()) {
-                    NumberFormat
-                        .getNumberInstance(Locale("ru"))
-                        .format(digits.toLong())
-                } else {
-                    ""
+                    val formatted = if (digits.isNotEmpty()) {
+                        NumberFormat.getNumberInstance(Locale("ru"))
+                            .format(digits.toLong())
+                    } else {
+                        ""
+                    }
+
+                    selfChange = true
+                    setText(formatted)
+                    setSelection(formatted.length)
+                    selfChange = false
                 }
-                setText(formatted)
-                setSelection(formatted.length)
             }
         }
     )

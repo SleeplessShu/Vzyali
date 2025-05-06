@@ -20,7 +20,7 @@ class FiltersViewModel(private val filtersPrefsInteractor: FiltersPrefsInteracto
         _filterState.value = _filterState.value.copy(industry = newIndustry)
     }
 
-    fun setSalary(newSalary: Int) {
+    fun setSalary(newSalary: Int?) {
         _filterState.value = _filterState.value.copy(salaryExpectations = newSalary)
     }
 
@@ -51,11 +51,6 @@ class FiltersViewModel(private val filtersPrefsInteractor: FiltersPrefsInteracto
 
     fun clearSalary() {
         _filterState.value = _filterState.value.copy(salaryExpectations = null)
-    }
-
-    fun clearAll() {
-        _filterState.value = UiFiltersState()
-        filtersPrefsInteractor.clearAll()
     }
 
     fun clearSelectedLocation() {
