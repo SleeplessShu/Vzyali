@@ -264,7 +264,9 @@ class AreaChoiceViewModel(
                     parentId = null,
                     areas = null
                 )
-            } else null
+            } else {
+                null
+            }
         }
 
         val region = state.location?.let {
@@ -275,7 +277,9 @@ class AreaChoiceViewModel(
                     parentId = it.countryId.toString(), // если надо связать
                     areas = null
                 )
-            } else null
+            } else {
+                null
+            }
         }
 
         _countryState.value = country
