@@ -13,7 +13,6 @@ class IndustryAdapter : RecyclerView.Adapter<IndustryAdapter.IndustryViewHolder>
 
     // выбранный элемент
     var checkedIndustry: Industry? = null
-        private set
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): IndustryViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
@@ -51,8 +50,7 @@ class IndustryAdapter : RecyclerView.Adapter<IndustryAdapter.IndustryViewHolder>
         fun bind(industry: Industry, position: Int) {
             binding.itemName.text = industry.name
             binding.roundBtn.isChecked = industry == checkedIndustry
-
-            binding.roundBtn.setOnClickListener {
+            itemView.setOnClickListener {
                 onItemClick(industry, position)
             }
         }

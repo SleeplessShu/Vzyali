@@ -12,6 +12,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.resource.bitmap.FitCenter
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -100,11 +101,19 @@ class VacancyFragment : Fragment() {
 
     private fun renderLogo(vacancy: VacancyLong) = with(binding.icCompany) {
         val radius = resources.getDimensionPixelSize(R.dimen.radius_12)
+        this.setShapeAppearanceModel(
+            this.shapeAppearanceModel
+                .toBuilder()
+                .setAllCornerSizes(radius.toFloat())
+                .build()
+        )
         Glide.with(this)
             .load(vacancy.logoUrl?.logo240)
-            .centerCrop()
             .placeholder(R.drawable.ic_placeholder)
-            .transform(RoundedCorners(radius))
+            .transform(
+                FitCenter(),
+                RoundedCorners(radius)
+            )
             .into(this)
     }
 

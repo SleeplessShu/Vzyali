@@ -1,26 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/work_place_field"
     android:layout_width="match_parent"
-    android:layout_height="@dimen/margin_60"
-    android:layout_marginStart="@dimen/margin_16"
-    android:layout_marginEnd="@dimen/margin_4"
-    android:clickable="true"
-    android:focusable="true">
+    android:layout_height="wrap_content"
+    android:clickable="false"
+    android:focusable="false">
 
     <TextView
         android:id="@+id/country_name"
-        style="@style/FilterOptionStyle"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
+        style="@style/FilterCountryAndRegion"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:clickable="false"
+        android:focusable="false"
         android:gravity="center_vertical"
+        android:paddingStart="@dimen/margin_16"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
         tools:text="Страна или регион" />
 
     <ImageView
         android:id="@+id/country_choice"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_vertical|end"
-        android:src="@drawable/leading_icon" />
-</FrameLayout>
+        android:clickable="false"
+        android:focusable="false"
+        android:paddingVertical="@dimen/margin_12"
+        android:paddingEnd="@dimen/margin_4"
+        android:src="@drawable/leading_icon"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+</androidx.constraintlayout.widget.ConstraintLayout>

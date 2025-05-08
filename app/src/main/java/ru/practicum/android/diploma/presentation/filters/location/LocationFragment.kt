@@ -45,15 +45,7 @@ class LocationFragment : Fragment() {
             findNavController().navigate(R.id.action_LocationFragment_to_RegionFragment)
         }
 
-        binding.bChooseRegion.setOnClickListener {
-            findNavController().navigate(R.id.action_LocationFragment_to_RegionFragment)
-        }
-
         binding.bCountry.setOnClickListener {
-            findNavController().navigate(R.id.action_LocationFragment_to_CountryFragment)
-        }
-
-        binding.bChooseCountry.setOnClickListener {
             findNavController().navigate(R.id.action_LocationFragment_to_CountryFragment)
         }
 
@@ -66,13 +58,13 @@ class LocationFragment : Fragment() {
         }
 
         binding.bSelect.setOnClickListener {
+            val selectedLocation = areaChoiceViewModel.getLocation()
+            filtersViewModel.setLocation(selectedLocation)
             findNavController().navigateUp()
         }
 
         binding.bBack.setOnClickListener {
             findNavController().navigateUp()
-            areaChoiceViewModel.removeCountry()
-            filtersViewModel.clearSelectedLocation()
         }
     }
 
@@ -94,55 +86,31 @@ class LocationFragment : Fragment() {
     private fun renderState(country: AreaFilter?, region: AreaFilter?) {
         val countryName = country?.name.orEmpty()
         val regionName = region?.name.orEmpty()
-
         if (country == null && region == null) {
             renderEmpty()
         } else {
             renderContent(countryName, regionName)
         }
-
-        filtersViewModel.setCountry(country?.id?.toIntOrNull() ?: -1, countryName)
-        filtersViewModel.setRegion(region?.id?.toIntOrNull() ?: -1, regionName)
     }
 
     private fun renderEmpty() = with(binding) {
-        showDefaultCountry(true)
-        showDefaultRegion(true)
-        showRegion(false)
         showCountry(false)
+        showRegion(false)
         bSelect.isVisible = false
     }
 
     private fun renderContent(country: String, region: String) {
-        if (country.isNotEmpty()) {
-            binding.tvCountryNameSelected.text = country
-            showDefaultCountry(false)
-            showCountry(true)
-        }
-        if (region.isNotEmpty()) {
-            binding.tvRegionNameSelected.text = region
-            showDefaultRegion(false)
-            showRegion(true)
-        }
+        binding.tvCountryNameSelected.text = country
+        showCountry(country.isNotEmpty())
+        binding.tvRegionNameSelected.text = region
+        showRegion(region.isNotEmpty())
         binding.bSelect.isVisible = country.isNotEmpty()
-    }
-
-    private fun showDefaultCountry(visibility: Boolean) {
-        with(binding) {
-            tvCountryEmpty.isVisible = visibility
-            bChooseCountry.isVisible = visibility
-        }
-    }
-
-    private fun showDefaultRegion(visibility: Boolean) {
-        with(binding) {
-            tvRegionEmpty.isVisible = visibility
-            bChooseRegion.isVisible = visibility
-        }
     }
 
     private fun showCountry(visibility: Boolean) {
         with(binding) {
+            tvCountryEmpty.isVisible = !visibility
+            bChooseCountry.isVisible = !visibility
             bRemoveCountry.isVisible = visibility
             tvCountryNameSelected.isVisible = visibility
             tvCountryWhenSelected.isVisible = visibility
@@ -151,9 +119,29 @@ class LocationFragment : Fragment() {
 
     private fun showRegion(visibility: Boolean) {
         with(binding) {
+            tvRegionEmpty.isVisible = !visibility
+            bChooseRegion.isVisible = !visibility
             bRemoveRegion.isVisible = visibility
             tvRegionNameSelected.isVisible = visibility
             tvRegionWhenSelected.isVisible = visibility
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+
+        val fromSelection = findNavController()
+            .currentBackStackEntry
+            ?.savedStateHandle
+            ?.get<Boolean>("from_selection") ?: false
+
+        if (!fromSelection) {
+            areaChoiceViewModel.initLocationFromFiltersState(filtersViewModel.filterState.value)
+        }
+
+        findNavController()
+            .currentBackStackEntry
+            ?.savedStateHandle
+            ?.remove<Boolean>("from_selection")
     }
 }

@@ -8,10 +8,16 @@ import kotlinx.coroutines.launch
 import ru.practicum.android.diploma.R
 import ru.practicum.android.diploma.data.utils.StringProvider
 import ru.practicum.android.diploma.domain.api.AreasInteractor
+import ru.practicum.android.diploma.domain.api.FiltersPrefsInteractor
 import ru.practicum.android.diploma.domain.models.AreaFilter
 import ru.practicum.android.diploma.domain.models.Resource
+import ru.practicum.android.diploma.domain.models.main.Location
+import ru.practicum.android.diploma.presentation.filters.UiFiltersState
+import ru.practicum.android.diploma.presentation.filters.toCountryLocation
+import ru.practicum.android.diploma.presentation.filters.toRegionLocation
 
 class AreaChoiceViewModel(
+    private val filtersPrefsInteractor: FiltersPrefsInteractor,
     private val areasInteractor: AreasInteractor,
     private val stringProvider: StringProvider
 ) : ViewModel() {
@@ -26,10 +32,10 @@ class AreaChoiceViewModel(
         MutableStateFlow<ChooseAreaScreenState>(ChooseAreaScreenState.Loading)
     val regionScreenState: StateFlow<ChooseAreaScreenState> = _regionScreenState
 
-    private val _countryState = MutableStateFlow<AreaFilter?>(null)
+    private val _countryState = MutableStateFlow<AreaFilter?>(filtersPrefsInteractor.getFilters().toCountryLocation())
     val countryState: StateFlow<AreaFilter?> = _countryState
 
-    private val _regionState = MutableStateFlow<AreaFilter?>(null)
+    private val _regionState = MutableStateFlow<AreaFilter?>(filtersPrefsInteractor.getFilters().toRegionLocation())
     val regionState: StateFlow<AreaFilter?> = _regionState
 
     fun getCountryAreas() {
@@ -88,7 +94,6 @@ class AreaChoiceViewModel(
             }
         }
         sortCountriesResult(result)
-
         return result
     }
 
@@ -223,6 +228,15 @@ class AreaChoiceViewModel(
         }
     }
 
+    fun getLocation(): Location {
+        return Location(
+            countryId = _countryState.value?.id?.toIntOrNull() ?: -1,
+            countryName = _countryState.value?.name.orEmpty(),
+            regionId = _regionState.value?.id?.toIntOrNull() ?: -1,
+            regionName = _regionState.value?.name.orEmpty()
+        )
+    }
+
     fun setCountry(country: AreaFilter) {
         _countryState.value = country
         _regionState.value = null
@@ -239,5 +253,36 @@ class AreaChoiceViewModel(
 
     fun removeRegion() {
         _regionState.value = null
+    }
+
+    fun initLocationFromFiltersState(state: UiFiltersState) {
+        val country = state.location?.let {
+            if (!it.countryName.isNullOrBlank()) {
+                AreaFilter(
+                    id = it.countryId.toString(),
+                    name = it.countryName,
+                    parentId = null,
+                    areas = null
+                )
+            } else {
+                null
+            }
+        }
+
+        val region = state.location?.let {
+            if (!it.regionName.isNullOrBlank()) {
+                AreaFilter(
+                    id = it.regionId.toString(),
+                    name = it.regionName,
+                    parentId = it.countryId.toString(), // если надо связать
+                    areas = null
+                )
+            } else {
+                null
+            }
+        }
+
+        _countryState.value = country
+        _regionState.value = region
     }
 }
